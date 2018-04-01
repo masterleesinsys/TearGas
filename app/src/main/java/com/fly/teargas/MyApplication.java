@@ -20,10 +20,8 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class MyApplication extends Application {
-    public static String SERVICE_HOST = "http://118.190.74.11:1578/";    //服务地址
-    public static String IMAGE_HOST = "http://118.190.74.11:1578";
-//    public static String SERVICE_HOST = "http://192.168.0.160:8300/";    //测试
-//    public static String IMAGE_HOST = "http://192.168.0.160:8300";
+    public static String SERVICE_HOST = "http://nhgskx.natappfree.cc/";    //测试地址
+    public static String IMAGE_HOST = "http://nhgskx.natappfree.cc/";
     public final static int DATA_PAGE_SIZE = 10;         //数据分页大小
     public static boolean isProgramExit = false;        // 设置程序关闭状态
     public static boolean DEBUG = true;        // 程序当前是调试还是发布状态,默认为调试状态

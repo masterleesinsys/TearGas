@@ -5,6 +5,9 @@ package com.fly.teargas;
  * 参数
  */
 public class Constants {
+    public static String MOBILE_TOKEN = "mobile/token?token=";  //验证token
+
+
     //用户接口
     public static String USER_AUTH = "api/auth/";  //登录
     public static String AUTH_WEIXIN = "api/auth/weixin/";  //微信登录

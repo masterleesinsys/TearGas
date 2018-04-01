@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rea_top"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
@@ -22,12 +23,12 @@
                 android:id="@+id/btnLeftAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="5dp"
                 android:clickable="true"
                 android:gravity="center_vertical|center_horizontal"
-                android:padding="5dip"
-                android:paddingLeft="20dip"
-                android:paddingRight="20dip"
+                android:padding="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:singleLine="true"
                 android:text=" 返 回"
                 android:visibility="gone" />
@@ -37,8 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:visibility="gone" />
 
             <ImageView
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="30dip"
+                android:layout_marginLeft="30dp"
                 android:visibility="gone" />
 
             <ImageView
@@ -117,8 +118,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@id/ActionBarRight"
         android:layout_toRightOf="@id/BarLefts"
         android:gravity="center">
@@ -128,17 +129,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="25dip"
             android:ellipsize="marquee"
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="@string/app_name"
-            android:textColor="@color/top_title_text"
+            android:textColor="@color/textColor_default"
             android:textSize="22sp"
             android:visibility="gone" />
 
     </LinearLayout>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/textColor_division"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
 </RelativeLayout>

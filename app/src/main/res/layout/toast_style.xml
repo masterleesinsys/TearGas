@@ -11,7 +11,7 @@
         android:id="@+id/tv_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/main_update_translucent_40"
+        android:background="@color/translucent_black_40"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"

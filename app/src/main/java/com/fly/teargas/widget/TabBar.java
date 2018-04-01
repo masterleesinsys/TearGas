@@ -96,8 +96,8 @@ public class TabBar extends RelativeLayout {
     private BaseTabItem newItem(int drawable, int checkedDrawable, String text) {
         NormalItemView normalItemView = new NormalItemView(mContext);
         normalItemView.initialize(drawable, checkedDrawable, text);
-        normalItemView.setTextDefaultColor(getResources().getColor(R.color.tabbar_item));
-        normalItemView.setTextCheckedColor(getResources().getColor(R.color.tabbar_textChecked));
+//        normalItemView.setTextDefaultColor(getResources().getColor(R.color.tabbar_item));
+//        normalItemView.setTextCheckedColor(getResources().getColor(R.color.tabbar_textChecked));
         return normalItemView;
     }
 

@@ -34,6 +34,7 @@ allprojects {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     dependencies {
         implementation 'me.everything:overscroll-decor-android:1.0.4'
         //仿iOS风格的边缘滚动效果，支持几乎所有滚动视图
@@ -48,7 +49,6 @@ dependencies {
     dependencies {      //spinner选择控件
         implementation 'com.github.arcadefire:nice-spinner:1.3.3'
     }
-    implementation 'fm.jiecao:jiecaovideoplayer:5.5.2'  //视频播放组件
     implementation 'com.github.bumptech.glide:glide:3.7.0'         //图片处理框架
     implementation 'com.lzy.widget:imagepicker:0.5.5'          //拍照，图库选择
 //    implementation 'com.shehabic.droppy:Droppy:0.6.0@aar'          //下拉菜单
@@ -67,5 +67,7 @@ dependencies {
     implementation 'org.xutils:xutils:3.5.0'                   //X组件
     implementation 'com.alibaba:fastjson:1.1.54.android'       //json解析阿里组件
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'      //加载进度组件
-    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')      //X5内核
+    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
+    //X5内核
+    implementation files('libs/commons-codec-1.9.jar')      //commons-codec-1.9
 }

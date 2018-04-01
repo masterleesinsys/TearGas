@@ -1,60 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#F67400</color>
-    <color name="colorAccent">#009aff</color>
-
-    <color name="transparent">#00000000</color>
-    <color name="bg_window">#efefef</color>
-    <color name="bg_header">#007BB6</color>
-    <color name="text_usual_color">#333333</color>
-    <color name="text_pressed">#FFFFFF</color>
-    <color name="text_weak">#999999</color>
-    <color name="text_orange">#F67400</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="gray">#C0C0C0</color>
-    <color name="secondblack">#666666</color>
-    <color name="blue">#0088cc</color>
-    <color name="blueold">#191970</color>
-    <color name="green">#458B00</color>
-    <color name="yellow">#FFD700</color>
-    <color name="edit_login">#909090</color>
-    <color name="separator_gray">#ddd7c5</color>
-    <color name="list_footer">#E2E7ED</color>
-    <color name="text_blue">#297DDD</color>
-    <color name="text_red">#FF0000</color>
-    <color name="my_red">#FF4800</color>
-    <color name="my_orange">#FF8A00</color>
-    <color name="orange">#FF6100</color>
-    <color name="fenhong">#FFCCCC</color>
-    <color name="text_header_pressed">#E03720</color>
-    <color name="channel_bg">#005DAD</color>
-    <color name="list_background">#FFFFFF</color>
-    <color name="button_bg_color">#ff6b2c</color>
-    <color name="top_title_text">#FFFFFF</color>
-    <color name="top_title_blue_text">#0088cc</color>
-    <color name="login_reg_button_bg">#F2F2F2</color>
-    <color name="login_reg_button_text">#ff6b2c</color>
-
-    <color name="home_bottom_title">#595757</color>
-    <color name="home_bottom_bg">#efeff0</color>
-    <color name="home_list_item_lable">#898989</color>
-    <color name="home_list_item_value">#DAA238</color>
-
-    <color name="login_button_submit">#007bb6</color>
-    <color name="value_date_text">#9fa0a0</color>
-    <color name="backlobel_date_text">#ff3000</color>
-    <color name="lable_versionupdate">#007bb6</color>
-    <color name="lable_shopinfoarea">#3295f0</color>
-    <color name="lable_shopinfobase">#000000</color>
-    <color name="value_shopinfobase">#898989</color>
-
-    <color name="text_pink">#ed5485</color>
-    <color name="tabbar_item">#9d9d9d</color>
-    <color name="tabbar_textChecked">#ed5485</color>
-    <color name="hometext_hideColor">#ccc9d3</color>
-
     <!--字体颜色-->
     <color name="textColor_title">#009aff</color>
     <color name="textColor_hint">#999999</color>
@@ -88,44 +33,13 @@
     <color name="makeAnAppointment">#ffcdd1</color>
     <color name="withdrawDeposit">#ffa1a8</color>
 
-    <!--实名&未实名-->
-    <color name="textColor_man">#3498DB</color>
-    <color name="hui">#aaaaaa</color>
+    <!--黑色&白色-->
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 
     <!--全透明色&半透明色-->
     <color name="full_transparency">#00000000</color>
     <color name="translucent">#e0000000</color>
-
-    <!--百度地图（选取位置）-->
-    <color name="location_selected">#ff6501</color>
-    <color name="location_content_detail">#8f605f5f</color>
-
-    <!-- 区域弹窗 -->
-    <color name="group_item_bg">#F3F3F3</color>
-    <color name="group_item_pressed_bg">#E5E5E5</color>
-    <color name="child_item_bg">#E5E5E5</color>
-    <color name="child_item_diveder">#D6D6D5</color>
-    <color name="list_item_text_pressed_bg">#FF822E</color>
-    <color name="tab_text_color">#787878</color>
-    <color name="tab_text_pressed_color">#CD0000</color>
-
-    <!-- 手势密码 -->
-    <color name="top_text">#007bb6</color>
-
-    <!-- 分析顶部标签背景 -->
-    <color name="fenxi_top_text_bg">#f8f8f8</color>
-    <color name="titlebar_background">#508af0</color>
-
-    <color name="navbar_switcher_background">#508af0</color>
-    <color name="navbar_item_on_background">#8ad2f4</color>
-
-    <color name="main_bg">#f5f5f5</color>
-
-    <!--邀约页面 RadioButton的字体颜色选择器-->
-    <color name="rb_selected">@color/white</color>
-    <color name="rb_unchecked">@color/textColor_hint</color>
-
-    <color name="main_update_translucent_40">#99e62129</color>
 
     <!--白色透明度-->
     <color name="translucent_white_05">#f2ffffff</color>

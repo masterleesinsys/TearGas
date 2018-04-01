@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context="com.fly.teargas.activity.LoginActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/colorAccent" />
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title"/>
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/title"
+        android:minHeight="80dp"
+        android:minWidth="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rl_login"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/iv_logo"
+        android:background="@drawable/editbackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--title-->
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="@color/textColor_default"
+                android:gravity="center"
+                android:text="登录"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <View
+                android:background="@color/textColor_division"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="@color/textColor_default"
+                android:gravity="center"
+                android:text="注册"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_below="@+id/ll_title"
+            android:background="@color/textColor_division"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_mailbox"
+                android:textSize="13sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:hint="邮箱"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:inputType="textEmailAddress"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/editbackground"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:textSize="13sp"
+                android:layout_below="@+id/et_mailbox"
+                android:paddingLeft="10dp"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:singleLine="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/editbackground"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="20dp"
+                tools:ignore="TextFields" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_protocol"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rl_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_user_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="同意"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_user_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="《注册协议》"
+            android:textColor="@color/textColor_title"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_below="@+id/ll_protocol"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:background="@color/textColor_title"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="50dp"
+        android:textSize="15sp"
+        android:layout_marginLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+</RelativeLayout>
