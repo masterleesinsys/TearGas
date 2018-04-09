@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context="com.fly.teargas.activity.InformationModificationActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:id="@+id/ll_status"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/titlebar"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="设备1"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerHorizontal="true"
+            android:text="设备编号：0029"
+            android:textColor="@color/textColor_default"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="张三"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_latlng"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ll_status"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerHorizontal="true"
+            android:text="经度：113.534468，纬度：34.840273"
+            android:textColor="@color/textColor_default"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_deviceAddress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ll_latlng"
+        android:background="@drawable/editbackground"
+        android:hint="设备地址"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:textColor="@color/textColor_default"
+        android:textColorHint="@color/textColor_hint"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_selectTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/et_deviceAddress"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editbackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="选择模版"
+        android:textColor="@color/textColor_default"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_inOut"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/tv_selectTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_IN1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="IN1"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="OUT1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_IN2"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="IN2"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT2"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="OUT2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_IN3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="IN3"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="OUT3"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_IN4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="IN4"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/editbackground"
+                android:hint="OUT4"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_set_stencil"
+        android:textColor="@color/textColor_title"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:text="修改当前模版"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ll_inOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_update_color"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

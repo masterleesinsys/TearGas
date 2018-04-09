@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_equipment"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ico_computer" />
+
+    <RelativeLayout
+        android:id="@+id/rl_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_equipment"
+        android:layout_alignTop="@+id/iv_equipment"
+        android:layout_toEndOf="@+id/iv_equipment"
+        android:layout_toRightOf="@+id/iv_equipment">
+
+        <TextView
+            android:id="@+id/tv_equipment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:text="设备名称"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tv_equipment_name"
+            android:gravity="center_vertical"
+            android:text="河南省郑州市高新区西四环"
+            android:textColor="@color/textColor_hint"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:id="@+id/tv_is_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:text="正常"
+                android:textColor="@color/normal"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/tv_is_normal"
+                android:gravity="center_vertical"
+                android:text="已布防"
+                android:textColor="@color/normal"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/iv_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textColor_division" />
+
+</RelativeLayout>

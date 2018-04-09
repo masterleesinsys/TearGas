@@ -3,10 +3,9 @@
 
     <declare-styleable name="TabBar">
         <attr name="page">
-            <!--<enum name="main" value="0" />-->
-            <!--<enum name="teacher" value="1" />-->
-            <!--<enum name="mall" value="2" />-->
-            <!--<enum name="mine" value="3" />-->
+            <enum name="main" value="0" />
+            <enum name="equipmentManagement" value="1" />
+            <enum name="personal" value="2" />
         </attr>
     </declare-styleable>
 

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context="com.fly.teargas.activity.SetStencilActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <EditText
+        android:id="@+id/et_templateName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/titlebar"
+        android:background="@drawable/editbackground"
+        android:hint="模版名称"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:textColor="@color/textColor_default"
+        android:textColorHint="@color/textColor_hint"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_inOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_templateName"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_IN1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="IN1"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="OUT1"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/et_IN2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="IN2"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="OUT2"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/et_IN3"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="IN3"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT3"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="OUT3"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/et_IN4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="IN4"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_OUT4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/editbackground"
+                android:hint="OUT4"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor_default"
+                android:textColorHint="@color/textColor_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_update_color"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

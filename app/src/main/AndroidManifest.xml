@@ -2,26 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fly.teargas">
 
-    <!-- 允许程序打开网络套接字 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 允许程序设置内置sd卡的写权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 允许程序获取网络状态 -->
+    <!-- 获取设备网络状态，禁用后无法获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 允许程序访问WiFi网络信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许程序读写手机状态和身份 -->
+    <!-- 网络权限，当禁用后，无法进行检索等相关业务 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 读取设备硬件信息，统计数据 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取系统信息，包含系统版本等信息，用作统计 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 获取设备的网络状态，鉴权所需网络代理 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许sd卡写权限，需写入地图数据，禁用后无法显示地图 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许sd卡读权限，需读取地图数据，禁用后无法显示地图 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 获取统计数据 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 鉴权所需该权限获取进程列表 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 使用步行AR导航，配置Camera权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ico_android"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ico_android"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- 百度AK配置 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="UBUgtFURvEN54A9LkDn2odI0znYNq60v" />
+
+        <!-- 百度定位service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <!-- 登录 -->
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +57,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.EquipmentManagementActivity" />
+        <activity android:name=".activity.PersonalActivity" />
+        <activity android:name=".activity.PasswordModiActivity" />
+        <activity android:name=".activity.AddUserActivity" />
+        <activity android:name=".activity.AccountInformationActivity" />
+        <activity android:name=".activity.ManagementActivity" />
+        <activity android:name=".activity.DeviceStatusActivity" />
+        <activity android:name=".activity.InformationModificationActivity" />
+        <activity android:name=".activity.SetStencilActivity" />
+        <activity android:name=".activity.LogInformationActivity"></activity>
     </application>
 
 </manifest>

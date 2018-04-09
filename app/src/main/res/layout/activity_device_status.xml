@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context="com.fly.teargas.activity.DeviceStatusActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:id="@+id/ll_status"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/titlebar"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="设备1"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="张三"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <!--设备1-->
+    <LinearLayout
+        android:id="@+id/ll_device1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_status"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备1"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device1_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备2-->
+    <LinearLayout
+        android:id="@+id/ll_device2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device1"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备2"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device2_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备3-->
+    <LinearLayout
+        android:id="@+id/ll_device3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device2"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备3"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device3_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备4-->
+    <LinearLayout
+        android:id="@+id/ll_device4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device3"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备4"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device4_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备5-->
+    <LinearLayout
+        android:id="@+id/ll_device5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device4"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备5"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device5_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备6-->
+    <LinearLayout
+        android:id="@+id/ll_device6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device5"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备6"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device6_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备7-->
+    <LinearLayout
+        android:id="@+id/ll_device7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device6"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备7"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device7_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!--设备8-->
+    <LinearLayout
+        android:id="@+id/ll_device8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_device7"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="设备8"
+            android:textColor="@color/textColor_default"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_device8_status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:checked="true"
+            android:text="状态1"
+            android:textColor="@color/textColor_default"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

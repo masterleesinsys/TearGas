@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/main_update_color</item>
+        <item name="colorPrimaryDark">@color/main_update_color</item>
+        <item name="colorAccent">@color/main_update_color</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/fade</item>
     </style>
@@ -32,17 +32,6 @@
         <item name="android:textSize">14sp</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
-    </style>
-
-    <!--RatingBar样式-->
-    <style name="GlimmerRatingBar" parent="Base.Widget.AppCompat.RatingBar">
-        <!--修改默认图片-->
-        <item name="android:progressDrawable">@drawable/glimmerratingbar</item>
-    </style>
-
-    <style name="GlimmerRatingBar_white" parent="Base.Widget.AppCompat.RatingBar">
-        <!--修改默认图片-->
-        <item name="android:progressDrawable">@drawable/glimmerratingbar_white</item>
     </style>
 
 </resources>

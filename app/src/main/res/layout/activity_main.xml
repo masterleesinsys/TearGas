@@ -4,15 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main_background"
     tools:context="com.fly.teargas.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_encryption"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:text="点击加密"
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabbar"
+        android:layout_below="@+id/titlebar"
+        android:clickable="true"
+        tools:ignore="KeyboardInaccessibleWidget" />
+
+    <ImageView
+        android:id="@+id/iv_location"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:visibility="gone"
+        android:layout_alignBottom="@+id/bmapView"
+        android:src="@drawable/ico_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.fly.teargas.widget.TabBar
+        android:id="@+id/tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:page="main" />
 
 </RelativeLayout>

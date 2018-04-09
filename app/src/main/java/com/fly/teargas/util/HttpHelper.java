@@ -530,7 +530,7 @@ public class HttpHelper {
      */
     public void mLoadPicture(String imagePath, ImageView iv) {
         try {
-            Glide.with(x.app()).load(imagePath).placeholder(R.drawable.general_kecheng_no).error(R.drawable.general_kecheng_no).into(iv);
+            Glide.with(x.app()).load(imagePath).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
         } catch (Exception e) {
             LogUtils.e(e.toString());
         }
@@ -544,7 +544,7 @@ public class HttpHelper {
      */
     public void mLoadPicture(String imagePath, ImageView iv, int width, int height) {
         try {
-            Glide.with(x.app()).load(imagePath).override(width, height).placeholder(R.drawable.general_kecheng_no).error(R.drawable.general_kecheng_no).into(iv);
+            Glide.with(x.app()).load(imagePath).override(width, height).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
         } catch (Exception e) {
             LogUtils.e(e.toString());
         }
@@ -557,8 +557,8 @@ public class HttpHelper {
      * @param imageView
      */
     public void mLoadCirclePicture(String url, final ImageView imageView) {
-        Glide.with(x.app()).load(url).asBitmap().centerCrop().placeholder(R.drawable.general_touxiang_y_no)
-                .error(R.drawable.general_touxiang_y_no).into(new BitmapImageViewTarget(imageView) {
+        Glide.with(x.app()).load(url).asBitmap().centerCrop().placeholder(R.drawable.ico_touxiang)
+                .error(R.drawable.ico_touxiang).into(new BitmapImageViewTarget(imageView) {
             @Override
             protected void setResource(Bitmap resource) {
                 RoundedBitmapDrawable circularBitmapDrawable =

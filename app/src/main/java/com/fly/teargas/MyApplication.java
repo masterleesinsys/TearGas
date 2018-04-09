@@ -8,7 +8,6 @@ import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.FileUtils;
 import com.fly.teargas.util.ImageUtil;
 import com.fly.teargas.util.LogUtils;
-import com.tencent.smtt.sdk.QbSdk;
 
 import org.xutils.x;
 
@@ -34,11 +33,6 @@ public class MyApplication extends Application {
     private static String KEY_LOGIN_AUTH = "LOGIN-AUTH";
     private static MyApplication mInstance;     // 接口服务地址
     private List<Activity> mList = new LinkedList<>();      // 运用list来保存们每一个activity是关键
-    //    {     //初始化UMENG设置
-//        PlatformConfig.setWeixin("wx937054a717343673", "b1a94af9605068299442ee76db5277e9");
-//        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-//        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
-//    }
     public static Boolean is_exit = false;     //账户是否注销
 
     public static MyApplication getInstance() {
@@ -57,8 +51,14 @@ public class MyApplication extends Application {
         return String.format("%s%s", SERVICE_HOST, path);
     }
 
-    //须身份验证地址，携带id和token
+    //须身份验证地址，携带token
     public static String getTokenURL(String path) {
+        @SuppressLint("DefaultLocale") String retVal = String.format("%s%s?token=%s", SERVICE_HOST, path, MyApplication.getToken());
+        return retVal;
+    }
+
+    //须身份验证地址，携带id和token
+    public static String getUserTokenURL(String path) {
         @SuppressLint("DefaultLocale") String retVal = String.format("%s%s?user=%d&token=%s", SERVICE_HOST, path, MyApplication.getUserId(), MyApplication.getToken());
         return retVal;
     }
@@ -142,21 +142,6 @@ public class MyApplication extends Application {
 
         x.Ext.init(this);
         x.Ext.setDebug(false); // 开启debug会影响性能
-
-        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
-        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
-            @Override
-            public void onViewInitFinished(boolean arg0) {
-                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                LogUtils.e(" onViewInitFinished is " + arg0);
-            }
-
-            @Override
-            public void onCoreInitFinished() {
-            }
-        };
-        //x5内核初始化接口
-        QbSdk.initX5Environment(getApplicationContext(), cb);
 
         // 检查缓存目录是否存在
         File file = new File(getCachePath());

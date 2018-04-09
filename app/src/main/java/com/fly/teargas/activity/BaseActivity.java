@@ -261,7 +261,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setTopNotVisble(boolean isShow) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (isShow)
             toolbar.setVisibility(View.VISIBLE);
@@ -270,22 +270,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showBackButton(boolean isShow) {
-        // 显示返回按钮时
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        imgBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ElasticAction.doAction(view, 400, 0.85f, 0.85f);
-                if (isListener) {
-                    onBackButtonListener.onBackButtonListener();
+        try {
+            // 显示返回按钮时
+            imgBack = findViewById(R.id.imgBack);
+            imgBack.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ElasticAction.doAction(view, 400, 0.85f, 0.85f);
+                    if (isListener) {
+                        onBackButtonListener.onBackButtonListener();
+                    }
+                    finish();
                 }
-                finish();
+            });
+            if (isShow) {
+                imgBack.setVisibility(View.VISIBLE);
+            } else {
+                imgBack.setVisibility(View.GONE);
             }
-        });
-        if (isShow) {
-            imgBack.setVisibility(View.VISIBLE);
-        } else {
-            imgBack.setVisibility(View.GONE);
+        } catch (Exception e) {
+            LogUtils.e(e.toString());
+            Placard.showInfo(e.toString());
+            e.printStackTrace();
         }
     }
 

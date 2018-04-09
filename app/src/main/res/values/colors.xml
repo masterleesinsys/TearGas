@@ -18,7 +18,7 @@
     <color name="bg_color">#ffeded</color>
     <color name="info_window">#00a1e9</color>
     <color name="main_background">#eeeeee</color>
-    <color name="main_update_color">#e62129</color>
+    <color name="main_update_color">#f35e58</color>
     <color name="mine_expiration_time">#ffa1a8</color>
     <color name="mine_vip">#fff600</color>
     <color name="screen_fillColor">#1abc9c</color>
@@ -32,6 +32,14 @@
     <color name="giveInstruction">#888888</color>
     <color name="makeAnAppointment">#ffcdd1</color>
     <color name="withdrawDeposit">#ffa1a8</color>
+
+    <!--正常&异常颜色-->
+    <color name="normal">#8ec355</color>
+    <color name="abnormal">#e3232e</color>
+
+    <!--titleBar切换颜色-->
+    <color name="titleBar_checked">#587bf8</color>
+    <color name="titleBar_unChecked">#a7c0fd</color>
 
     <!--黑色&白色-->
     <color name="black">#000000</color>
