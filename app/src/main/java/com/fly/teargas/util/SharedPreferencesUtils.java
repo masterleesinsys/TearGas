@@ -13,16 +13,13 @@ import org.xutils.x;
  */
 @SuppressWarnings("ALL")
 public class SharedPreferencesUtils {
-//    public static final String CONFIG_TALENT_STAYUS = "talent_status";      //达人状态
-//    public static final String CONFIG_MESSAGE_NUMBER = "message_number";    //消息数量
-//    public static final String CONFIG_ORDER_STATUS = "order_status";      //订单状态提醒
-//    public static final String CONFIG_REMBER_USERNAME = "rember_username";      //记住账户
-//    public static final String CONFIG_RONG_TOKEN = "rong_token";      //融云的Token
-//    public static final String CONFIG_IS_QUIT = "is_quit";      //判断当前账户是否已退出
+    public static final String CONFIG_REMBER_USERNAME = "rember_username";      //记住账户
+    public static final String CONFIG_REMBER_PASSWORD = "rember_password";      //记住密码
+    public static final String CONFIG_IS_QUIT = "is_quit";      //判断当前账户是否已退出
 
     public static final String CONFIG_USER_TYPE = "user_type";      //用户类型
 
-    private static final String CONFIG_NAME = "chenshi_config";
+    private static final String CONFIG_NAME = "teargas_config";
     private static final String CONFIG_FILE_NAME = "filename";
 
     private static SharedPreferences preferences = null;

@@ -193,24 +193,23 @@ public class StringUtils {
      * @return
      */
     public static boolean isEmail(String email) {
-        if (email == null || email.trim().length() == 0)
-            return false;
-        return emailer.matcher(email).matches();
+        return !(email == null || email.trim().length() == 0) && emailer.matcher(email).matches();
     }
 
     /**
      * 字符串转整数
      *
      * @param str
-     * @param defValue
      * @return
      */
-    public static int toInt(String str, int defValue) {
+    public static int toInt(String str) {
         try {
             return Integer.parseInt(str);
         } catch (Exception e) {
+            LogUtils.e(e.toString());
+            Placard.showInfo(e.toString());
         }
-        return defValue;
+        return 0;
     }
 
     /**
@@ -222,7 +221,7 @@ public class StringUtils {
     public static int toInt(Object obj) {
         if (obj == null)
             return 0;
-        return toInt(obj.toString(), 0);
+        return toInt(obj.toString());
     }
 
     /**

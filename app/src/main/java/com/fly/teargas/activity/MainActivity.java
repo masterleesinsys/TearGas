@@ -20,8 +20,13 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.fly.teargas.Constants;
+import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
+import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
+import com.fly.teargas.util.Placard;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.skydoves.elasticviews.ElasticAction;
 
 import org.xutils.view.annotation.Event;
@@ -33,6 +38,9 @@ import org.xutils.view.annotation.ViewInject;
 public class MainActivity extends BaseActivity {
     @ViewInject(R.id.iv_location)
     private ImageView iv_location;  //定位当前
+
+    @ViewInject(R.id.spin_kit)
+    private SpinKitView spin_kit;
 
     private MapView mMapView;
 
@@ -75,6 +83,7 @@ public class MainActivity extends BaseActivity {
     private void initMap() {
         setStyle(STYLE_HOME);
         setCaption("首页");
+        showNameTv("张三");
 
         mMapView = findViewById(R.id.bmapView);
 
@@ -116,14 +125,14 @@ public class MainActivity extends BaseActivity {
                 int id = bundle.getInt("id");
                 switch (id) {
                     case 1:
-                        intent=new Intent();
-                        intent.putExtra("id",id);
-                        openActivity(intent,ManagementActivity.class);
+                        intent = new Intent();
+                        intent.putExtra("id", id);
+                        openActivity(intent, ManagementActivity.class);
                         break;
                     case 2:
-                        intent=new Intent();
-                        intent.putExtra("id",id);
-                        openActivity(intent,ManagementActivity.class);
+                        intent = new Intent();
+                        intent.putExtra("id", id);
+                        openActivity(intent, ManagementActivity.class);
                         break;
                 }
                 return false;
@@ -188,7 +197,7 @@ public class MainActivity extends BaseActivity {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(15.0f);
+                builder.target(new LatLng(34.841175, 113.535969)).zoom(15.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 if (mLocationClient.isStarted())
                     mLocationClient.stop();
@@ -227,6 +236,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
     }
 
     @Override
@@ -236,5 +246,27 @@ public class MainActivity extends BaseActivity {
         mMapView.onPause();
         if (mLocationClient.isStarted())
             mLocationClient.stop();
+    }
+
+    /**
+     * 判断是否有新的警情信息
+     */
+    private class getChechNewXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            Boolean isNew = false;
+            try {
+                isNew = getHttpResultBoolean(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (isNew) {
+                LogUtils.e("有新的警情");
+            } else {
+                LogUtils.e("没有新的警情");
+            }
+        }
     }
 }

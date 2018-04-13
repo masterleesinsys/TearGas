@@ -1,10 +1,6 @@
 package com.fly.teargas.util;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Environment;
-
-import com.fly.teargas.Constants;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -371,34 +367,5 @@ public class Common {
         }
 
         return sb.toString().split("\\|");
-    }
-
-    public static boolean NewIsRead(String newid, Context context) {
-        boolean isread = false;
-        SharedPreferences sp = context.getSharedPreferences(Constants.NEWS_READ_STATE, Context.MODE_PRIVATE);
-        String ids = sp.getString("ids", "");
-        if (!"".equals(ids)) {
-            newid = "|" + newid + "|";
-            if (ids.indexOf(newid) != -1) {
-                isread = true;
-            }
-        }
-        return isread;
-    }
-
-    public static void NewIsReadAdd(String newid, Context context) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.NEWS_READ_STATE, Context.MODE_PRIVATE);
-        String ids = sp.getString("ids", "");
-        newid = "|" + newid + "|";
-        if (!"".equals(ids)) {
-            if (ids.indexOf(newid) == -1) {
-                ids = ids + "," + newid;
-            }
-        } else {
-            ids = newid;
-        }
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("ids", ids);
-        editor.commit();
     }
 }

@@ -6,56 +6,54 @@ import java.io.Serializable;
  * 会员信息
  */
 public class UserInfo implements Serializable {
-
-    private static final long serialVersionUID = -2385146642281204884L;
     /**
-     * member : {"level":1,"grade":1,"vip_expire_date":"","level_text":"VIP1","total_fee":0,"icon":"","grade_text":"一年级"}
-     * teacher_collected_count : 0
-     * name : 伯恩
-     * video_collected_count : 0
-     * gender : 1
-     * balance : 0
-     * type : 2
-     * promoting_amount : 0
-     * user : 21
+     * userID : 0
+     * qx : 超级管理员
+     * dq : 全国
+     * user : admin
+     * name : 管理员
+     * tel : 114
+     * registerTime : 2018-02-04T03:14:27
      */
-    private int teacher_collected_count;
+
+    private int userID;
+    private String qx;
+    private String dq;
+    private String user;
     private String name;
-    private int video_collected_count;
-    private int gender;
-    private int balance;
-    private int type;
-    private int promoting_amount;
-    private int user;
-    private String token;     //token
-    private int id;     //编号
+    private String tel;
+    private String registerTime;
 
-    public String getToken() {
-        return token;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public int getId() {
-        return id;
+    public String getQx() {
+        return qx;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setQx(String qx) {
+        this.qx = qx;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public String getDq() {
+        return dq;
     }
 
-    public int getTeacher_collected_count() {
-        return teacher_collected_count;
+    public void setDq(String dq) {
+        this.dq = dq;
     }
 
-    public void setTeacher_collected_count(int teacher_collected_count) {
-        this.teacher_collected_count = teacher_collected_count;
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -66,51 +64,19 @@ public class UserInfo implements Serializable {
         this.name = name;
     }
 
-    public int getVideo_collected_count() {
-        return video_collected_count;
+    public String getTel() {
+        return tel;
     }
 
-    public void setVideo_collected_count(int video_collected_count) {
-        this.video_collected_count = video_collected_count;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
-    public int getGender() {
-        return gender;
+    public String getRegisterTime() {
+        return registerTime;
     }
 
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getPromoting_amount() {
-        return promoting_amount;
-    }
-
-    public void setPromoting_amount(int promoting_amount) {
-        this.promoting_amount = promoting_amount;
-    }
-
-    public int getUser() {
-        return user;
-    }
-
-    public void setUser(int user) {
-        this.user = user;
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 
-import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.FileUtils;
 import com.fly.teargas.util.ImageUtil;
 import com.fly.teargas.util.LogUtils;
@@ -19,8 +18,8 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class MyApplication extends Application {
-    public static String SERVICE_HOST = "http://nhgskx.natappfree.cc/";    //测试地址
-    public static String IMAGE_HOST = "http://nhgskx.natappfree.cc/";
+    public static String SERVICE_HOST = "http://60.205.213.120/";    //服务地址
+    public static String IMAGE_HOST = "http://60.205.213.120/";
     public final static int DATA_PAGE_SIZE = 10;         //数据分页大小
     public static boolean isProgramExit = false;        // 设置程序关闭状态
     public static boolean DEBUG = true;        // 程序当前是调试还是发布状态,默认为调试状态
@@ -57,12 +56,6 @@ public class MyApplication extends Application {
         return retVal;
     }
 
-    //须身份验证地址，携带id和token
-    public static String getUserTokenURL(String path) {
-        @SuppressLint("DefaultLocale") String retVal = String.format("%s%s?user=%d&token=%s", SERVICE_HOST, path, MyApplication.getUserId(), MyApplication.getToken());
-        return retVal;
-    }
-
     public static Date getStartTime() {
         return startTime;
     }
@@ -79,14 +72,14 @@ public class MyApplication extends Application {
         MyApplication.running = running;
     }
 
-    public static void syncDetail(UserInfo info) {
+    public static void syncDetail(String info) {
         FileUtils.savePrivateObject(info, KEY_LOGIN_AUTH);
     }
 
-    public static UserInfo getDetailFromLocal() {
+    public static String getDetailFromLocal() {
         Object o = FileUtils.getPrivateObject(KEY_LOGIN_AUTH);
         if (o != null)
-            return (UserInfo) o;
+            return (String) o;
         return null;
     }
 
@@ -99,31 +92,10 @@ public class MyApplication extends Application {
      *
      * @return 0未登录,>=1已登录
      */
-    public static int getUserId() {
-        UserInfo info = getDetailFromLocal();
-        if (info != null)
-            return info.getId();
-        return 0;
-    }
-
-    public static int getUserType() {
-        UserInfo info = getDetailFromLocal();
-        if (info != null)
-            return info.getType();
-        return 0;
-    }
-
-    public static String getName() {
-        UserInfo info = getDetailFromLocal();
-        if (info != null)
-            return info.getName();
-        return "";
-    }
-
     public static String getToken() {
-        UserInfo info = getDetailFromLocal();
+        String info = getDetailFromLocal();
         if (info != null)
-            return info.getToken();
+            return info;
         return "";
     }
 

@@ -38,6 +38,7 @@ public class EquipmentManagementActivity extends BaseActivity {
     protected void initView() {
         setStyle(STYLE_HOME);
         setCaption("设备管理");
+        showNameTv("张三");
 
         mInitRecyclerView(rv_equipment_management, 2);
 
@@ -50,7 +51,7 @@ public class EquipmentManagementActivity extends BaseActivity {
         equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position) {
-
+                openActivity(ManagementActivity.class);
             }
         });
     }
@@ -70,7 +71,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                 equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(int position) {
-
+                        openActivity(ManagementActivity.class);
                     }
                 });
                 break;
@@ -84,7 +85,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                 equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(int position) {
-
+                        openActivity(ManagementActivity.class);
                     }
                 });
                 break;
@@ -98,7 +99,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                 equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(int position) {
-
+                        openActivity(ManagementActivity.class);
                     }
                 });
                 break;

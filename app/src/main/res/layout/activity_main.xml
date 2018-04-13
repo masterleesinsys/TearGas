@@ -34,7 +34,7 @@
         android:id="@+id/iv_location"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_alignBottom="@+id/bmapView"
         android:src="@drawable/ico_location"
         android:layout_width="wrap_content"

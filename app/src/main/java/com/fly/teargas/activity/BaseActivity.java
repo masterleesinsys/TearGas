@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int STYLE_USERCENTER = 4;
     protected int STYLE_BACK_SET = 5;
     protected int STYLE_FENXI = 6;
-    protected int STYLE_SHOUSHI_YANXHENG = 7;
+    protected int STYLE_NAME = 7;
     protected int STYLE_VERUPDATE = 8;
     protected int STYLE_JINGPIN = 9;
     protected int STYLE_BACK_ADD = 101;
@@ -82,6 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ImageView deletebutton;
     protected TextView txtCaption;
     protected TextView mBtnRightAction;
+    protected TextView textName;
     protected TextView mBtnLeftAction;
     protected ImageView mBtnActivityAdd;
     protected ImageView mBtnActivityRemove;
@@ -164,7 +165,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             showBackButton(true);
         } else if (value == STYLE_HOME) {
             showBackButton(false);
-        } else if (value == STYLE_SHOUSHI_YANXHENG) {
+        } else if (value == STYLE_NAME) {
             showBackButton(false);
         } else if (value == STYLE_JINGPIN) {
             showBackButton(true);
@@ -181,6 +182,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            showQueryIco();
             showQueryImg();
         }
+    }
+
+    public BaseActivity showNameTv(String name){
+        textName=findViewById(R.id.textName);
+        textName.setVisibility(View.VISIBLE);
+        textName.setText(name);
+        return this;
     }
 
     private BaseActivity showQueryTv() {
@@ -403,45 +411,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showLoginButton(boolean isShow) {
-        if (MyApplication.getUserId() == 0) {
-            mBtnRightAction.setVisibility(View.VISIBLE);
-            mBtnRightAction.setText(" 登 录 ");
-            mBtnRightAction.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openActivity(LoginActivity.class);
-                }
-            });
-
-            if (isShow) {
-                mBtnRightAction.setVisibility(View.VISIBLE);
-            } else {
-                mBtnRightAction.setVisibility(View.GONE);
-            }
-        } else {
-            mBtnRightAction.setVisibility(View.VISIBLE);
-            mBtnRightAction.setText(" 注销 ");
-            mBtnRightAction.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MyApplication.userLogout();
-                    openActivity(MainActivity.class);
-                }
-            });
-
-            if (isShow) {
-                mBtnRightAction.setVisibility(View.VISIBLE);
-            } else {
-                mBtnRightAction.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    protected void logoutClicked() {
-
-    }
-
     protected void openActivity(Context context, Class cls) {
         Intent intent = new Intent();
         intent.setClass(context, cls);
@@ -490,52 +459,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         void onBackButtonListener();
     }
 
-    /**
-     * TODO 打开需要登录的窗口
-     *
-     * @param cls
-     */
-    protected void openNeedLoginActivity(Class cls) {
-        if (MyApplication.getUserId() == 0) {
-            openActivity(LoginActivity.class);
-        } else {
-            openActivity(cls);
-        }
-    }
-
-    protected void openNeedLoginActivity(Intent intent) {
-        if (MyApplication.getUserId() == 0) {
-            openActivity(LoginActivity.class);
-        } else {
-            startActivity(intent);
-        }
-    }
-
-    protected void openNeedLoginActivity(Intent intent, Class cls) {
-        if (MyApplication.getUserId() == 0) {
-            openActivity(LoginActivity.class);
-        } else {
-            openActivity(intent, cls);
-        }
-    }
-
-    /**
-     * TODO 判断是否需要登录
-     */
-    protected void IsNeedLoginActivity() {
-        if (MyApplication.getUserId() == 0) {
-            openNeedLoginActivityForResult(99);
-        }
-    }
-
-    protected void openNeedLoginActivityForResult(int type) {
-        if (MyApplication.getUserId() == 0) {
-            Intent intent = new Intent();
-            intent.setClass(mContext, LoginActivity.class);
-            startActivityForResult(intent, type);
-        }
-    }
-
     protected void openReLoginActivityForResult(int type) {
         Intent intent = new Intent();
         intent.setClass(mContext, LoginActivity.class);
@@ -579,18 +502,18 @@ public abstract class BaseActivity extends AppCompatActivity {
                 } else
                     return null;
             } else if (json.getInt("success") == 0) {
-                String errors = json.getString("errors");
+                String errors = json.getString("error");
                 Placard.showInfo(errors);
                 LogUtils.e(errors);
                 return null;
-            }
-//            调试期间，暂屏蔽
-//            else if (json.getInt("success") == 2) {
+            } else if (json.getInt("success") == 2) {
 //                Placard.showInfo("您的令牌失效，请重新登录");
 //                openReLoginActivityForResult(99);
-//            }
-            else if (json.getInt("success") == 3) {
-                String errors = json.getString("errors");
+                String errors = json.getString("error");
+                Placard.showInfo(errors);
+                LogUtils.e(errors);
+            } else if (json.getInt("success") == 3) {
+                String errors = json.getString("error");
                 Placard.showInfo(errors);
                 LogUtils.e(errors);
             }
@@ -615,7 +538,37 @@ public abstract class BaseActivity extends AppCompatActivity {
                 } else
                     return null;
             } else if (json.getInt("success") == 0) {
-                String errors = json.getString("errors");
+                String errors = json.getString("error");
+                LogUtils.e(errors);
+                Placard.showInfo(errors);
+                return null;
+            } else if (json.getInt("success") == 2) {
+                Placard.showInfo("您的令牌失效，请重新登录");
+                openReLoginActivityForResult(99);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            showToastText(e.toString());
+            LogUtils.e(e.toString());
+            return null;
+        }
+        return null;
+    }
+
+    //解析服务端返回结果
+    public Boolean getHttpResultBoolean(String result) {
+        String o = "";
+        JSONObject json = null;
+        try {
+            json = new JSONObject(result);
+            if (json.getInt("success") == 1) {
+                if (json.has("data")) {
+                    Boolean data = (Boolean) json.getBoolean("data");
+                    return data;
+                } else
+                    return null;
+            } else if (json.getInt("success") == 0) {
+                String errors = json.getString("error");
                 LogUtils.e(errors);
                 Placard.showInfo(errors);
                 return null;
@@ -644,14 +597,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (success == 1) {
                     return success;
                 } else if (json.getInt("success") == 0) {
-                    String errors = json.getString("errors");
+                    String errors = json.getString("error");
                     Placard.showInfo(errors);
                     LogUtils.e(errors);
                 } else if (json.getInt("success") == 2) {
                     Placard.showInfo("您的令牌失效，请重新登录");
                     openReLoginActivityForResult(99);
                 } else if (json.getInt("success") == 3) {
-                    String errors = json.getString("errors");
+                    String errors = json.getString("error");
                     Placard.showInfo(errors);
                     LogUtils.e(errors);
                 }

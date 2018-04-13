@@ -29,20 +29,6 @@
         android:background="@color/main_background"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_headImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp" />
-
-        </RelativeLayout>
-
         <!--当前账户-->
         <LinearLayout
             android:id="@+id/ll_currentAccount"
@@ -104,9 +90,9 @@
 
         </LinearLayout>
 
-        <!--性别-->
+        <!--用户身份-->
         <LinearLayout
-            android:id="@+id/ll_sex"
+            android:id="@+id/ll_userType"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -119,17 +105,79 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="性别"
+                android:text="用户身份"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_sex"
+                android:id="@+id/tv_userType"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingRight="20dp"
-                android:text="男"
+                android:text="超级管理员"
+                android:textColor="@color/textColor_hint"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!--用户注册时间-->
+        <LinearLayout
+            android:id="@+id/ll_registerTime"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="用户注册时间"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_registerTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:text="2018-02-04T03:14:27"
+                android:textColor="@color/textColor_hint"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!--联系电话-->
+        <LinearLayout
+            android:id="@+id/ll_tel"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="联系电话"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_tel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:text="34567"
                 android:textColor="@color/textColor_hint"
                 android:textSize="14sp" />
 
