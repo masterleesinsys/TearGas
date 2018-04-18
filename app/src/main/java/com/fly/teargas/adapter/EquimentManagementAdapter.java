@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fly.teargas.R;
+import com.fly.teargas.entity.DeviceInfo;
+
+import java.util.List;
 
 
 /**
@@ -19,6 +22,13 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
     private Context context;
     private OnItemClickListener onItemClickListener;
     private Integer type = 0;     //0全部  1正常  2异常
+    private List<DeviceInfo> list = null;
+
+    public EquimentManagementAdapter(Context context, Integer type, List<DeviceInfo> list) {
+        this.context = context;
+        this.type = type;
+        this.list = list;
+    }
 
     public EquimentManagementAdapter(Context context, Integer type) {
         this.context = context;
@@ -33,46 +43,38 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        switch (type) {
-            case 0:
-                switch (position) {
-                    case 2:
-                    case 3:
-                    case 5:
-                        holder.tv_is_normal.setText("异常");
-                        holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                        holder.tv_status.setText("已撤防");
-                        holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                        break;
-                }
-                break;
-            case 1:
-                break;
-            case 2:
-                holder.tv_is_normal.setText("异常");
-                holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                holder.tv_status.setText("已撤防");
-                holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                break;
-        }
+        holder.tv_is_normal.setText("异常");
+        holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+        holder.tv_status.setText("已撤防");
+        holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+
+//        switch (type) {
+//            case 0:
+//                switch (position) {
+//                    case 2:
+//                    case 3:
+//                    case 5:
+//                        holder.tv_is_normal.setText("异常");
+//                        holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+//                        holder.tv_status.setText("已撤防");
+//                        holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+//                        break;
+//                }
+//                break;
+//            case 1:
+//                break;
+//            case 2:
+//                holder.tv_is_normal.setText("异常");
+//                holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+//                holder.tv_status.setText("已撤防");
+//                holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+//                break;
+//        }
     }
 
     @Override
     public int getItemCount() {
-//        return list == null ? 0 : list.size();
-        int num = 0;
-        switch (type) {
-            case 0:
-                num = 10;
-                break;
-            case 1:
-                num = 7;
-                break;
-            case 2:
-                num = 3;
-                break;
-        }
-        return num;
+        return list == null ? 0 : list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

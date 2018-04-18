@@ -43,6 +43,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="全部"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <View
@@ -57,6 +58,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="正常"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <View
@@ -71,6 +73,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="异常"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
     </LinearLayout>

@@ -16,7 +16,7 @@ public class UserInfo implements Serializable {
      * registerTime : 2018-02-04T03:14:27
      */
 
-    private int userID;
+    private String userID;
     private String qx;
     private String dq;
     private String user;
@@ -24,11 +24,11 @@ public class UserInfo implements Serializable {
     private String tel;
     private String registerTime;
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

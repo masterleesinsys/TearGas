@@ -24,6 +24,7 @@ import org.xutils.view.annotation.ViewInject;
 /**
  * 个人中心
  */
+@SuppressWarnings("ALL")
 @ContentView(R.layout.activity_personal)
 public class PersonalActivity extends BaseActivity {
     @ViewInject(R.id.tv_account)
@@ -60,6 +61,7 @@ public class PersonalActivity extends BaseActivity {
     protected void initView() {
         setStyle(STYLE_HOME);
         setCaption("个人中心");
+        showNameTv("张三");
     }
 
     @Override
@@ -105,7 +107,7 @@ public class PersonalActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != userInfo) {
-                username = userInfo.getName();
+                username = userInfo.getUser();
 
                 tv_account.setText(userInfo.getUser());
                 tv_username.setText(userInfo.getName());

@@ -45,6 +45,10 @@ public class PasswordModiActivity extends BaseActivity {
         setStyle(STYLE_BACK);
         setCaption("修改密码");
 
+        et_pwmodi_oldpassword.setText("admin");
+        et_pwmodi_setpassword.setText("admins");
+        et_pwmodi_againpassword.setText("admins");
+
         if (getIntent().hasExtra("username"))
             username =getIntent().getStringExtra("username");
     }
