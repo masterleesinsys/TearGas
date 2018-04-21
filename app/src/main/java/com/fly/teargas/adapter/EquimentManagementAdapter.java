@@ -30,11 +30,6 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
         this.list = list;
     }
 
-    public EquimentManagementAdapter(Context context, Integer type) {
-        this.context = context;
-        this.type = type;
-    }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_equiment_management, parent, false);
@@ -43,38 +38,66 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv_is_normal.setText("异常");
-        holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-        holder.tv_status.setText("已撤防");
-        holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-
-//        switch (type) {
-//            case 0:
-//                switch (position) {
-//                    case 2:
-//                    case 3:
-//                    case 5:
-//                        holder.tv_is_normal.setText("异常");
-//                        holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-//                        holder.tv_status.setText("已撤防");
-//                        holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-//                        break;
-//                }
-//                break;
-//            case 1:
-//                break;
-//            case 2:
-//                holder.tv_is_normal.setText("异常");
-//                holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-//                holder.tv_status.setText("已撤防");
-//                holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-//                break;
-//        }
+        switch (type) {
+            case 0:
+                if (list.get(position).getCurState().contains("布防")) {
+                    holder.tv_address.setText(list.get(position).getDescription());
+                    holder.tv_is_normal.setText("正常");
+                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
+                    holder.tv_status.setText("已布防");
+                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
+                } else {
+                    holder.tv_address.setText(list.get(position).getDescription());
+                    holder.tv_is_normal.setText("异常");
+                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+                    holder.tv_status.setText(list.get(position).getCurState());
+                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+                }
+                break;
+            case 1:
+                if (list.get(position).getCurState().contains("布防")) {
+                    holder.tv_address.setText(list.get(position).getDescription());
+                    holder.tv_is_normal.setText("正常");
+                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
+                    holder.tv_status.setText("已布防");
+                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
+                }
+                break;
+            case 2:
+                if (!list.get(position).getCurState().contains("布防")) {
+                    holder.tv_address.setText(list.get(position).getDescription());
+                    holder.tv_is_normal.setText("异常");
+                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+                    holder.tv_status.setText(list.get(position).getCurState());
+                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+                }
+                break;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        int num = 0;
+        switch (type) {
+            case 0:
+                num = list == null ? 0 : list.size();
+                break;
+            case 1:
+                for (DeviceInfo deviceInfo : list) {
+                    if (deviceInfo.getCurState().contains("布防")) {
+                        num++;
+                    }
+                }
+                break;
+            case 2:
+                for (DeviceInfo deviceInfo : list) {
+                    if (!deviceInfo.getCurState().contains("布防")) {
+                        num++;
+                    }
+                }
+                break;
+        }
+        return num;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

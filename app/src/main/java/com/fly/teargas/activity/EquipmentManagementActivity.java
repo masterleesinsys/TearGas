@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.adapter.EquimentManagementAdapter;
 import com.fly.teargas.entity.DeviceInfo;
+import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -44,11 +46,12 @@ public class EquipmentManagementActivity extends BaseActivity {
 
     private EquimentManagementAdapter equimentManagementAdapter = null;
 
+    private List<DeviceInfo> list = null;
+
     @Override
     protected void initView() {
         setStyle(STYLE_HOME);
         setCaption("设备管理");
-        showNameTv("张三");
 
         mInitRecyclerView(rv_equipment_management, 2);
     }
@@ -56,9 +59,64 @@ public class EquipmentManagementActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
+        clearColor();
+        tv_entire.setBackgroundResource(R.color.titleBar_checked);
+        getDevices(0);
+    }
+
+    /**
+     * 获取账户信息
+     */
+    private class getUserXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            UserInfo userInfo = null;
+            try {
+                userInfo = getHttpResult(result, UserInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != userInfo) {
+                showNameTv(userInfo.getName());
+            }
+        }
+    }
+
+    private void getDevices(final int type) {
         Map<String, String> map = new HashMap<>();
         map.put("", "");
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICE), map, spin_kit, new onGetDeviceXCallBack());
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICES), map, spin_kit, new HttpHelper.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                try {
+                    String data = getHttpResultList(result);
+                    list = JSON.parseArray(data, DeviceInfo.class);
+                } catch (Exception e) {
+                    LogUtils.e(e.toString());
+                    Placard.showInfo(e.toString());
+                    e.printStackTrace();
+                }
+                if (null != list && 0 <= list.size()) {
+                    equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, type, list);
+                    rv_equipment_management.setAdapter(equimentManagementAdapter);
+
+                    equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClickListener(int position) {
+                            Intent intent = new Intent();
+                            intent.putExtra("lat", list.get(position).getLat());
+                            intent.putExtra("lng", list.get(position).getLng());
+                            openActivity(intent, MainActivity.class);
+                        }
+                    });
+                } else {
+                    rv_equipment_management.setAdapter(null);
+                }
+            }
+        });
     }
 
     @Event(value = {R.id.tv_entire, R.id.tv_normal, R.id.tv_abnormal})
@@ -69,44 +127,17 @@ public class EquipmentManagementActivity extends BaseActivity {
             case R.id.tv_entire:    //全部
                 clearColor();
                 tv_entire.setBackgroundResource(R.color.titleBar_checked);
-
-                equimentManagementAdapter = new EquimentManagementAdapter(this, 0);
-                rv_equipment_management.setAdapter(equimentManagementAdapter);
-
-                equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(int position) {
-                        openActivity(ManagementActivity.class);
-                    }
-                });
+                getDevices(0);
                 break;
             case R.id.tv_normal:    //正常
                 clearColor();
                 tv_normal.setBackgroundResource(R.color.titleBar_checked);
-
-                equimentManagementAdapter = new EquimentManagementAdapter(this, 1);
-                rv_equipment_management.setAdapter(equimentManagementAdapter);
-
-                equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(int position) {
-                        openActivity(ManagementActivity.class);
-                    }
-                });
+                getDevices(1);
                 break;
             case R.id.tv_abnormal:  //异常
                 clearColor();
                 tv_abnormal.setBackgroundResource(R.color.titleBar_checked);
-
-                equimentManagementAdapter = new EquimentManagementAdapter(this, 2);
-                rv_equipment_management.setAdapter(equimentManagementAdapter);
-
-                equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(int position) {
-                        openActivity(ManagementActivity.class);
-                    }
-                });
+                getDevices(2);
                 break;
         }
     }
@@ -115,40 +146,5 @@ public class EquipmentManagementActivity extends BaseActivity {
         tv_entire.setBackgroundResource(R.color.titleBar_unChecked);
         tv_normal.setBackgroundResource(R.color.titleBar_unChecked);
         tv_abnormal.setBackgroundResource(R.color.titleBar_unChecked);
-    }
-
-    /**
-     * 获取设备信息
-     */
-    private class onGetDeviceXCallBack implements HttpHelper.XCallBack {
-        List<DeviceInfo> list = null;
-
-        @Override
-        public void onResponse(String result) {
-            DeviceInfo deviceInfo = null;
-            try {
-                deviceInfo = getHttpResult(result, DeviceInfo.class);
-            } catch (Exception e) {
-                LogUtils.e(e.toString());
-                Placard.showInfo(e.toString());
-                e.printStackTrace();
-            }
-            if (null != deviceInfo) {
-                clearColor();
-                tv_entire.setBackgroundResource(R.color.titleBar_checked);
-
-                equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, 0);
-                rv_equipment_management.setAdapter(equimentManagementAdapter);
-
-                equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(int position) {
-                        openActivity(ManagementActivity.class);
-                    }
-                });
-            } else {
-
-            }
-        }
     }
 }

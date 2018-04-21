@@ -67,7 +67,7 @@
         <activity android:name=".activity.DeviceStatusActivity" />
         <activity android:name=".activity.InformationModificationActivity" />
         <activity android:name=".activity.SetStencilActivity" />
-        <activity android:name=".activity.LogInformationActivity"></activity>
+        <activity android:name=".activity.LogInformationActivity"/>
     </application>
 
 </manifest>

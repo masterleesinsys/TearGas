@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -23,6 +24,8 @@ import com.baidu.mapapi.model.LatLng;
 import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
+import com.fly.teargas.entity.DeviceInfo;
+import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -31,6 +34,10 @@ import com.skydoves.elasticviews.ElasticAction;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 首页
@@ -50,6 +57,11 @@ public class MainActivity extends BaseActivity {
 
     private LatLng latLng = null;
     private boolean isFirstLoc = true; // 是否首次定位
+
+    private List<DeviceInfo> list = null;
+
+    private Double lat = 0.0;
+    private Double lng = 0.0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +93,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initMap() {
+        if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+            lat = getIntent().getDoubleExtra("lat", 0.0);
+            lng = getIntent().getDoubleExtra("lng", 0.0);
+        }
+
         setStyle(STYLE_HOME);
         setCaption("首页");
-        showNameTv("张三");
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
 
         mMapView = findViewById(R.id.bmapView);
 
@@ -99,6 +116,25 @@ public class MainActivity extends BaseActivity {
         mMapView.showScaleControl(false);
         //默认显示普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("", "");
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICES), map, spin_kit, new HttpHelper.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                try {
+                    String data = getHttpResultList(result);
+                    list = JSON.parseArray(data, DeviceInfo.class);
+                } catch (Exception e) {
+                    LogUtils.e(e.toString());
+                    Placard.showInfo(e.toString());
+                    e.printStackTrace();
+                }
+                if (null != list && 0 <= list.size()) {
+
+                }
+            }
+        });
 
         BitmapDescriptor bitmap1 = BitmapDescriptorFactory.fromResource(R.drawable.ico_coordinates);
         BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.ico_coordinates_fill);
@@ -153,6 +189,26 @@ public class MainActivity extends BaseActivity {
         mLocationClient.start();
     }
 
+    /**
+     * 获取账户信息
+     */
+    private class getUserXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            UserInfo userInfo = null;
+            try {
+                userInfo = getHttpResult(result, UserInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != userInfo) {
+                showNameTv(userInfo.getName());
+            }
+        }
+    }
+
     //配置定位SDK参数
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
@@ -195,10 +251,16 @@ public class MainActivity extends BaseActivity {
             mBaiduMap.setMyLocationEnabled(false);
             if (isFirstLoc) {
                 isFirstLoc = false;
+
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(new LatLng(34.841175, 113.535969)).zoom(15.0f);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    builder.target(new LatLng(lat, lng)).zoom(15.0f);
+                } else {
+                    builder.target(ll).zoom(15.0f);
+                }
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
                 if (mLocationClient.isStarted())
                     mLocationClient.stop();
 

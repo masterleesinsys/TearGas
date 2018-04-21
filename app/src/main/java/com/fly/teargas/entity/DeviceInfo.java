@@ -45,14 +45,6 @@ public class DeviceInfo implements Serializable {
         this.userID = userID;
     }
 
-    public boolean isbOnLine() {
-        return bOnLine;
-    }
-
-    public void setbOnLine(boolean bOnLine) {
-        this.bOnLine = bOnLine;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -101,11 +93,11 @@ public class DeviceInfo implements Serializable {
         this.recentTime = recentTime;
     }
 
-    public boolean isBOnLine() {
+    public boolean isbOnLine() {
         return bOnLine;
     }
 
-    public void setBOnLine(boolean bOnLine) {
+    public void setbOnLine(boolean bOnLine) {
         this.bOnLine = bOnLine;
     }
 }
