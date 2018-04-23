@@ -83,6 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected TextView txtCaption;
     protected TextView mBtnRightAction;
     protected TextView textName;
+    protected TextView textNameRight;
     protected TextView mBtnLeftAction;
     protected ImageView mBtnActivityAdd;
     protected ImageView mBtnActivityRemove;
@@ -184,10 +185,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public BaseActivity showNameTv(String name){
+    public BaseActivity showNameTvLift(String name){
         textName=findViewById(R.id.textName);
         textName.setVisibility(View.VISIBLE);
         textName.setText(name);
+        return this;
+    }
+
+    public BaseActivity showNameTvRight(String name){
+        textNameRight=findViewById(R.id.textNameRight);
+        textNameRight.setVisibility(View.VISIBLE);
+        textNameRight.setText(name);
         return this;
     }
 

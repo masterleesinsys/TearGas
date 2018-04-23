@@ -11,7 +11,6 @@ import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.adapter.EquimentManagementAdapter;
 import com.fly.teargas.entity.DeviceInfo;
-import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -52,37 +51,13 @@ public class EquipmentManagementActivity extends BaseActivity {
     protected void initView() {
         setStyle(STYLE_HOME);
         setCaption("设备管理");
+        showNameTvLift(MyApplication.getUserName());
 
         mInitRecyclerView(rv_equipment_management, 2);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
         clearColor();
         tv_entire.setBackgroundResource(R.color.titleBar_checked);
         getDevices(0);
-    }
-
-    /**
-     * 获取账户信息
-     */
-    private class getUserXCallBack implements HttpHelper.XCallBack {
-        @Override
-        public void onResponse(String result) {
-            UserInfo userInfo = null;
-            try {
-                userInfo = getHttpResult(result, UserInfo.class);
-            } catch (Exception e) {
-                LogUtils.e(e.toString());
-                Placard.showInfo(e.toString());
-                e.printStackTrace();
-            }
-            if (null != userInfo) {
-                showNameTv(userInfo.getName());
-            }
-        }
     }
 
     private void getDevices(final int type) {

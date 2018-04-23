@@ -61,6 +61,7 @@ public class PersonalActivity extends BaseActivity {
     protected void initView() {
         setStyle(STYLE_HOME);
         setCaption("个人中心");
+        showNameTvLift(MyApplication.getUserName());
     }
 
     @Override
@@ -114,7 +115,6 @@ public class PersonalActivity extends BaseActivity {
                 tv_registerTime.setText(userInfo.getRegisterTime());
                 tv_tel.setText(userInfo.getTel());
                 tv_numberOfDevices.setText(userInfo.getDq());
-                showNameTv(userInfo.getName());
             }
         }
     }

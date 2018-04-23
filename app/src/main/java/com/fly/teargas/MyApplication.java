@@ -33,6 +33,9 @@ public class MyApplication extends Application {
     private static MyApplication mInstance;     // 接口服务地址
     private List<Activity> mList = new LinkedList<>();      // 运用list来保存们每一个activity是关键
     public static Boolean is_exit = false;     //账户是否注销
+    private static double UserLat;      //用户所在位置的纬度
+    private static double UserLng;      //用户所在位置的经度
+    private static String UserName;      //用户名
 
     public static MyApplication getInstance() {
         if (mInstance == null) {
@@ -176,5 +179,30 @@ public class MyApplication extends Application {
 
     public void setExit(boolean exit) {
         isProgramExit = exit;
+    }
+
+    //用户信息
+    public static double getUserLat() {
+        return UserLat;
+    }
+
+    public static void setUserLat(double userLat) {
+        UserLat = userLat;
+    }
+
+    public static double getUserLng() {
+        return UserLng;
+    }
+
+    public static void setUserLng(double userLng) {
+        UserLng = userLng;
+    }
+
+    public static String getUserName() {
+        return UserName;
+    }
+
+    public static void setUserName(String userName) {
+        UserName = userName;
     }
 }

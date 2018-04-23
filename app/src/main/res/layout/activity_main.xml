@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         app:SpinKit_Color="@color/textColor_title" />
 
     <include
@@ -32,13 +32,13 @@
 
     <ImageView
         android:id="@+id/iv_location"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:visibility="visible"
-        android:layout_alignBottom="@+id/bmapView"
-        android:src="@drawable/ico_location"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bmapView"
+        android:clickable="true"
+        android:padding="15dp"
+        android:src="@drawable/ico_location"
+        android:visibility="visible" />
 
     <com.fly.teargas.widget.TabBar
         android:id="@+id/tabbar"

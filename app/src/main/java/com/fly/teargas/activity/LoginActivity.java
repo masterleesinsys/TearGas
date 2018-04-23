@@ -1,12 +1,18 @@
 package com.fly.teargas.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
@@ -46,6 +52,9 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.tv_login)
     private TextView tv_login;
 
+    private LocationClient mLocationClient;
+    private BDLocationListener mBDLocationListener;
+
     private String mailbox = "";
     private String password = "";
 
@@ -57,6 +66,19 @@ public class LoginActivity extends BaseActivity {
         //仅供测试使用，待删除
         et_mailbox.setText("admin");
         et_password.setText("admin");
+
+        initLocation();
+    }
+
+    private void initLocation() {
+        // 声明LocationClient类
+        mLocationClient = new LocationClient(getApplicationContext());
+        mBDLocationListener = new MyBDLocationListener();
+        // 注册监听
+        mLocationClient.registerLocationListener(mBDLocationListener);
+        StartLocation();
+        // 启动定位
+        mLocationClient.start();
     }
 
     @Event(value = {R.id.iv_logo, R.id.tv_login})
@@ -118,6 +140,52 @@ public class LoginActivity extends BaseActivity {
         } else {
             SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_USERNAME, "");
             SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_PASSWORD, "");
+        }
+    }
+
+    /**
+     * 获得所在位置经纬度及详细地址
+     */
+    private void StartLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);// 设置定位模式 高精度
+        option.setCoorType("gcj02");// 设置返回定位结果是百度经纬度 默认gcj02
+        option.setScanSpan(5000);// 设置发起定位请求的时间间隔 单位ms
+        option.setIsNeedAddress(true);// 设置定位结果包含地址信息
+        option.setNeedDeviceDirect(true);// 设置定位结果包含手机机头 的方向
+        // 设置定位参数
+        mLocationClient.setLocOption(option);
+    }
+
+    private class MyBDLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // 非空判断
+            if (location != null) {
+//                 根据BDLocation 对象获得经纬度以及详细地址信息
+//                当检测到系统版本为6.0，并且用户未打开按钮时，进行提示。
+                LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (locManager != null && !locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    // 未打开位置开关，可能导致定位失败或定位不准，提示用户或做相应处理
+                    showToastText("未打开位置开关，可能导致定位失败或定位不准，请打开位置开关后重启该页面,否则将无法获取到数据!");
+                    return;
+                }
+                try {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    MyApplication.setUserLat(latitude);
+                    MyApplication.setUserLng(longitude);
+
+                    if (mLocationClient.isStarted()) {
+                        // 获得位置之后停止定位
+                        mLocationClient.stop();
+                    }
+                } catch (Exception e) {
+                    showToastText("定位服务出错,请检查您是否已开启定位权限!");
+                    LogUtils.e("定位服务出错!" + e.toString());
+                }
+            }
         }
     }
 }

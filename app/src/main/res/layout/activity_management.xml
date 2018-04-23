@@ -30,22 +30,15 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_device_info"
             android:textColor="@color/textColor_default"
             android:textSize="15sp"
             android:text="设备1    已布防    未告警"
-            android:layout_marginLeft="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:ellipsize="end"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_centerVertical="true"
-            android:textColor="@color/textColor_default"
-            android:textSize="15sp"
-            android:text="张三"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>

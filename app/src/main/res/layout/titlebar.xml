@@ -32,6 +32,17 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/textNameRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="张三"
+            android:textColor="@color/main_update_color"
+            android:textSize="15sp"
+            android:layout_gravity="right"
+            android:paddingRight="15dp"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/txtCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
