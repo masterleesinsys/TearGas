@@ -78,7 +78,9 @@ public class ManagementActivity extends BaseActivity {
                     @Override
                     public void onItemClick(Object o, int position) {
                         if (position >= 0) {
-                            showToastText("已布防");
+                            Map<String, String> map = new HashMap<>();
+                            map.put("deviceID", deviceID);
+                            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.CMD_BU_FANG), map, spin_kit, new onCmdBuFangXCallBack());
                         }
                     }
                 }).show();
@@ -88,29 +90,40 @@ public class ManagementActivity extends BaseActivity {
                     @Override
                     public void onItemClick(Object o, int position) {
                         if (position >= 0) {
-                            showToastText("已撤防");
+                            Map<String, String> map = new HashMap<>();
+                            map.put("deviceID", deviceID);
+                            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.CMD_CHE_FANG), map, spin_kit, new onCmdCheFangXCallBack());
                         }
                     }
                 }).show();
                 break;
             case R.id.ll_bomb:     //爆弹
-                new AlertView("是否爆弹", "爆弹前请确认是否为犯罪分子盗窃，请选择爆弹通道", "取消", new String[]{"弹1", "弹2", "弹3", "空调"}, null, ManagementActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+//                爆弹前请确认是否为犯罪分子盗窃，请选择爆弹通道
+                new AlertView("是否爆弹", "爆弹前请确认是否为犯罪分子盗窃", "取消", new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {
                         if (position >= 0) {
-                            showToastText("已爆弹");
+                            Map<String, String> map = new HashMap<>();
+                            map.put("deviceID", deviceID);
+                            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.CMD_BAO_DAN), map, spin_kit, new onCmdBaoDanXCallBack());
                         }
                     }
                 }).show();
                 break;
             case R.id.ll_deviceStatus:     //设备状态
-                openActivity(DeviceStatusActivity.class);
+                intent = new Intent();
+                intent.putExtra("deviceID", deviceID);
+                openActivity(intent, DeviceStatusActivity.class);
                 break;
             case R.id.ll_informationModification:     //信息修改
-                openActivity(InformationModificationActivity.class);
+                intent = new Intent();
+                intent.putExtra("deviceID", deviceID);
+                openActivity(intent, InformationModificationActivity.class);
                 break;
             case R.id.ll_logInformation:     //日志信息
-                openActivity(LogInformationActivity.class);
+                intent = new Intent();
+                intent.putExtra("deviceID", deviceID);
+                openActivity(intent, LogInformationActivity.class);
                 break;
         }
     }
@@ -132,6 +145,69 @@ public class ManagementActivity extends BaseActivity {
             }
             if (null != deviceInfo) {
                 tv_device_info.setText("设备" + deviceInfo.getDeviceID() + "    " + deviceInfo.getCurState());
+            }
+        }
+    }
+
+    /**
+     * 布防
+     */
+    private class onCmdBuFangXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            LogUtils.e(result);
+            String data = "";
+            try {
+                data = getHttpResult(result, String.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (!"".equals(data)) {
+                showToastText("已布防");
+            }
+        }
+    }
+
+    /**
+     * 撤防
+     */
+    private class onCmdCheFangXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            LogUtils.e(result);
+            String data = "";
+            try {
+                data = getHttpResult(result, String.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (!"".equals(data)) {
+                showToastText("已撤防");
+            }
+        }
+    }
+
+    /**
+     * 爆弹
+     */
+    private class onCmdBaoDanXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            LogUtils.e(result);
+            String data = "";
+            try {
+                data = getHttpResult(result, String.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (!"".equals(data)) {
+                showToastText("已爆弹");
             }
         }
     }

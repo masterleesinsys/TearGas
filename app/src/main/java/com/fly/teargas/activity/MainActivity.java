@@ -43,6 +43,7 @@ import java.util.Map;
 /**
  * 首页
  */
+@SuppressWarnings("ALL")
 public class MainActivity extends BaseActivity {
     private ImageView iv_location;  //定位当前
 
@@ -284,9 +285,9 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (isNew) {
-                LogUtils.e("有新的警情");
+                showToastText("有新的警情");
             } else {
-                LogUtils.e("没有新的警情");
+                showToastText("没有新的警情");
             }
         }
     }

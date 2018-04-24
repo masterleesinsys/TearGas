@@ -1,5 +1,6 @@
 package com.fly.teargas.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -36,8 +37,10 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        holder.tv_equipment_name.setText("设备"+list.get(position).getDeviceID());
         switch (type) {
             case 0:
                 if (list.get(position).getCurState().contains("布防")) {

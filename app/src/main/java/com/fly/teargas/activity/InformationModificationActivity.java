@@ -27,6 +27,8 @@ public class InformationModificationActivity extends BaseActivity {
 
     private AlertView alertView=null;
 
+    private String deviceID = "";
+
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);

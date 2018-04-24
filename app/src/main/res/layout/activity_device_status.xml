@@ -30,21 +30,12 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="设备1"
-            android:textColor="@color/textColor_default"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text="张三"
             android:textColor="@color/textColor_default"
             android:textSize="15sp" />
 
