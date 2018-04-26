@@ -35,6 +35,7 @@ public class MyApplication extends Application {
     public static Boolean is_exit = false;     //账户是否注销
     private static double UserLat;      //用户所在位置的纬度
     private static double UserLng;      //用户所在位置的经度
+    private static String UserAddress;      //用户所在位置地址信息
     private static String UserName;      //用户名
 
     public static MyApplication getInstance() {
@@ -204,5 +205,13 @@ public class MyApplication extends Application {
 
     public static void setUserName(String userName) {
         UserName = userName;
+    }
+
+    public static String getUserAddress() {
+        return UserAddress;
+    }
+
+    public static void setUserAddress(String userAddress) {
+        UserAddress = userAddress;
     }
 }

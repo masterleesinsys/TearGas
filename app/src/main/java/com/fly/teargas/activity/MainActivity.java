@@ -83,7 +83,6 @@ public class MainActivity extends BaseActivity {
 
         setStyle(STYLE_HOME);
         setCaption("首页");
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
 
         initLocation();
     }
@@ -182,20 +181,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-
-        //添加marker
-        MarkerOptions markerOptions1 = new MarkerOptions().icon(bitmap1).position(new LatLng(34.840288, 113.534613));
-        MarkerOptions markerOptions2 = new MarkerOptions().icon(bitmap2).position(new LatLng(34.830189, 113.524411));
-        Marker marker1 = (Marker) mBaiduMap.addOverlay(markerOptions1);
-        Marker marker2 = (Marker) mBaiduMap.addOverlay(markerOptions2);
-
-        Bundle mBundle1 = new Bundle();
-        mBundle1.putInt("id", 1);
-        Bundle mBundle2 = new Bundle();
-        mBundle2.putInt("id", 2);
-
-        marker1.setExtraInfo(mBundle1);
-        marker2.setExtraInfo(mBundle2);
 
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
@@ -307,6 +292,7 @@ public class MainActivity extends BaseActivity {
         //在activity执行onResume时执行mMapView. onResume()，实现地图生命周期管理
         mMapView.onResume();
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
     }
 
     @Override
@@ -346,12 +332,11 @@ public class MainActivity extends BaseActivity {
                 try {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
-
-                    LogUtils.e(latitude);
-                    LogUtils.e(longitude);
+                    String address = location.getAddrStr();
 
                     MyApplication.setUserLat(latitude);
                     MyApplication.setUserLng(longitude);
+                    MyApplication.setUserAddress(address);
 
                     if (mLocationClient.isStarted()) {
                         // 获得位置之后停止定位

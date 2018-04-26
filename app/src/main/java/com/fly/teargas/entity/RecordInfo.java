@@ -12,12 +12,14 @@ public class RecordInfo implements Serializable {
      * deviceID : 1
      * text : 查询与校时命令
      * time : 2018-04-03T13:57:09
+     * operatorName : 管理员
      */
     private String no;
     private String userID;
     private String deviceID;
     private String text;
     private String time;
+    private String operatorName;
 
     public String getNo() {
         return no;
@@ -57,5 +59,13 @@ public class RecordInfo implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
     }
 }

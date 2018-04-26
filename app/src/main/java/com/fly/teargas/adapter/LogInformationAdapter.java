@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.entity.RecordInfo;
 
@@ -38,7 +37,7 @@ public class LogInformationAdapter extends RecyclerView.Adapter<LogInformationAd
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv_status.setText(list.get(position).getText());
         holder.tv_date.setText(list.get(position).getTime());
-        holder.tv_operator.setText("操作员：" + MyApplication.getUserName());
+        holder.tv_operator.setText("操作员：" + list.get(position).getOperatorName());
     }
 
     @Override

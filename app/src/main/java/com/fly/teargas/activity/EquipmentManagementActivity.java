@@ -21,6 +21,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class EquipmentManagementActivity extends BaseActivity {
     private EquimentManagementAdapter equimentManagementAdapter = null;
 
     private List<DeviceInfo> list = null;
+    private List<DeviceInfo> deviceInfoList = null;
 
     @Override
     protected void initView() {
@@ -58,40 +60,6 @@ public class EquipmentManagementActivity extends BaseActivity {
         clearColor();
         tv_entire.setBackgroundResource(R.color.titleBar_checked);
         getDevices(0);
-    }
-
-    private void getDevices(final int type) {
-        Map<String, String> map = new HashMap<>();
-        map.put("", "");
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICES), map, spin_kit, new HttpHelper.XCallBack() {
-            @Override
-            public void onResponse(String result) {
-                try {
-                    String data = getHttpResultList(result);
-                    list = JSON.parseArray(data, DeviceInfo.class);
-                } catch (Exception e) {
-                    LogUtils.e(e.toString());
-                    Placard.showInfo(e.toString());
-                    e.printStackTrace();
-                }
-                if (null != list && 0 <= list.size()) {
-                    equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, type, list);
-                    rv_equipment_management.setAdapter(equimentManagementAdapter);
-
-                    equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClickListener(int position) {
-                            Intent intent = new Intent();
-                            intent.putExtra("lat", list.get(position).getLat());
-                            intent.putExtra("lng", list.get(position).getLng());
-                            openActivity(intent, MainActivity.class);
-                        }
-                    });
-                } else {
-                    rv_equipment_management.setAdapter(null);
-                }
-            }
-        });
     }
 
     @Event(value = {R.id.tv_entire, R.id.tv_normal, R.id.tv_abnormal})
@@ -115,6 +83,62 @@ public class EquipmentManagementActivity extends BaseActivity {
                 getDevices(2);
                 break;
         }
+    }
+
+    private void getDevices(final int type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("", "");
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICES), map, spin_kit, new HttpHelper.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                try {
+                    String data = getHttpResultList(result);
+                    list = JSON.parseArray(data, DeviceInfo.class);
+                } catch (Exception e) {
+                    LogUtils.e(e.toString());
+                    Placard.showInfo(e.toString());
+                    e.printStackTrace();
+                }
+                if (null != list && 0 <= list.size()) {
+                    switch (type) {
+                        case 0:
+                            equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, list);
+                            rv_equipment_management.setAdapter(equimentManagementAdapter);
+                            break;
+                        case 1:
+                            deviceInfoList = new ArrayList<>();
+                            for (DeviceInfo deviceInfo : list) {
+                                if ("布防".equals(deviceInfo.getCurState()))
+                                    deviceInfoList.add(deviceInfo);
+                            }
+                            equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, deviceInfoList);
+                            rv_equipment_management.setAdapter(equimentManagementAdapter);
+                            break;
+                        case 2:
+                            deviceInfoList = new ArrayList<>();
+                            for (DeviceInfo deviceInfo : list) {
+                                if (!"布防".equals(deviceInfo.getCurState()))
+                                    deviceInfoList.add(deviceInfo);
+                            }
+                            equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, deviceInfoList);
+                            rv_equipment_management.setAdapter(equimentManagementAdapter);
+                            break;
+                    }
+
+                    equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClickListener(int position) {
+                            Intent intent = new Intent();
+                            intent.putExtra("lat", list.get(position).getLat());
+                            intent.putExtra("lng", list.get(position).getLng());
+                            openActivity(intent, MainActivity.class);
+                        }
+                    });
+                } else {
+                    rv_equipment_management.setAdapter(null);
+                }
+            }
+        });
     }
 
     private void clearColor() {

@@ -58,14 +58,13 @@
 
             <TextView
                 android:id="@+id/tv_status"
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
                 android:layout_height="30dp"
-                android:maxLength="6"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:layout_below="@+id/tv_is_normal"
-                android:gravity="center_vertical"
-                android:text="布防+喇叭响"
+                android:gravity="center"
+                android:text="布防+喇叭响dwadwa"
                 android:textColor="@color/normal"
                 android:textSize="14sp" />
 

@@ -22,12 +22,10 @@ import java.util.List;
 public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentManagementAdapter.MyViewHolder> {
     private Context context;
     private OnItemClickListener onItemClickListener;
-    private Integer type = 0;     //0全部  1正常  2异常
     private List<DeviceInfo> list = null;
 
-    public EquimentManagementAdapter(Context context, Integer type, List<DeviceInfo> list) {
+    public EquimentManagementAdapter(Context context, List<DeviceInfo> list) {
         this.context = context;
-        this.type = type;
         this.list = list;
     }
 
@@ -40,67 +38,26 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv_equipment_name.setText("设备"+list.get(position).getDeviceID());
-        switch (type) {
-            case 0:
-                if (list.get(position).getCurState().contains("布防")) {
-                    holder.tv_address.setText(list.get(position).getDescription());
-                    holder.tv_is_normal.setText("正常");
-                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
-                    holder.tv_status.setText("已布防");
-                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
-                } else {
-                    holder.tv_address.setText(list.get(position).getDescription());
-                    holder.tv_is_normal.setText("异常");
-                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                    holder.tv_status.setText(list.get(position).getCurState());
-                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                }
-                break;
-            case 1:
-                if (list.get(position).getCurState().contains("布防")) {
-                    holder.tv_address.setText(list.get(position).getDescription());
-                    holder.tv_is_normal.setText("正常");
-                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
-                    holder.tv_status.setText("已布防");
-                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
-                }
-                break;
-            case 2:
-                if (!list.get(position).getCurState().contains("布防")) {
-                    holder.tv_address.setText(list.get(position).getDescription());
-                    holder.tv_is_normal.setText("异常");
-                    holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                    holder.tv_status.setText(list.get(position).getCurState());
-                    holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-                }
-                break;
+        holder.tv_equipment_name.setText("设备" + list.get(position).getDeviceID());
+
+        holder.tv_status.setText(list.get(position).getCurState());
+        holder.tv_address.setText(list.get(position).getDescription());
+
+        if ("布防".equals(list.get(position).getCurState())) {
+            holder.tv_is_normal.setText("正常");
+            holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
+
+            holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
+        } else {
+            holder.tv_is_normal.setText("异常");
+            holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+            holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
         }
     }
 
     @Override
     public int getItemCount() {
-        int num = 0;
-        switch (type) {
-            case 0:
-                num = list == null ? 0 : list.size();
-                break;
-            case 1:
-                for (DeviceInfo deviceInfo : list) {
-                    if (deviceInfo.getCurState().contains("布防")) {
-                        num++;
-                    }
-                }
-                break;
-            case 2:
-                for (DeviceInfo deviceInfo : list) {
-                    if (!deviceInfo.getCurState().contains("布防")) {
-                        num++;
-                    }
-                }
-                break;
-        }
-        return num;
+        return list == null ? 0 : list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

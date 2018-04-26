@@ -60,8 +60,6 @@ public class ManagementActivity extends BaseActivity {
             id = getIntent().getIntExtra("id", 0);
         if (getIntent().hasExtra("deviceID"))
             deviceID = getIntent().getStringExtra("deviceID");
-        LogUtils.e(id);
-        LogUtils.e(deviceID);
 
         Map<String, String> map = new HashMap<>();
         map.put("deviceID", deviceID);
@@ -111,9 +109,10 @@ public class ManagementActivity extends BaseActivity {
                 }).show();
                 break;
             case R.id.ll_deviceStatus:     //设备状态
-                intent = new Intent();
-                intent.putExtra("deviceID", deviceID);
-                openActivity(intent, DeviceStatusActivity.class);
+                new AlertView("温馨提示", "设备状态功能维护中，待后续升级添加", null, new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
+//                intent = new Intent();
+//                intent.putExtra("deviceID", deviceID);
+//                openActivity(intent, DeviceStatusActivity.class);
                 break;
             case R.id.ll_informationModification:     //信息修改
                 intent = new Intent();
@@ -156,16 +155,18 @@ public class ManagementActivity extends BaseActivity {
         @Override
         public void onResponse(String result) {
             LogUtils.e(result);
-            String data = "";
+            Boolean isCmdBuFang = false;
             try {
-                data = getHttpResult(result, String.class);
+                isCmdBuFang = getHttpResultBoolean(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
             }
-            if (!"".equals(data)) {
-                showToastText("已布防");
+            if (isCmdBuFang) {
+                showToastText("布防成功");
+            } else {
+                showToastText("布防失败");
             }
         }
     }
@@ -176,17 +177,18 @@ public class ManagementActivity extends BaseActivity {
     private class onCmdCheFangXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
-            String data = "";
+            Boolean isCmdCheFang = false;
             try {
-                data = getHttpResult(result, String.class);
+                isCmdCheFang = getHttpResultBoolean(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
             }
-            if (!"".equals(data)) {
-                showToastText("已撤防");
+            if (isCmdCheFang) {
+                showToastText("撤防成功");
+            } else {
+                showToastText("撤防失败");
             }
         }
     }
@@ -197,17 +199,18 @@ public class ManagementActivity extends BaseActivity {
     private class onCmdBaoDanXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
-            String data = "";
+            Boolean isCmdBaoDan = false;
             try {
-                data = getHttpResult(result, String.class);
+                isCmdBaoDan = getHttpResultBoolean(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
             }
-            if (!"".equals(data)) {
-                showToastText("已爆弹");
+            if (isCmdBaoDan) {
+                showToastText("爆弹成功");
+            } else {
+                showToastText("爆弹失败");
             }
         }
     }

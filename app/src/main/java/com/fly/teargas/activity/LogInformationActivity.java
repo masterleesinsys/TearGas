@@ -66,7 +66,7 @@ public class LogInformationActivity extends BaseActivity {
                 LogInformationAdapter logInformationAdapter = new LogInformationAdapter(LogInformationActivity.this,list);
                 rv_log_information.setAdapter(logInformationAdapter);
             } else {
-
+                rv_log_information.setAdapter(null);
             }
         }
     }

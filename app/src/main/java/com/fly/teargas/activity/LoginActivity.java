@@ -173,9 +173,11 @@ public class LoginActivity extends BaseActivity {
                 try {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
+                    String address = location.getAddrStr();
 
                     MyApplication.setUserLat(latitude);
                     MyApplication.setUserLng(longitude);
+                    MyApplication.setUserAddress(address);
 
                     if (mLocationClient.isStarted()) {
                         // 获得位置之后停止定位
