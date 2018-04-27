@@ -1,8 +1,10 @@
 package com.fly.teargas.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -30,9 +32,17 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 import java.util.Map;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
 /**
  * 登录注册
  */
+@RuntimePermissions
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.spin_kit)
@@ -63,9 +73,10 @@ public class LoginActivity extends BaseActivity {
         setStyle(STYLE_HOME);
         setCaption("登录");
 
-        //仅供测试使用，待删除
-        et_mailbox.setText("admin");
-        et_password.setText("admin");
+        et_mailbox.setText(SharedPreferencesUtils.getStringPreferences(SharedPreferencesUtils.CONFIG_REMBER_USERNAME));
+        et_password.setText(SharedPreferencesUtils.getStringPreferences(SharedPreferencesUtils.CONFIG_REMBER_PASSWORD));
+
+        LoginActivityPermissionsDispatcher.CameraWithPermissionCheck(this);
 
         initLocation();
     }
@@ -133,13 +144,13 @@ public class LoginActivity extends BaseActivity {
      * 记住密码
      */
     private void rememberPassword() {
-        //如果被选中，则记录当前账户密码；否则清空混存账户密码
-        if (cb_rememberPassword.isSelected()) {
-            SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_USERNAME, mailbox);
-            SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_PASSWORD, password);
+        //如果被选中，则记录当前账户密码；否则清空缓存账户密码
+        if (cb_rememberPassword.isChecked()) {
+            SharedPreferencesUtils.save(mailbox, SharedPreferencesUtils.CONFIG_REMBER_USERNAME);
+            SharedPreferencesUtils.save(password, SharedPreferencesUtils.CONFIG_REMBER_PASSWORD);
         } else {
-            SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_USERNAME, "");
-            SharedPreferencesUtils.save(SharedPreferencesUtils.CONFIG_REMBER_PASSWORD, "");
+            SharedPreferencesUtils.save("", SharedPreferencesUtils.CONFIG_REMBER_USERNAME);
+            SharedPreferencesUtils.save("", SharedPreferencesUtils.CONFIG_REMBER_PASSWORD);
         }
     }
 
@@ -189,5 +200,35 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    //开启权限成功时回调
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void Camera() {
+
+    }
+
+    // 向用户说明为什么需要这些权限（可选）
+    @OnShowRationale({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void ShowRationale(final PermissionRequest request) {
+
+    }
+
+    // 用户拒绝授权回调（可选）
+    @OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void PermissonDenied() {
+
+    }
+
+    // 用户勾选了“不再提醒”时调用（可选）
+    @OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void NeverAskAgain() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        LoginActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }

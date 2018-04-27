@@ -37,7 +37,6 @@ public class CustomVersionDialogActivity extends VersionDialogActivity {
     }
 
 
-
     /**
      * 自定义更新展示界面 直接重写此方法就好
      */
@@ -60,7 +59,6 @@ public class CustomVersionDialogActivity extends VersionDialogActivity {
      * @see
      */
     private void customVersionDialogOne() {
-
         versionDialog = new AlertDialog.Builder(this).setTitle("版本更新").setMessage("已经是最新版本").setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -71,7 +69,4 @@ public class CustomVersionDialogActivity extends VersionDialogActivity {
         }).create();
         versionDialog.show();
     }
-
-
-
 }

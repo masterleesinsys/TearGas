@@ -49,6 +49,12 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <!-- 版本更新 -->
+        <service
+            android:name=".service.VerUpdateService"
+            android:enabled="true"
+            android:exported="true" />
+
         <!-- 登录 -->
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
@@ -67,7 +73,10 @@
         <activity android:name=".activity.DeviceStatusActivity" />
         <activity android:name=".activity.InformationModificationActivity" />
         <activity android:name=".activity.SetStencilActivity" />
-        <activity android:name=".activity.LogInformationActivity"/>
+        <activity android:name=".activity.LogInformationActivity" />
+        <activity android:name=".activity.SetUserInfoActivity" />
+        <activity android:name=".service.CustomVersionDialogActivity" />
+        <activity android:name=".activity.AlarmCenterActivity"></activity>
     </application>
 
 </manifest>

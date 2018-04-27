@@ -44,6 +44,7 @@ public class ManagementActivity extends BaseActivity {
     private LinearLayout ll_informationModification; //信息修改
     @ViewInject(R.id.ll_logInformation)
     private LinearLayout ll_logInformation; //日志信息
+
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
 
@@ -164,9 +165,9 @@ public class ManagementActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (isCmdBuFang) {
-                showToastText("布防成功");
+                new AlertView("温馨提示", "布防成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
-                showToastText("布防失败");
+                new AlertView("温馨提示", "布防失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             }
         }
     }
@@ -186,9 +187,9 @@ public class ManagementActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (isCmdCheFang) {
-                showToastText("撤防成功");
+                new AlertView("温馨提示", "撤防成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
-                showToastText("撤防失败");
+                new AlertView("温馨提示", "撤防失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             }
         }
     }
@@ -208,9 +209,9 @@ public class ManagementActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (isCmdBaoDan) {
-                showToastText("爆弹成功");
+                new AlertView("温馨提示", "爆弹成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
-                showToastText("爆弹失败");
+                new AlertView("温馨提示", "爆弹失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             }
         }
     }

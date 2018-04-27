@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
  */
 public class FileUtils<T> {
 	private static final String TAG = FileUtils.class.getSimpleName();
-	public static String basePath = Tools.getSDPath() + "/chenshi/";
+	public static String basePath = Tools.getSDPath() + "/asdsa/";
 
 	static {
 		File file = new File(basePath);

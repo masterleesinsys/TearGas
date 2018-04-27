@@ -1,14 +1,18 @@
 package com.fly.teargas.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.allenliu.versionchecklib.core.AllenChecker;
+import com.allenliu.versionchecklib.core.VersionParams;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -31,6 +35,7 @@ import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.entity.DeviceInfo;
 import com.fly.teargas.entity.UserInfo;
+import com.fly.teargas.service.VerUpdateService;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -40,9 +45,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
+import static com.fly.teargas.MyApplication.ROOT_PATH;
+
 /**
  * 首页
  */
+@RuntimePermissions
 @SuppressWarnings("ALL")
 public class MainActivity extends BaseActivity {
     private ImageView iv_location;  //定位当前
@@ -84,7 +99,22 @@ public class MainActivity extends BaseActivity {
         setStyle(STYLE_HOME);
         setCaption("首页");
 
+        MainActivityPermissionsDispatcher.CameraWithPermissionCheck(this);
+
         initLocation();
+
+        initVersionCheck();
+    }
+
+    private void initVersionCheck() {
+        //只有requsetUrl service 是必须值 其他参数都有默认值，可选
+        VersionParams.Builder builder = new VersionParams.Builder()
+                .setRequestUrl(MyApplication.getURL(Constants.GET_LATEST_APP))
+                .setService(VerUpdateService.class);
+        stopService(new Intent(this, VerUpdateService.class));
+        builder.setPauseRequestTime(Long.valueOf(0));
+        builder.setDownloadAPKPath(ROOT_PATH);
+        AllenChecker.startVersionCheck(this, builder.build());
     }
 
     private void initLocation() {
@@ -270,9 +300,15 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (isNew) {
+//                new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(Object o, int position) {
+//                        if (position >= 0) {
+//                            openActivity(AlarmCenterActivity.class);
+//                        }
+//                    }
+//                }).show();
                 showToastText("有新的警情");
-            } else {
-                showToastText("没有新的警情");
             }
         }
     }
@@ -349,5 +385,35 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    //开启权限成功时回调
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void Camera() {
+
+    }
+
+    // 向用户说明为什么需要这些权限（可选）
+    @OnShowRationale({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void ShowRationale(final PermissionRequest request) {
+
+    }
+
+    // 用户拒绝授权回调（可选）
+    @OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void PermissonDenied() {
+
+    }
+
+    // 用户勾选了“不再提醒”时调用（可选）
+    @OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void NeverAskAgain() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }

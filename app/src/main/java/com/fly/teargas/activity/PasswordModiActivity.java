@@ -50,7 +50,8 @@ public class PasswordModiActivity extends BaseActivity {
         et_pwmodi_againpassword.setText("admins");
 
         if (getIntent().hasExtra("username"))
-            username =getIntent().getStringExtra("username");
+            username = getIntent().getStringExtra("username");
+        LogUtils.e(username);
     }
 
     @Event(value = {R.id.tv_pwmodi_determine})
@@ -88,7 +89,6 @@ public class PasswordModiActivity extends BaseActivity {
 //                MyApplication.userLogout();
 //                MyApplication.is_exit = true;
 //                openActivity(LoginActivity.class);
-
                 break;
         }
     }

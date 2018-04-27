@@ -5,21 +5,27 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.core.AllenChecker;
+import com.allenliu.versionchecklib.core.VersionParams;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.entity.UserInfo;
+import com.fly.teargas.service.VerUpdateService;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
+import com.fly.teargas.util.Tools;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.skydoves.elasticviews.ElasticAction;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import static com.fly.teargas.MyApplication.ROOT_PATH;
 
 /**
  * 个人中心
@@ -38,7 +44,9 @@ public class PersonalActivity extends BaseActivity {
     @ViewInject(R.id.tv_tel)
     private TextView tv_tel;            //联系电话
     @ViewInject(R.id.tv_numberOfDevices)
-    private TextView tv_numberOfDevices;    //当前管理设备数
+    private TextView tv_numberOfDevices;    //当前用户权限
+    @ViewInject(R.id.tv_versionNumber)
+    private TextView tv_versionNumber;    //版本更新
 
     @ViewInject(R.id.tv_logout)
     private TextView tv_logout;    //退出账户
@@ -49,6 +57,8 @@ public class PersonalActivity extends BaseActivity {
     private LinearLayout ll_addUser;        //添加用户
     @ViewInject(R.id.ll_accountInformation)
     private LinearLayout ll_accountInformation;    //查看所有账户
+    @ViewInject(R.id.ll_updata)
+    private LinearLayout ll_updata;     //检查更新
 
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
@@ -62,6 +72,8 @@ public class PersonalActivity extends BaseActivity {
         setStyle(STYLE_HOME);
         setCaption("个人中心");
         showNameTvLift(MyApplication.getUserName());
+
+        tv_versionNumber.setText("版本号:" + Tools.getVersionName(this) + "");
     }
 
     @Override
@@ -70,7 +82,7 @@ public class PersonalActivity extends BaseActivity {
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
     }
 
-    @Event(value = {R.id.tv_logout, R.id.ll_setPassword, R.id.ll_addUser, R.id.ll_accountInformation})
+    @Event(value = {R.id.tv_logout, R.id.ll_setPassword, R.id.ll_addUser, R.id.ll_accountInformation, R.id.ll_updata})
     private void onClick(View view) {
         ElasticAction.doAction(view, 400, 0.85f, 0.85f);
         Intent intent = null;
@@ -88,6 +100,16 @@ public class PersonalActivity extends BaseActivity {
                 break;
             case R.id.tv_logout:    //退出账户
                 logout();
+                break;
+            case R.id.ll_updata:    //检查更新
+                //只有requsetUrl service 是必须值 其他参数都有默认值，可选
+                VersionParams.Builder builder = new VersionParams.Builder()
+                        .setRequestUrl(MyApplication.getURL(Constants.GET_LATEST_APP))
+                        .setService(VerUpdateService.class);
+                stopService(new Intent(this, VerUpdateService.class));
+                builder.setPauseRequestTime(Long.valueOf(0));
+                builder.setDownloadAPKPath(ROOT_PATH);
+                AllenChecker.startVersionCheck(this, builder.build());
                 break;
         }
     }

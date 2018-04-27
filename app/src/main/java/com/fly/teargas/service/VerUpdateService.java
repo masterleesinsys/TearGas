@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class VerUpdateService extends AVersionService {
 
-    private String apkfilename = "media/upgrade/teargas.apk";
+    private String apkfilename = "app/asdsa.apk";
 
     public VerUpdateService() {
     }
@@ -27,19 +27,18 @@ public class VerUpdateService extends AVersionService {
 
     @Override
     public void onResponses(AVersionService service, String response) {
-//        Log.e("DemoService", response);
         //可以在判断版本之后在设置是否强制更新或者VersionParams
         String data = null;
         try {
             data = getHttpResult(response, String.class);
             String content = new JSONObject(data).getString("content");
-            String title = new JSONObject(data).getString("title");
+//            String title = new JSONObject(data).getString("title");
             int version = new JSONObject(data).getInt("version");
             String apkurl = MyApplication.getURL(apkfilename);
 
             if (Tools.getVersionCode(this) < version) {
                 CustomVersionDialogActivity.isNeedUpdate = true;
-                showVersionDialog(apkurl, title, content);
+                showVersionDialog(apkurl, "版本更新", content);
             } else {
                 CustomVersionDialogActivity.isNeedUpdate = false;
                 if (MyApplication.DIALOG_NEW_VER)
@@ -48,18 +47,6 @@ public class VerUpdateService extends AVersionService {
         } catch (Exception e) {
             LogUtils.e(e.toString());
         }
-//
-//        if (data != null) {
-//            Log.d("关于我们","关于我们请求成功");
-//        } else {
-//            Log.d("关于我们","关于我们请求失败");
-//        }
-        //eg
-        // versionParams.isForceUpdate=true;
-//        showVersionDialog("https://wap3.ucweb.com/files/UCBrowser/zh-cn/999/UCBrowser_V11.6.6.951_android_pf145_(Build170821133354).apk?auth_key=1504169623-0-0-9f169358664b2d4ad6e924c75e5223b1&SESSID=7906d058b83c658a754eb25a9549e6e7", "检测到新版本", getString(R.string.updatecontent));
-//        or
-//        showVersionDialog("http://www.apk3.com/uploads/soft/guiguangbao/UCllq.apk", "检测到新版本", getString(R.string.updatecontent),bundle);
-
     }
 
     //解析服务端返回结果
@@ -76,7 +63,7 @@ public class VerUpdateService extends AVersionService {
                 } else
                     return null;
             } else if (json.getInt("success") == 0) {
-                String errors = json.getString("errors");
+                String errors = json.getString("error");
                 Placard.showInfo(errors);
                 return null;
             }
