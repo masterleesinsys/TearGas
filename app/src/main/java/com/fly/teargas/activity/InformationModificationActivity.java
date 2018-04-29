@@ -363,15 +363,18 @@ public class InformationModificationActivity extends BaseActivity {
     private class onSetDeviceByIdXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            Boolean isSave = false;
+            String data = "";
             try {
-                isSave = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isSave) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 finish();
                 showToastText("保存成功");
             } else {

@@ -291,15 +291,18 @@ public class MainActivity extends BaseActivity {
     private class getChechNewXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            Boolean isNew = false;
+            String data = "";
             try {
-                isNew = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isNew) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
 //                new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
 //                    @Override
 //                    public void onItemClick(Object o, int position) {

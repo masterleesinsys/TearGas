@@ -156,15 +156,18 @@ public class ManagementActivity extends BaseActivity {
         @Override
         public void onResponse(String result) {
             LogUtils.e(result);
-            Boolean isCmdBuFang = false;
+            String data = "";
             try {
-                isCmdBuFang = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isCmdBuFang) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 new AlertView("温馨提示", "布防成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
                 new AlertView("温馨提示", "布防失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
@@ -178,15 +181,18 @@ public class ManagementActivity extends BaseActivity {
     private class onCmdCheFangXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            Boolean isCmdCheFang = false;
+            String data = "";
             try {
-                isCmdCheFang = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isCmdCheFang) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 new AlertView("温馨提示", "撤防成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
                 new AlertView("温馨提示", "撤防失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
@@ -200,15 +206,18 @@ public class ManagementActivity extends BaseActivity {
     private class onCmdBaoDanXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            Boolean isCmdBaoDan = false;
+            String data = "";
             try {
-                isCmdBaoDan = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isCmdBaoDan) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 new AlertView("温馨提示", "爆弹成功", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();
             } else {
                 new AlertView("温馨提示", "爆弹失败", null, new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, null).show();

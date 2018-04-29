@@ -564,36 +564,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     //解析服务端返回结果
-    public Boolean getHttpResultBoolean(String result) {
-        String o = "";
-        JSONObject json = null;
-        try {
-            json = new JSONObject(result);
-            if (json.getInt("success") == 1) {
-                if (json.has("data")) {
-                    Boolean data = (Boolean) json.getBoolean("data");
-                    return data;
-                } else
-                    return null;
-            } else if (json.getInt("success") == 0) {
-                String errors = json.getString("error");
-                LogUtils.e(errors);
-                Placard.showInfo(errors);
-                return null;
-            } else if (json.getInt("success") == 2) {
-                Placard.showInfo("您的令牌失效，请重新登录");
-                openReLoginActivityForResult(99);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            showToastText(e.toString());
-            LogUtils.e(e.toString());
-            return null;
-        }
-        return null;
-    }
-
-    //解析服务端返回结果
     public int getHttpResult(String result) {
         Object o = new Object();
         JSONObject json = null;

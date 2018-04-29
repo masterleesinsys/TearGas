@@ -99,16 +99,18 @@ public class SetUserInfoActivity extends BaseActivity {
     private class onSetUserByIdXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
-            Boolean isSet = false;
+            String data = "";
             try {
-                isSet = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isSet) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 finish();
                 showToastText("修改成功");
             } else {

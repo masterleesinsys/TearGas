@@ -178,15 +178,18 @@ public class SetStencilActivity extends BaseActivity {
     private class onSetModelByIdXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            Boolean isSuccess = false;
+            String data = "";
             try {
-                isSuccess = getHttpResultBoolean(result);
+                data = getHttpResultList(result);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
                 e.printStackTrace();
+                return;
             }
-            if (isSuccess) {
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
                 finish();
                 showToastText("修改成功");
             } else {
