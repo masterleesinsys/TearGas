@@ -7,16 +7,6 @@
     android:background="@color/main_background"
     tools:context="com.fly.teargas.activity.AccountInformationActivity">
 
-    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/spin_kit"
-        style="@style/SpinKitView.ThreeBounce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:SpinKit_Color="@color/textColor_title" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_account_information"
         android:background="@color/white"
@@ -27,5 +17,15 @@
     <include
         android:id="@+id/titlebar"
         layout="@layout/titlebar" />
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
 
 </RelativeLayout>

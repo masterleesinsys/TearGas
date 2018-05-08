@@ -1,5 +1,6 @@
 package com.fly.teargas.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -89,6 +90,7 @@ public class EquipmentManagementActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("", "");
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICES), map, spin_kit, new HttpHelper.XCallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String result) {
                 try {
@@ -102,6 +104,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                 if (null != list && 0 <= list.size()) {
                     switch (type) {
                         case 0:
+                            tv_entire.setText("全部 (" + list.size() + ")");
                             equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, list);
                             rv_equipment_management.setAdapter(equimentManagementAdapter);
                             break;
@@ -111,6 +114,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                                 if ("布防".equals(deviceInfo.getCurState()))
                                     deviceInfoList.add(deviceInfo);
                             }
+                            tv_normal.setText("正常 (" + deviceInfoList.size() + ")");
                             equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, deviceInfoList);
                             rv_equipment_management.setAdapter(equimentManagementAdapter);
                             break;
@@ -120,6 +124,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                                 if (!"布防".equals(deviceInfo.getCurState()))
                                     deviceInfoList.add(deviceInfo);
                             }
+                            tv_abnormal.setText("异常 (" + deviceInfoList.size() + ")");
                             equimentManagementAdapter = new EquimentManagementAdapter(EquipmentManagementActivity.this, deviceInfoList);
                             rv_equipment_management.setAdapter(equimentManagementAdapter);
                             break;

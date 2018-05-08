@@ -76,7 +76,7 @@
         <activity android:name=".activity.LogInformationActivity" />
         <activity android:name=".activity.SetUserInfoActivity" />
         <activity android:name=".service.CustomVersionDialogActivity" />
-        <activity android:name=".activity.AlarmCenterActivity"></activity>
+        <activity android:name=".activity.AlarmCenterActivity"/>
     </application>
 
 </manifest>

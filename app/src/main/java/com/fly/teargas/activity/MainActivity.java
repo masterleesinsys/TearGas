@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity {
     private BitmapDescriptor bitmap1 = null;
     private BitmapDescriptor bitmap2 = null;
 
+    private AlertView alertView = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +100,13 @@ public class MainActivity extends BaseActivity {
 
         setStyle(STYLE_HOME);
         setCaption("首页");
+        showQueryImg();
+        setOnTitleBarRightImgListener(new onTitleBarRightImgListener() {
+            @Override
+            public void onTitleBarRightImgListener() {
+                openActivity(AlarmCenterActivity.class);
+            }
+        });
 
         MainActivityPermissionsDispatcher.CameraWithPermissionCheck(this);
 
@@ -303,15 +312,20 @@ public class MainActivity extends BaseActivity {
             if ("{}".equals(data))
                 return;
             if ("true".equals(data)) {
-//                new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(Object o, int position) {
-//                        if (position >= 0) {
-//                            openActivity(AlarmCenterActivity.class);
-//                        }
-//                    }
-//                }).show();
-                showToastText("有新的警情");
+                setTitleBarImageResource(R.drawable.ico_an_xinxi_new);
+                if (null == alertView) {
+                    alertView = new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            if (position >= 0) {
+                                openActivity(AlarmCenterActivity.class);
+                            }
+                        }
+                    });
+                    alertView.show();
+                }
+            } else {
+                setTitleBarImageResource(R.drawable.ico_an_xinxi_new_def);
             }
         }
     }

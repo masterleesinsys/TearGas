@@ -51,5 +51,15 @@ public class Constants {
     public static String SET_DEVICE_BY_ID = "API/setDeviceByID";
     //修改模版信息，须指定操作账户token、模版ID
     public static String SET_MODEL_BY_ID = "API/setMOdelByID";
+    //设置用户状态（激活1/冻结0），须指定操作者token及账户ID
+    public static String SET_USER_STATE = "API/setUserState";
+    //添加账户，须指定操作者token及新账户信息
+    public static String ADD_USER = "API/addUser";
+    //删除账户，须指定操作者token及账户ID
+    public static String DEL_USER = "API/delUser";
+    //添加模版，须指定操作者token及新模版信息
+    public static String ADD_MODEL_BY_ID = "API/addModelByID";
+    //删除模版，须指定操作者token及模版ID
+    public static String DEL_MODEL = "API/delModel";
 }
 
