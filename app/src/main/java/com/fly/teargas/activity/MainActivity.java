@@ -81,6 +81,8 @@ public class MainActivity extends BaseActivity {
 
     private AlertView alertView = null;
 
+    private String userID = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +106,13 @@ public class MainActivity extends BaseActivity {
         setOnTitleBarRightImgListener(new onTitleBarRightImgListener() {
             @Override
             public void onTitleBarRightImgListener() {
-                openActivity(AlarmCenterActivity.class);
+                if (!"".equals(userID)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("userID", userID);
+                    openActivity(intent, AlarmCenterActivity.class);
+                } else {
+                    showToastText("未查询到用户信息，请重试");
+                }
             }
         });
 
@@ -288,8 +296,10 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != userInfo) {
+                userID = userInfo.getUserID();
                 MyApplication.setUserName(userInfo.getName());
                 showNameTvLift(MyApplication.getUserName());
+
             }
         }
     }
@@ -318,7 +328,13 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onItemClick(Object o, int position) {
                             if (position >= 0) {
-                                openActivity(AlarmCenterActivity.class);
+                                if (!"".equals(userID)) {
+                                    Intent intent = new Intent();
+                                    intent.putExtra("userID", userID);
+                                    openActivity(intent, AlarmCenterActivity.class);
+                                } else {
+                                    showToastText("未查询到用户信息，请重试");
+                                }
                             }
                         }
                     });
