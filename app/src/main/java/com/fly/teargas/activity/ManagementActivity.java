@@ -155,7 +155,6 @@ public class ManagementActivity extends BaseActivity {
     private class onCmdBuFangXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
             String data = "";
             try {
                 data = getHttpResultList(result);

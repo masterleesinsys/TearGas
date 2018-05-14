@@ -74,21 +74,44 @@ public class SetStencilActivity extends BaseActivity {
 
     private String modelID = "";
 
+    private String type = "";
+
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);
 
+        if (getIntent().hasExtra("type"))
+            type = getIntent().getStringExtra("type");
         if (getIntent().hasExtra("modelID"))
             modelID = getIntent().getStringExtra("modelID");
 
-        setCaption("修改模版" + modelID);
+        switch (type) {
+            case "add":
+                setCaption("添加模版");
+                break;
+            case "set":
+                setCaption("修改模版" + modelID);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("modelID", modelID);
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_MODEL), map, spin_kit, new onGetModelXCallBack());
+                setTitleBarRightTvVisibility(View.VISIBLE);
+                setTitleBarRightTvText("删除");
+
+                setOnTitleBarRightTvListener(new onTitleBarRightTvListener() {
+                    @Override
+                    public void onTitleBarRightTvListener() {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("modelID", modelID);
+                        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.DEL_MODEL), map, spin_kit, new onDelModelXCallBack());
+                    }
+                });
+
+                Map<String, String> map = new HashMap<>();
+                map.put("modelID", modelID);
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_MODEL), map, spin_kit, new onGetModelXCallBack());
+                break;
+        }
     }
 
-    @Event(value = {R.id.tv_save, R.id.tv_set_stencil, R.id.tv_selectTemplate})
+    @Event(value = {R.id.tv_save})
     private void onClick(View view) {
         ElasticAction.doAction(view, 400, 0.85f, 0.85f);
         String IN1 = et_IN1.getText().toString().trim();
@@ -111,24 +134,47 @@ public class SetStencilActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_save:    //保存
                 Map<String, String> map = new HashMap<>();
-                map.put("modelID", modelID);
-                map.put("in1", IN1);
-                map.put("in2", IN2);
-                map.put("in3", IN3);
-                map.put("in4", IN4);
-                map.put("in5", IN5);
-                map.put("in6", IN6);
-                map.put("in7", IN7);
-                map.put("in8", IN8);
-                map.put("out1", OUT1);
-                map.put("out2", OUT2);
-                map.put("out3", OUT3);
-                map.put("out4", OUT4);
-                map.put("out5", OUT5);
-                map.put("out6", OUT6);
-                map.put("out7", OUT7);
-                map.put("out8", OUT8);
-                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_MODEL_BY_ID), map, spin_kit, new onSetModelByIdXCallBack());
+                switch (type) {
+                    case "add":
+                        map.put("in1", IN1);
+                        map.put("in2", IN2);
+                        map.put("in3", IN3);
+                        map.put("in4", IN4);
+                        map.put("in5", IN5);
+                        map.put("in6", IN6);
+                        map.put("in7", IN7);
+                        map.put("in8", IN8);
+                        map.put("out1", OUT1);
+                        map.put("out2", OUT2);
+                        map.put("out3", OUT3);
+                        map.put("out4", OUT4);
+                        map.put("out5", OUT5);
+                        map.put("out6", OUT6);
+                        map.put("out7", OUT7);
+                        map.put("out8", OUT8);
+                        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.ADD_MODEL_BY_ID), map, spin_kit, new onAddModelByIdXCallBack());
+                        break;
+                    case "set":
+                        map.put("modelID", modelID);
+                        map.put("in1", IN1);
+                        map.put("in2", IN2);
+                        map.put("in3", IN3);
+                        map.put("in4", IN4);
+                        map.put("in5", IN5);
+                        map.put("in6", IN6);
+                        map.put("in7", IN7);
+                        map.put("in8", IN8);
+                        map.put("out1", OUT1);
+                        map.put("out2", OUT2);
+                        map.put("out3", OUT3);
+                        map.put("out4", OUT4);
+                        map.put("out5", OUT5);
+                        map.put("out6", OUT6);
+                        map.put("out7", OUT7);
+                        map.put("out8", OUT8);
+                        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_MODEL_BY_ID), map, spin_kit, new onSetModelByIdXCallBack());
+                        break;
+                }
                 break;
         }
     }
@@ -194,6 +240,59 @@ public class SetStencilActivity extends BaseActivity {
                 showToastText("修改成功");
             } else {
                 showToastText("修改失败，请重试");
+            }
+        }
+    }
+
+    /**
+     * 删除模版
+     */
+    private class onDelModelXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                showToastText("删除成功");
+                finish();
+            } else {
+                showToastText("删除失败，请重试");
+            }
+        }
+    }
+
+    /**
+     * 添加模版
+     */
+    private class onAddModelByIdXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                finish();
+                showToastText("添加成功");
+                finish();
+            } else {
+                showToastText("添加失败，请重试");
             }
         }
     }

@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity {
     private AlertView alertView = null;
 
     private String userID = "";
+    private String type = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,8 @@ public class MainActivity extends BaseActivity {
 
         initLocation();
 
-        initVersionCheck();
+        if (!getIntent().hasExtra("type"))
+            initVersionCheck();
     }
 
     private void initVersionCheck() {
@@ -360,7 +362,8 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume()，实现地图生命周期管理
         mMapView.onResume();
-        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
+        if (!getIntent().hasExtra("type"))
+            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
     }
 

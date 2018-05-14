@@ -7,22 +7,13 @@
     android:background="@color/main_background"
     tools:context="com.fly.teargas.activity.InformationModificationActivity">
 
-    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/spin_kit"
-        style="@style/SpinKitView.ThreeBounce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:SpinKit_Color="@color/textColor_title" />
-
     <ScrollView
         android:id="@+id/sv_information_modification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_save"
-        android:layout_below="@+id/titlebar">
+        android:layout_below="@+id/titlebar"
+        android:fadeScrollbars="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -143,7 +134,7 @@
                 android:layout_below="@+id/tv_selectTemplate"
                 android:layout_centerHorizontal="true"
                 android:padding="20dp"
-                android:text="修改当前模版"
+                android:text="编辑当前模版"
                 android:textColor="@color/textColor_title"
                 android:textSize="15sp" />
 
@@ -468,5 +459,15 @@
         android:text="保存"
         android:textColor="@color/white"
         android:textSize="15sp" />
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/textColor_title" />
 
 </RelativeLayout>

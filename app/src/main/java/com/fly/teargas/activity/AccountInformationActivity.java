@@ -68,6 +68,7 @@ public class AccountInformationActivity extends BaseActivity {
                     @Override
                     public void onItemClickListener(int position) {
                         Intent intent = new Intent();
+                        intent.putExtra("userID", list.get(position).getUserID());
                         intent.putExtra("name", list.get(position).getName());
                         intent.putExtra("tel", list.get(position).getTel());
                         intent.putExtra("qx", list.get(position).getQx());

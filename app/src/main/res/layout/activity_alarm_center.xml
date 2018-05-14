@@ -11,8 +11,6 @@
         android:id="@+id/rv_alarm_center"
         android:background="@color/white"
         android:layout_below="@+id/titlebar"
-        android:scrollbars="vertical"
-        android:scrollbarSize="2dp"
         android:fadeScrollbars="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

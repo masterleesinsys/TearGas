@@ -3,12 +3,17 @@ package com.fly.teargas.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.fly.teargas.Constants;
+import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
+import com.fly.teargas.util.HttpHelper;
+import com.fly.teargas.util.LogUtils;
+import com.fly.teargas.util.Placard;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.skydoves.elasticviews.ElasticAction;
 
@@ -16,26 +21,29 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 添加用户
  */
 @ContentView(R.layout.activity_add_user)
 public class AddUserActivity extends BaseActivity {
+    @ViewInject(R.id.et_userName)
+    private EditText et_userName;   //账号
+    @ViewInject(R.id.et_password)
+    private TextView et_password;   //密码
     @ViewInject(R.id.et_fullName)
-    private EditText et_fullName;   //姓名
-    @ViewInject(R.id.tv_position)
-    private TextView tv_position;   //选择职位
+    private EditText et_fullName;   //名称
+    @ViewInject(R.id.et_tel)
+    private EditText et_tel;    //电话
+    @ViewInject(R.id.tv_competence)
+    private TextView tv_competence; //权限
+    @ViewInject(R.id.tv_area)
+    private TextView tv_area;   //地区
     @ViewInject(R.id.tv_save)
     private TextView tv_save;       //保存
-    @ViewInject(R.id.tv_activation)
-    private TextView tv_activation;   //激活此账户
-    @ViewInject(R.id.tv_freeze)
-    private TextView tv_freeze;   //冻结此账户
-
-    @ViewInject(R.id.sv_addUser)
-    private ScrollView sv_addUser;
 
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
@@ -44,50 +52,134 @@ public class AddUserActivity extends BaseActivity {
     protected void initView() {
         setStyle(STYLE_BACK);
         setCaption("添加用户");
-
-        OverScrollDecoratorHelper.setUpOverScroll(sv_addUser);
-
-        if (getIntent().hasExtra("name")) {
-            tv_freeze.setVisibility(View.VISIBLE);
-            et_fullName.setText(getIntent().getStringExtra("name"));
-        } else {
-            tv_freeze.setVisibility(View.GONE);
-        }
     }
 
-    @Event(value = {R.id.tv_position, R.id.tv_save, R.id.tv_activation,R.id.tv_freeze})
+    @Event(value = {R.id.tv_competence, R.id.tv_area, R.id.tv_save})
     private void onClick(View view) {
         ElasticAction.doAction(view, 400, 0.85f, 0.85f);
         Intent intent = null;
+        String userName = et_userName.getText().toString().trim();
+        String password = et_password.getText().toString().trim();
+        String name = et_fullName.getText().toString().trim();
+        String tel = et_tel.getText().toString().trim();
+        String competence = tv_competence.getText().toString().trim();
+        String area = tv_area.getText().toString().trim();
         switch (view.getId()) {
-            case R.id.tv_position:  //选择职位
-                showAlertView();
+            case R.id.tv_competence:    //权限
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_QUAN_XIAN), null, spin_kit, new onGetAllQuanXainXCallBack());
                 break;
-            case R.id.tv_save:      //保存
-                showToastText("保存成功");
+            case R.id.tv_area:    //地区
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_DI_QU), null, spin_kit, new onGetAllDiQuXCallBack());
                 break;
-            case R.id.tv_activation:    //激活此账户
-                showToastText("已成功激活");
-                break;
-            case R.id.tv_freeze:    //冻结此账户
-                showToastText("已成功冻结");
+            case R.id.tv_save:      //添加
+                Map<String, Object> map = new HashMap<>();
+                map.put("username", userName);
+                map.put("password", password);
+                map.put("name", name);
+                map.put("tel", tel);
+                map.put("diqu", competence);
+                map.put("quanxian", area);
+                HttpHelper.getInstance().post(MyApplication.getTokenURL(Constants.ADD_USER), map, spin_kit, new onAddUserXCallBack());
                 break;
         }
     }
 
-    private void showAlertView() {
-        new AlertView(null, null, null, null, new String[]{"管理员", "代维文员"}, this, AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object o, int position) {
-                switch (position) {
-                    case 0:
-                        tv_position.setText("管理员");
-                        break;
-                    case 1:
-                        tv_position.setText("代维文员");
-                        break;
-                }
+    /**
+     * 获取所有权限列表
+     */
+    private class onGetAllQuanXainXCallBack implements HttpHelper.XCallBack {
+        private List<String> list = null;
+
+        @Override
+        public void onResponse(String result) {
+            try {
+                String data = getHttpResultList(result);
+                list = JSON.parseArray(data, String.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
             }
-        }).show();
+            if (null != list && 0 < list.size()) {
+                showAlertView(list, 0);
+            } else {
+                showToastText("未获取到权限列表，请重试");
+            }
+        }
+    }
+
+    /**
+     * 获取所有地区列表
+     */
+    private class onGetAllDiQuXCallBack implements HttpHelper.XCallBack {
+        private List<String> list = null;
+
+        @Override
+        public void onResponse(String result) {
+            try {
+                String data = getHttpResultList(result);
+                list = JSON.parseArray(data, String.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != list && 0 < list.size()) {
+                showAlertView(list, 1);
+            } else {
+                showToastText("未获取到地区列表，请重试");
+            }
+        }
+    }
+
+    private void showAlertView(final List<String> list, int type) {
+        String[] str = new String[]{};
+        str = list.toArray(str);
+        switch (type) {
+            case 0:
+                new AlertView(null, null, null, null, str, this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        tv_competence.setText(list.get(position));
+                    }
+                }).show();
+                break;
+            case 1:
+                new AlertView(null, null, null, null, str, this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        tv_area.setText(list.get(position));
+                    }
+                }).show();
+                break;
+        }
+    }
+
+    /**
+     * 添加用户
+     */
+    private class onAddUserXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            LogUtils.e(result);
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                finish();
+                showToastText("添加成功");
+                finish();
+            } else {
+                showToastText("添加失败，请重试");
+            }
+        }
     }
 }

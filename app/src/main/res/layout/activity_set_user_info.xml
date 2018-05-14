@@ -80,16 +80,47 @@
         android:id="@+id/titlebar"
         layout="@layout/titlebar" />
 
-    <TextView
-        android:id="@+id/tv_save"
+    <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/main_update_color"
-        android:gravity="center"
-        android:text="保存"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/normal"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_activation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_update_color"
+            android:gravity="center"
+            android:text="激活"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_freeze"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/textColor_title"
+            android:gravity="center"
+            android:text="冻结"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"

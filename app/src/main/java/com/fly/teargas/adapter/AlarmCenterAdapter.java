@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fly.teargas.R;
-import com.fly.teargas.entity.DeviceInfo;
+import com.fly.teargas.entity.RecordInfo;
 
 import java.util.List;
 
@@ -19,23 +19,25 @@ import java.util.List;
  */
 public class AlarmCenterAdapter extends RecyclerView.Adapter<AlarmCenterAdapter.MyViewHolder> {
     private Context context;
-    private List<DeviceInfo> list;
+    private List<RecordInfo> list;
 
-    public AlarmCenterAdapter(Context context, List<DeviceInfo> list) {
+    public AlarmCenterAdapter(Context context, List<RecordInfo> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_log_information, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_alarm_center, parent, false);
         return new MyViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        holder.tv_status.setText("设备" + list.get(position).getDeviceID());
+        holder.tv_date.setText(list.get(position).getTime());
+        holder.tv_operator.setText(list.get(position).getText());
     }
 
     @Override

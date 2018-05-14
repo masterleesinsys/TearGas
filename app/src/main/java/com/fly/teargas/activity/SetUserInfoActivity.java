@@ -39,10 +39,15 @@ public class SetUserInfoActivity extends BaseActivity {
     private TextView tv_area;   //地区
     @ViewInject(R.id.tv_save)
     private TextView tv_save;   //保存
+    @ViewInject(R.id.tv_activation)
+    private TextView tv_activation;   //激活
+    @ViewInject(R.id.tv_freeze)
+    private TextView tv_freeze;   //冻结
 
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
 
+    private String userID = "";
     private String name = "";
     private String tel = "";
     private String qx = "";
@@ -53,6 +58,11 @@ public class SetUserInfoActivity extends BaseActivity {
         setStyle(STYLE_BACK);
         setCaption("修改用户信息");
 
+        setTitleBarRightTvVisibility(View.VISIBLE);
+        setTitleBarRightTvText("删除");
+
+        if (getIntent().hasExtra("userID"))
+            userID = getIntent().getStringExtra("userID");
         if (getIntent().hasExtra("name"))
             name = getIntent().getStringExtra("name");
         if (getIntent().hasExtra("tel"))
@@ -62,15 +72,25 @@ public class SetUserInfoActivity extends BaseActivity {
         if (getIntent().hasExtra("dq"))
             dq = getIntent().getStringExtra("dq");
 
+        setOnTitleBarRightTvListener(new onTitleBarRightTvListener() {
+            @Override
+            public void onTitleBarRightTvListener() {
+                Map<String, String> map = new HashMap<>();
+                map.put("userID", userID);
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.DEL_USER), map, spin_kit, new onDelUserXCallBack());
+            }
+        });
+
         et_fullName.setText(name);
         et_tel.setText(tel);
         tv_competence.setText(qx);
         tv_area.setText(dq);
     }
 
-    @Event(value = {R.id.tv_competence, R.id.tv_area, R.id.tv_save})
+    @Event(value = {R.id.tv_competence, R.id.tv_area, R.id.tv_save, R.id.tv_activation, R.id.tv_freeze})
     private void onClick(View view) {
         ElasticAction.doAction(view, 400, 0.85f, 0.85f);
+        Map<String, String> map = null;
         String name = et_fullName.getText().toString().trim();
         String tel = et_tel.getText().toString().trim();
         String competence = tv_competence.getText().toString().trim();
@@ -83,12 +103,24 @@ public class SetUserInfoActivity extends BaseActivity {
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_DI_QU), null, spin_kit, new onGetAllDiQuXCallBack());
                 break;
             case R.id.tv_save:    //保存
-                Map<String, String> map = new HashMap<>();
+                map = new HashMap<>();
                 map.put("name", name);
                 map.put("tel", tel);
                 map.put("diqu", competence);
                 map.put("quanxian", area);
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_USER_BY_ID), map, spin_kit, new onSetUserByIdXCallBack());
+                break;
+            case R.id.tv_activation:    //激活
+                map = new HashMap<>();
+                map.put("userID", userID);
+                map.put("state", "1");
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_USER_STATE), map, spin_kit, new onSetUserState1XCallBack());
+                break;
+            case R.id.tv_freeze:    //冻结
+                map = new HashMap<>();
+                map.put("userID", userID);
+                map.put("state", "0");
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_USER_STATE), map, spin_kit, new onSetUserState0XCallBack());
                 break;
         }
     }
@@ -138,7 +170,7 @@ public class SetUserInfoActivity extends BaseActivity {
             if (null != list && 0 < list.size()) {
                 showAlertView(list, 0);
             } else {
-                new AlertView("错误提示", "未获取到权限列表，请重试", null, new String[]{"确定"}, null, SetUserInfoActivity.this, AlertView.Style.Alert, null).show();
+                showToastText("未获取到权限列表，请重试");
             }
         }
     }
@@ -162,7 +194,7 @@ public class SetUserInfoActivity extends BaseActivity {
             if (null != list && 0 < list.size()) {
                 showAlertView(list, 1);
             } else {
-                new AlertView("错误提示", "未获取到地区列表，请重试", null, new String[]{"确定"}, null, SetUserInfoActivity.this, AlertView.Style.Alert, null).show();
+                showToastText("未获取到地区列表，请重试");
             }
         }
     }
@@ -187,6 +219,85 @@ public class SetUserInfoActivity extends BaseActivity {
                     }
                 }).show();
                 break;
+        }
+    }
+
+    /**
+     * 删除账户
+     */
+    private class onDelUserXCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                finish();
+                showToastText("删除成功");
+                finish();
+            } else {
+                showToastText("删除失败，请重试");
+            }
+        }
+    }
+
+    /**
+     * 激活
+     */
+    private class onSetUserState1XCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                finish();
+                showToastText("激活成功");
+            } else {
+                showToastText("激活失败，请重试");
+            }
+        }
+    }
+
+    /**
+     * 冻结
+     */
+    private class onSetUserState0XCallBack implements HttpHelper.XCallBack {
+        @Override
+        public void onResponse(String result) {
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                finish();
+                showToastText("冻结成功");
+            } else {
+                showToastText("冻结失败，请重试");
+            }
         }
     }
 }

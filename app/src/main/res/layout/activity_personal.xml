@@ -303,7 +303,8 @@
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
             android:background="@color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -372,7 +373,7 @@
         android:layout_height="40dp"
         android:layout_above="@+id/tabbar"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/login_next"

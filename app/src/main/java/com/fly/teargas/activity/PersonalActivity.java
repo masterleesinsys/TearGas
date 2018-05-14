@@ -137,6 +137,14 @@ public class PersonalActivity extends BaseActivity {
                 tv_registerTime.setText(userInfo.getRegisterTime());
                 tv_tel.setText(userInfo.getTel());
                 tv_numberOfDevices.setText(userInfo.getDq());
+
+                if ("超级管理员".equals(userInfo.getQx())) {
+                    ll_addUser.setVisibility(View.VISIBLE);
+                    ll_accountInformation.setVisibility(View.VISIBLE);
+                } else {
+                    ll_addUser.setVisibility(View.GONE);
+                    ll_accountInformation.setVisibility(View.GONE);
+                }
             }
         }
     }

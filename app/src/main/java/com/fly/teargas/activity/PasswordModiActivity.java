@@ -9,6 +9,7 @@ import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
+import com.fly.teargas.util.Placard;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.skydoves.elasticviews.ElasticAction;
 
@@ -45,13 +46,8 @@ public class PasswordModiActivity extends BaseActivity {
         setStyle(STYLE_BACK);
         setCaption("修改密码");
 
-        et_pwmodi_oldpassword.setText("admin");
-        et_pwmodi_setpassword.setText("admins");
-        et_pwmodi_againpassword.setText("admins");
-
         if (getIntent().hasExtra("username"))
             username = getIntent().getStringExtra("username");
-        LogUtils.e(username);
     }
 
     @Event(value = {R.id.tv_pwmodi_determine})
@@ -86,9 +82,7 @@ public class PasswordModiActivity extends BaseActivity {
                 params.put("confirmpassword", againpassword);
                 HttpHelper.getInstance().post(MyApplication.getTokenURL(Constants.CHANGE_PASSWORD), params, spin_kit, new onChangePasswordCallback());
 
-//                MyApplication.userLogout();
-//                MyApplication.is_exit = true;
-//                openActivity(LoginActivity.class);
+
                 break;
         }
     }
@@ -99,14 +93,26 @@ public class PasswordModiActivity extends BaseActivity {
     private class onChangePasswordCallback implements HttpHelper.XCallBack {
         public void onResponse(String result) {
             LogUtils.e(result);
-
-//            //同步服务器返回的最新token
-//            UserInfo localuser = MyApplication.getDetailFromLocal();
-//            if (null != localuser)
-//                localuser.setToken(user.getToken());
-//            MyApplication.syncDetail(localuser);
-            showToastText("修改成功，请重新登录");
-            finish();
+            String data = "";
+            try {
+                data = getHttpResultList(result);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+                return;
+            }
+            if ("{}".equals(data))
+                return;
+            if ("true".equals(data)) {
+                showToastText("修改成功，请重新登录");
+                MyApplication.userLogout();
+                MyApplication.is_exit = true;
+                openActivity(LoginActivity.class);
+                finish();
+            } else {
+                showToastText("修改失败，请重试");
+            }
         }
     }
 }

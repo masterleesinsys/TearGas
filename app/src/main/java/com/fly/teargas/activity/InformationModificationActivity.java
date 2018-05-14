@@ -20,6 +20,7 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
+import com.fly.teargas.entity.DeviceInfo;
 import com.fly.teargas.entity.ModelInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
@@ -120,7 +121,7 @@ public class InformationModificationActivity extends BaseActivity {
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);
-        setCaption("管理");
+        setCaption("设备" + deviceID + "信息修改");
         showNameTvRight(MyApplication.getUserName());
 
         OverScrollDecoratorHelper.setUpOverScroll(sv_information_modification);
@@ -135,9 +136,9 @@ public class InformationModificationActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        et_lat.setText("" + String.valueOf(MyApplication.getUserLat()));
-        et_lng.setText("" + String.valueOf(MyApplication.getUserLng()));
-        et_deviceAddress.setText("" + String.valueOf(MyApplication.getUserAddress()));
+        Map<String, String> map = new HashMap<>();
+        map.put("deviceID", deviceID);
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICE), map, spin_kit, new onGetDeviceXCallBack());
     }
 
     @Event(value = {R.id.tv_save, R.id.tv_set_stencil, R.id.tv_selectTemplate, R.id.iv_get_location})
@@ -157,6 +158,7 @@ public class InformationModificationActivity extends BaseActivity {
                     return;
                 }
                 intent = new Intent();
+                intent.putExtra("type", "set");
                 intent.putExtra("modelID", modelID);
                 openActivity(intent, SetStencilActivity.class);
                 break;
@@ -194,9 +196,8 @@ public class InformationModificationActivity extends BaseActivity {
                     @Override
                     public void onItemClick(Object o, int position) {
                         if (position == 0) {
-                            showToastText("添加模版功能暂不可用");
-//                            alertView.dismiss();
-//                            openActivity(SetStencilActivity.class);
+                            alertView.dismiss();
+                            openActivity(SetStencilActivity.class);
                         } else {
                             Map<String, String> map = new HashMap<>();
                             map.put("modelID", list.get(position - 1).getModelID());
@@ -250,9 +251,10 @@ public class InformationModificationActivity extends BaseActivity {
                     public void onItemClick(Object o, int position) {
                         switch (position) {
                             case 0:
-                                showToastText("添加模版功能暂不可用");
-//                                alertView.dismiss();
-//                                openActivity(SetStencilActivity.class);
+                                alertView.dismiss();
+                                Intent intent = new Intent();
+                                intent.putExtra("type", "add");
+                                openActivity(intent, SetStencilActivity.class);
                                 break;
                         }
                     }
@@ -260,6 +262,76 @@ public class InformationModificationActivity extends BaseActivity {
                 break;
         }
         alertView.show();
+    }
+
+    /**
+     * 获取设备信息
+     */
+    private class onGetDeviceXCallBack implements HttpHelper.XCallBack {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onResponse(String result) {
+            DeviceInfo deviceInfo = null;
+            try {
+                deviceInfo = getHttpResult(result, DeviceInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != deviceInfo) {
+                et_lat.setText(String.valueOf(deviceInfo.getLat()));
+                et_lng.setText(String.valueOf(deviceInfo.getLng()));
+                et_deviceAddress.setText(deviceInfo.getDescription());
+
+                tv_selectTemplate.setText("模版" + deviceInfo.getModelID());
+
+                Map<String, String> map = new HashMap<>();
+                map.put("modelID", deviceInfo.getModelID());
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_MODEL), map, spin_kit, new onGetModelXCallBack());
+            } else {
+                showToastText("未获取到设备信息，请重试");
+            }
+        }
+    }
+
+    /**
+     * 获取指定模版
+     */
+    private class onGetModelXCallBack implements HttpHelper.XCallBack {
+        private ModelInfo modelInfo = null;
+
+        @Override
+        public void onResponse(String result) {
+            try {
+                modelInfo = getHttpResult(result, ModelInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != modelInfo) {
+                et_IN1.setText(modelInfo.getIn1());
+                et_IN2.setText(modelInfo.getIn2());
+                et_IN3.setText(modelInfo.getIn3());
+                et_IN4.setText(modelInfo.getIn4());
+                et_IN5.setText(modelInfo.getIn5());
+                et_IN6.setText(modelInfo.getIn6());
+                et_IN7.setText(modelInfo.getIn7());
+                et_IN8.setText(modelInfo.getIn8());
+
+                et_OUT1.setText(modelInfo.getIn1());
+                et_OUT2.setText(modelInfo.getIn2());
+                et_OUT3.setText(modelInfo.getIn3());
+                et_OUT4.setText(modelInfo.getIn4());
+                et_OUT5.setText(modelInfo.getIn5());
+                et_OUT6.setText(modelInfo.getIn6());
+                et_OUT7.setText(modelInfo.getIn7());
+                et_OUT8.setText(modelInfo.getIn8());
+            } else {
+                showToastText("未获取到模版信息，请重试");
+            }
+        }
     }
 
     /**

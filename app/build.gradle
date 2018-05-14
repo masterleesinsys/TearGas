@@ -34,7 +34,6 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     dependencies {
         implementation 'me.everything:overscroll-decor-android:1.0.4'
         //仿iOS风格的边缘滚动效果，支持几乎所有滚动视图

@@ -7,7 +7,7 @@ import com.fly.teargas.Constants;
 import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.adapter.AlarmCenterAdapter;
-import com.fly.teargas.entity.DeviceInfo;
+import com.fly.teargas.entity.RecordInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -34,7 +34,6 @@ public class AlarmCenterActivity extends BaseActivity {
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);
-        setCaption("告警中心");
         showNameTvRight(MyApplication.getUserName());
 
         mInitRecyclerView(rv_alarm_center, 2);
@@ -48,13 +47,13 @@ public class AlarmCenterActivity extends BaseActivity {
      * 获取指定用户的所有设备
      */
     private class onGetDevicesXCallBack implements HttpHelper.XCallBack {
-        private List<DeviceInfo> list = null;
+        private List<RecordInfo> list = null;
 
         @Override
         public void onResponse(String result) {
             try {
                 String data = getHttpResultList(result);
-                list = JSON.parseArray(data, DeviceInfo.class);
+                list = JSON.parseArray(data, RecordInfo.class);
             } catch (Exception e) {
                 LogUtils.e(e.toString());
                 Placard.showInfo(e.toString());
@@ -62,9 +61,11 @@ public class AlarmCenterActivity extends BaseActivity {
                 return;
             }
             if (null != list && 0 < list.size()) {
+                setCaption("告警中心(" + list.size() + ")");
                 AlarmCenterAdapter alarmCenterAdapter = new AlarmCenterAdapter(AlarmCenterActivity.this, list);
                 rv_alarm_center.setAdapter(alarmCenterAdapter);
             } else {
+                setCaption("告警中心");
                 rv_alarm_center.setAdapter(null);
             }
         }

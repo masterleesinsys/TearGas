@@ -17,6 +17,7 @@ public class DeviceInfo implements Serializable {
      * curState : 撤防+喇叭响
      * recentTime : 2018-03-29T00:17:09
      * bOnLine : false
+     * modelID : 1
      */
 
     private String deviceID;
@@ -28,6 +29,15 @@ public class DeviceInfo implements Serializable {
     private String curState;
     private String recentTime;
     private boolean bOnLine;
+    private String modelID;
+
+    public String getModelID() {
+        return modelID;
+    }
+
+    public void setModelID(String modelID) {
+        this.modelID = modelID;
+    }
 
     public String getDeviceID() {
         return deviceID;

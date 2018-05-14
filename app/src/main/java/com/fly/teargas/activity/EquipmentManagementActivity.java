@@ -134,6 +134,7 @@ public class EquipmentManagementActivity extends BaseActivity {
                         @Override
                         public void onItemClickListener(int position) {
                             Intent intent = new Intent();
+                            intent.putExtra("type","EquipmentManagement");
                             intent.putExtra("lat", list.get(position).getLat());
                             intent.putExtra("lng", list.get(position).getLng());
                             openActivity(intent, MainActivity.class);
