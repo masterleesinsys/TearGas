@@ -2,6 +2,7 @@ package com.fly.teargas.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +40,18 @@ public class AccountInformationAdapter extends RecyclerView.Adapter<AccountInfor
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv_equipment_name.setText(list.get(position).getName());
         holder.tv_identity.setText(list.get(position).getQx());
-        holder.tv_numberOfDevices.setText("管辖设备数：" + list.get(position).getTel());
+//        holder.tv_numberOfDevices.setText("管辖设备数：" + list.get(position).getTel());
 
-//        holder.tv_is_activation.setText("冻结中");
-//        holder.tv_is_activation.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+        switch (list.get(position).getState()) {
+            case 0: //冻结
+                holder.tv_is_activation.setText("冻结中");
+                holder.tv_is_activation.setTextColor(ContextCompat.getColor(context, R.color.main_update_color));
+                break;
+            case 1: //激活
+                holder.tv_is_activation.setText("已激活");
+                holder.tv_is_activation.setTextColor(ContextCompat.getColor(context, R.color.normal));
+                break;
+        }
     }
 
     @Override

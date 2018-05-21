@@ -50,6 +50,7 @@ public class ManagementActivity extends BaseActivity {
 
     private int id = 0;
     private String deviceID = "";
+    private String modelID = "";
 
     @Override
     protected void initView() {
@@ -62,6 +63,10 @@ public class ManagementActivity extends BaseActivity {
         if (getIntent().hasExtra("deviceID"))
             deviceID = getIntent().getStringExtra("deviceID");
 
+        if ("".equals(deviceID)) {
+            showToastText("未获取到相关数据，请重试");
+            return;
+        }
         Map<String, String> map = new HashMap<>();
         map.put("deviceID", deviceID);
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICE), map, spin_kit, new onGetDeviceXCallBack());
@@ -73,6 +78,10 @@ public class ManagementActivity extends BaseActivity {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.ll_arming:     //布防
+                if ("".equals(deviceID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
                 new AlertView("是否布防", "布防前请确认站内无人员工作，门已关好", "取消", new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {
@@ -85,6 +94,10 @@ public class ManagementActivity extends BaseActivity {
                 }).show();
                 break;
             case R.id.ll_withdrawAGarrison:     //撤防
+                if ("".equals(deviceID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
                 new AlertView("是否撤防", "撤防前请确认有工作人员入内", "取消", new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {
@@ -97,7 +110,10 @@ public class ManagementActivity extends BaseActivity {
                 }).show();
                 break;
             case R.id.ll_bomb:     //爆弹
-//                爆弹前请确认是否为犯罪分子盗窃，请选择爆弹通道
+                if ("".equals(deviceID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
                 new AlertView("是否爆弹", "爆弹前请确认是否为犯罪分子盗窃", "取消", new String[]{"确定"}, null, ManagementActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {
@@ -110,17 +126,30 @@ public class ManagementActivity extends BaseActivity {
                 }).show();
                 break;
             case R.id.ll_deviceStatus:     //设备状态
-                new AlertView("温馨提示", "设备状态功能维护中，待后续升级添加", null, new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
-//                intent = new Intent();
-//                intent.putExtra("deviceID", deviceID);
-//                openActivity(intent, DeviceStatusActivity.class);
+//                new AlertView("温馨提示", "设备状态功能维护中，待后续升级添加", null, new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
+                if ("".equals(deviceID) || "".equals(modelID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
+                intent = new Intent();
+                intent.putExtra("modelID", modelID);
+                intent.putExtra("deviceID", deviceID);
+                openActivity(intent, DeviceStatusActivity.class);
                 break;
             case R.id.ll_informationModification:     //信息修改
+                if ("".equals(deviceID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
                 intent = new Intent();
                 intent.putExtra("deviceID", deviceID);
                 openActivity(intent, InformationModificationActivity.class);
                 break;
             case R.id.ll_logInformation:     //日志信息
+                if ("".equals(deviceID)) {
+                    showToastText("未获取到相关数据，请重试");
+                    return;
+                }
                 intent = new Intent();
                 intent.putExtra("deviceID", deviceID);
                 openActivity(intent, LogInformationActivity.class);
@@ -144,6 +173,7 @@ public class ManagementActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != deviceInfo) {
+                modelID = deviceInfo.getModelID();
                 tv_device_info.setText("设备" + deviceInfo.getDeviceID() + "    " + deviceInfo.getCurState());
             }
         }

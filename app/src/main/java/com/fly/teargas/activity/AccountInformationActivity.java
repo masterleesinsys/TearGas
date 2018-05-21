@@ -33,7 +33,6 @@ public class AccountInformationActivity extends BaseActivity {
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);
-        setCaption("所有账户");
 
         mInitRecyclerView(rv_account_information, 2);
     }
@@ -61,6 +60,7 @@ public class AccountInformationActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != list && 0 < list.size()) {
+                setCaption("所有账户(" + list.size() + ")");
                 AccountInformationAdapter accountInformationAdapter = new AccountInformationAdapter(AccountInformationActivity.this, list);
                 rv_account_information.setAdapter(accountInformationAdapter);
 

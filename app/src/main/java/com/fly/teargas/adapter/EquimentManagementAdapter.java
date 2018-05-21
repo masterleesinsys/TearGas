@@ -50,8 +50,8 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
             holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.normal));
         } else {
             holder.tv_is_normal.setText("异常");
-            holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
-            holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.abnormal));
+            holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.main_update_color));
+            holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.main_update_color));
         }
     }
 

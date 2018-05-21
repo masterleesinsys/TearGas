@@ -58,6 +58,7 @@ public class SetUserInfoActivity extends BaseActivity {
         setStyle(STYLE_BACK);
         setCaption("修改用户信息");
 
+        showQueryTv();
         setTitleBarRightTvVisibility(View.VISIBLE);
         setTitleBarRightTvText("删除");
 
@@ -75,9 +76,16 @@ public class SetUserInfoActivity extends BaseActivity {
         setOnTitleBarRightTvListener(new onTitleBarRightTvListener() {
             @Override
             public void onTitleBarRightTvListener() {
-                Map<String, String> map = new HashMap<>();
-                map.put("userID", userID);
-                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.DEL_USER), map, spin_kit, new onDelUserXCallBack());
+                new AlertView("删除账户", "是否确认删除该账户?", "取消", new String[]{"确定"}, null, SetUserInfoActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        if (position >= 0) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("userID", userID);
+                            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.DEL_USER), map, spin_kit, new onDelUserXCallBack());
+                        }
+                    }
+                }).show();
             }
         });
 
@@ -103,11 +111,28 @@ public class SetUserInfoActivity extends BaseActivity {
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_DI_QU), null, spin_kit, new onGetAllDiQuXCallBack());
                 break;
             case R.id.tv_save:    //保存
+                if ("".equals(name)) {
+                    new AlertView("错误提示", "请填写用户姓名", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("".equals(tel)) {
+                    new AlertView("错误提示", "请填写用户电话", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("无".equals(competence)) {
+                    new AlertView("错误提示", "请选择用户权限", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("未知".equals(area)) {
+                    new AlertView("错误提示", "请选择用户管辖范围", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                }
                 map = new HashMap<>();
                 map.put("name", name);
                 map.put("tel", tel);
-                map.put("diqu", competence);
-                map.put("quanxian", area);
+                map.put("diqu", area);
+                map.put("quanxian", competence);
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.SET_USER_BY_ID), map, spin_kit, new onSetUserByIdXCallBack());
                 break;
             case R.id.tv_activation:    //激活

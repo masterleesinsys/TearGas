@@ -8,14 +8,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.MediaMetadataRetriever;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,17 +21,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +49,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 @SuppressWarnings("ALL")
 public abstract class BaseActivity extends AppCompatActivity {
-    final int RIGHT = 0;
-    final int LEFT = 1;
-    public ImageView btn_collect = null;
     @ViewInject(R.id.toolbar)
     protected Toolbar mToolbar;
     protected Context mContext = this;
@@ -73,29 +63,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int STYLE_NAME = 7;
     protected int STYLE_VERUPDATE = 8;
     protected int STYLE_JINGPIN = 9;
-    protected int STYLE_BACK_ADD = 101;
-    protected int STYLE_RIGHT_IMG_ADD = 10;
     protected int STYLE_BACK_ACTIVITY_DETAIL = 102;
     protected int mStyle = 0;
     protected boolean mIsExit;
-    protected ImageView editbutton;
-    protected ImageView deletebutton;
     protected TextView txtCaption;
     protected TextView mBtnRightAction;
     protected TextView textName;
     protected TextView textNameRight;
-    protected TextView mBtnLeftAction;
-    protected ImageView mBtnActivityAdd;
-    protected ImageView mBtnActivityRemove;
-    protected ImageView mBtnCompanyDetail;
-    protected TextView mbtnBack = null;
-    protected ImageView mbtnSettings = null;
-    protected ImageView mbtnAreaselect = null;
-    protected ImageView mbtnZhaoshang = null;
-    protected ImageView mbtnSearch = null;
-    protected ImageView mbtnAdd = null;
-    protected RelativeLayout mRel_top = null;
-    protected LinearLayout mLinCaption = null;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -103,7 +77,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             super.handleMessage(msg);
             mIsExit = false;
         }
-
     };
     private ImageView imgMore, imgBack;
     private TextView tvPrompt;
@@ -173,9 +146,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             showQueryTv();
         } else if (value == STYLE_VERUPDATE) {
             showBackButton(true);
-        } else if (value == STYLE_BACK_ADD) {
-            showBackButton(true);
-            showAddIco();
         } else if (value == STYLE_BACK_ACTIVITY_DETAIL) {
             showBackButton(true);
         } else if (value == STYLE_BACK_QUERY) {
@@ -185,22 +155,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public BaseActivity showNameTvLift(String name){
-        textName=findViewById(R.id.textName);
+    public BaseActivity showNameTvLift(String name) {
+        textName = findViewById(R.id.textName);
         textName.setVisibility(View.VISIBLE);
         textName.setText(name);
         return this;
     }
 
-    public BaseActivity showNameTvRight(String name){
-        textNameRight=findViewById(R.id.textNameRight);
+    public BaseActivity showNameTvRight(String name) {
+        textNameRight = findViewById(R.id.textNameRight);
         textNameRight.setVisibility(View.VISIBLE);
         textNameRight.setText(name);
         return this;
     }
 
-    private BaseActivity showQueryTv() {
-        tvPrompt = (TextView) findViewById(R.id.tvPrompt);
+    public BaseActivity showQueryTv() {
+        getRightTvView();
         tvPrompt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,14 +233,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setCaption(String strCaption) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        txtCaption = (TextView) findViewById(R.id.txtCaption);
+        toolbar = findViewById(R.id.toolbar);
+        txtCaption = findViewById(R.id.txtCaption);
         txtCaption.setText(strCaption);
         txtCaption.setVisibility(View.VISIBLE);
     }
 
     protected void setCaption(int resId) {
-        txtCaption = (TextView) findViewById(R.id.txtCaption);
+        txtCaption = findViewById(R.id.txtCaption);
         txtCaption.setText(resId);
         txtCaption.setVisibility(View.VISIBLE);
 
@@ -316,108 +286,108 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.isListener = isListener;
     }
 
-    protected void showQueryIco() {
-        mbtnSearch = (ImageView) findViewById(R.id.btnSearch);
-        mbtnSearch.setVisibility(View.VISIBLE);
-    }
-
-    protected void showAddIco() {
-        mbtnAdd = (ImageView) findViewById(R.id.btnAdd);
-        mbtnAdd.setVisibility(View.VISIBLE);
-    }
-
-    protected void showBackButtonNoLogin(boolean isShow) {
-        // 显示返回按钮时，隐藏图标和设�?
-        mBtnLeftAction = (TextView) findViewById(R.id.btnLeftAction);
-        mBtnLeftAction.setText(" 返  回 ");
-        if (isShow) {
-            mBtnLeftAction.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View v) {
-                    onBackonNoLogin();
-                }
-            });
-            mBtnLeftAction.setVisibility(View.VISIBLE);
-        } else {
-            mBtnLeftAction.setVisibility(View.GONE);
-        }
-    }
-
-    protected void showImgLogo(boolean isShow) {
-        ImageView titelLogo = (ImageView) findViewById(R.id.img_logo);
-
-        if (isShow)
-            titelLogo.setVisibility(View.VISIBLE);
-        else
-            titelLogo.setVisibility(View.GONE);
-    }
-
-    protected void addActionButton(int imgResId, OnClickListener onClickListener) {
-        LinearLayout actionBarRight = (LinearLayout) findViewById(R.id.ActionBarRight);
-        actionBarRight.setGravity(Gravity.CENTER_VERTICAL);
-        ImageView imgSeparator = new ImageView(this);
-        actionBarRight.addView(imgSeparator);
-        actionBarRight.setVisibility(View.VISIBLE);
-        Button btnAction = new Button(this);
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lp.leftMargin = 8;
-        lp.rightMargin = 5;
-        btnAction.setPadding(15, 5, 15, 5);
-        btnAction.setGravity(Gravity.CENTER);
-        btnAction.setLayoutParams(lp);
-        actionBarRight.addView(btnAction);
-        if (onClickListener != null) {
-            btnAction.setBackgroundResource(imgResId);
-            btnAction.setOnClickListener(onClickListener);
-        }
-    }
-
-    protected Button addActionButton(String strText, OnClickListener onClickListener) {
-        LinearLayout actionBarRight = (LinearLayout) findViewById(R.id.ActionBarRight);
-        ImageView imgSeparator = new ImageView(this);
-        actionBarRight.addView(imgSeparator);
-        actionBarRight.setVisibility(View.VISIBLE);
-        Button btnAction = new Button(this);
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        lp.leftMargin = 3;
-        lp.rightMargin = 3;
-        btnAction.setText(strText);
-        btnAction.setTextColor(0xffffffff);
-        btnAction.setTextSize(16);
-        btnAction.setBackgroundDrawable(null);
-        btnAction.setPadding(15, 0, 15, 0);
-        btnAction.setGravity(Gravity.CENTER);
-        btnAction.setLayoutParams(lp);
-        actionBarRight.addView(btnAction);
-
-        if (onClickListener != null) {
-            btnAction.setOnClickListener(onClickListener);
-        }
-        return btnAction;
-    }
-
-    protected void setLeftActionButton(String strText, OnClickListener onClickListener) {
-        mBtnLeftAction = (TextView) findViewById(R.id.btnLeftAction);
-        mBtnLeftAction.setVisibility(View.VISIBLE);
-
-        mBtnLeftAction.setText(strText);
-
-        if (onClickListener != null) {
-            mBtnLeftAction.setOnClickListener(onClickListener);
-        }
-    }
-
-    protected void setRightActionButton(String strText,
-                                        OnClickListener onClickListener) {
-        // mBtnRightAction = (TextView) findViewById(R.id.btnRightAction);
-        mBtnRightAction.setVisibility(View.VISIBLE);
-
-        mBtnRightAction.setText(strText);
-
-        if (onClickListener != null) {
-            mBtnRightAction.setOnClickListener(onClickListener);
-        }
-    }
+//    protected void showQueryIco() {
+//        mbtnSearch = (ImageView) findViewById(R.id.btnSearch);
+//        mbtnSearch.setVisibility(View.VISIBLE);
+//    }
+//
+//    protected void showAddIco() {
+//        mbtnAdd = (ImageView) findViewById(R.id.btnAdd);
+//        mbtnAdd.setVisibility(View.VISIBLE);
+//    }
+//
+//    protected void showBackButtonNoLogin(boolean isShow) {
+//        // 显示返回按钮时，隐藏图标和设�?
+//        mBtnLeftAction = (TextView) findViewById(R.id.btnLeftAction);
+//        mBtnLeftAction.setText(" 返  回 ");
+//        if (isShow) {
+//            mBtnLeftAction.setOnClickListener(new OnClickListener() {
+//
+//                public void onClick(View v) {
+//                    onBackonNoLogin();
+//                }
+//            });
+//            mBtnLeftAction.setVisibility(View.VISIBLE);
+//        } else {
+//            mBtnLeftAction.setVisibility(View.GONE);
+//        }
+//    }
+//
+//    protected void showImgLogo(boolean isShow) {
+//        ImageView titelLogo = (ImageView) findViewById(R.id.img_logo);
+//
+//        if (isShow)
+//            titelLogo.setVisibility(View.VISIBLE);
+//        else
+//            titelLogo.setVisibility(View.GONE);
+//    }
+//
+//    protected void addActionButton(int imgResId, OnClickListener onClickListener) {
+//        LinearLayout actionBarRight = (LinearLayout) findViewById(R.id.ActionBarRight);
+//        actionBarRight.setGravity(Gravity.CENTER_VERTICAL);
+//        ImageView imgSeparator = new ImageView(this);
+//        actionBarRight.addView(imgSeparator);
+//        actionBarRight.setVisibility(View.VISIBLE);
+//        Button btnAction = new Button(this);
+//        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//        lp.leftMargin = 8;
+//        lp.rightMargin = 5;
+//        btnAction.setPadding(15, 5, 15, 5);
+//        btnAction.setGravity(Gravity.CENTER);
+//        btnAction.setLayoutParams(lp);
+//        actionBarRight.addView(btnAction);
+//        if (onClickListener != null) {
+//            btnAction.setBackgroundResource(imgResId);
+//            btnAction.setOnClickListener(onClickListener);
+//        }
+//    }
+//
+//    protected Button addActionButton(String strText, OnClickListener onClickListener) {
+//        LinearLayout actionBarRight = (LinearLayout) findViewById(R.id.ActionBarRight);
+//        ImageView imgSeparator = new ImageView(this);
+//        actionBarRight.addView(imgSeparator);
+//        actionBarRight.setVisibility(View.VISIBLE);
+//        Button btnAction = new Button(this);
+//        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+//        lp.leftMargin = 3;
+//        lp.rightMargin = 3;
+//        btnAction.setText(strText);
+//        btnAction.setTextColor(0xffffffff);
+//        btnAction.setTextSize(16);
+//        btnAction.setBackgroundDrawable(null);
+//        btnAction.setPadding(15, 0, 15, 0);
+//        btnAction.setGravity(Gravity.CENTER);
+//        btnAction.setLayoutParams(lp);
+//        actionBarRight.addView(btnAction);
+//
+//        if (onClickListener != null) {
+//            btnAction.setOnClickListener(onClickListener);
+//        }
+//        return btnAction;
+//    }
+//
+//    protected void setLeftActionButton(String strText, OnClickListener onClickListener) {
+//        mBtnLeftAction = (TextView) findViewById(R.id.btnLeftAction);
+//        mBtnLeftAction.setVisibility(View.VISIBLE);
+//
+//        mBtnLeftAction.setText(strText);
+//
+//        if (onClickListener != null) {
+//            mBtnLeftAction.setOnClickListener(onClickListener);
+//        }
+//    }
+//
+//    protected void setRightActionButton(String strText,
+//                                        OnClickListener onClickListener) {
+//         mBtnRightAction = (TextView) findViewById(R.id.btnRightAction);
+//        mBtnRightAction.setVisibility(View.VISIBLE);
+//
+//        mBtnRightAction.setText(strText);
+//
+//        if (onClickListener != null) {
+//            mBtnRightAction.setOnClickListener(onClickListener);
+//        }
+//    }
 
     protected void openActivity(Context context, Class cls) {
         Intent intent = new Intent();
@@ -451,7 +421,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void showToastText(int resId) {
         String msg = getResources().getString(resId);
-        if (msg != null && !msg.equals("-1") && !msg.equals(""))
+        if (!msg.equals("-1") && !msg.equals(""))
             Placard.showInfo(msg);
     }
 
@@ -475,7 +445,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // 按下键盘上返回按�?
+        // 按下键盘上返回按?
         if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK && mStyle == STYLE_HOME) {
             exit();
             return false;
@@ -498,13 +468,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //解析服务端返回结果
     public <T> T getHttpResult(String result, Class<T> clazz) {
-        Object o = new Object();
-        JSONObject json = null;
+        Object o;
+        JSONObject json;
         try {
             json = new JSONObject(result);
             if (json.getInt("success") == 1) {
                 if (json.has("data")) {
-                    String data = (String) json.getString("data");
+                    String data = json.getString("data");
                     o = JSON.parseObject(data, clazz);
                     return (T) o;
                 } else
@@ -535,14 +505,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //解析服务端返回结果
     public String getHttpResultList(String result) {
-        String o = "";
-        JSONObject json = null;
+        JSONObject json;
         try {
             json = new JSONObject(result);
             if (json.getInt("success") == 1) {
                 if (json.has("data")) {
-                    String data = (String) json.getString("data");
-                    return data;
+                    return json.getString("data");
                 } else
                     return null;
             } else if (json.getInt("success") == 0) {
@@ -565,8 +533,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //解析服务端返回结果
     public int getHttpResult(String result) {
-        Object o = new Object();
-        JSONObject json = null;
+        JSONObject json;
         int success = 0;
         try {
             json = new JSONObject(result);
@@ -676,14 +643,11 @@ public abstract class BaseActivity extends AppCompatActivity {
      * TODO 获取网络视频缩略图
      *
      * @param url
-     * @param width
-     * @param height
      * @return
      */
-    protected Bitmap createVideoThumbnail(String url, int width, int height) {
+    protected Bitmap createVideoThumbnail(String url) {
         Bitmap bitmap = null;
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
         try {
             retriever.setDataSource(url, new HashMap<String, String>());
             bitmap = retriever.getFrameAtTime();
@@ -699,9 +663,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 LogUtils.e(ex.toString());
             }
         }
-        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
-            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-        }
         return bitmap;
     }
 
@@ -712,6 +673,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         int netWorkType = -1;
         //获取网络连接管理者
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             int type = networkInfo.getType();

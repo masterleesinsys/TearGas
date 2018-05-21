@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class VerUpdateService extends AVersionService {
 
-    private String apkfilename = "app/asdsa.apk";
+    private String apkfilename = "app/TearsGas.apk";
 
     public VerUpdateService() {
     }
@@ -35,6 +35,8 @@ public class VerUpdateService extends AVersionService {
 //            String title = new JSONObject(data).getString("title");
             int version = new JSONObject(data).getInt("version");
             String apkurl = MyApplication.getURL(apkfilename);
+
+            LogUtils.e(apkurl);
 
             if (Tools.getVersionCode(this) < version) {
                 CustomVersionDialogActivity.isNeedUpdate = true;

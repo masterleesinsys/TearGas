@@ -1,19 +1,12 @@
 package com.fly.teargas.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.fly.teargas.R;
 import com.github.ybq.android.spinkit.SpinKitView;
 
 import org.json.JSONException;
@@ -521,69 +514,69 @@ public class HttpHelper {
             }
         });
     }
-
-    /**
-     * TODO Glide 加载图片
-     *
-     * @param imagePath 图片地址
-     * @param iv        显示图片的控件
-     */
-    public void mLoadPicture(String imagePath, ImageView iv) {
-        try {
-            Glide.with(x.app()).load(imagePath).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
-        } catch (Exception e) {
-            LogUtils.e(e.toString());
-        }
-    }
-
-    /**
-     * TODO Glide 加载图片(尺寸压缩)
-     *
-     * @param imagePath 图片地址
-     * @param iv        显示图片的控件
-     */
-    public void mLoadPicture(String imagePath, ImageView iv, int width, int height) {
-        try {
-            Glide.with(x.app()).load(imagePath).override(width, height).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
-        } catch (Exception e) {
-            LogUtils.e(e.toString());
-        }
-    }
-
-    /**
-     * TODO 加载圆型网络图片
-     *
-     * @param url       图片地址
-     * @param imageView
-     */
-    public void mLoadCirclePicture(String url, final ImageView imageView) {
-        Glide.with(x.app()).load(url).asBitmap().centerCrop().placeholder(R.drawable.ico_touxiang)
-                .error(R.drawable.ico_touxiang).into(new BitmapImageViewTarget(imageView) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(x.app().getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageView.setImageDrawable(circularBitmapDrawable);
-            }
-        });
-    }
-
-    /**
-     * TODO Glide 下载图片
-     *
-     * @param imagePath 图片地址
-     */
-    public Bitmap mDownLoadPicture(String imagePath, int width, int height) {
-        Bitmap myBitmap = null;
-        try {
-            myBitmap = Glide.with(x.app()).load(imagePath).asBitmap().centerCrop().into(width, height).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LogUtils.e(e.toString());
-        }
-        return myBitmap;
-    }
+//
+//    /**
+//     * TODO Glide 加载图片
+//     *
+//     * @param imagePath 图片地址
+//     * @param iv        显示图片的控件
+//     */
+//    public void mLoadPicture(String imagePath, ImageView iv) {
+//        try {
+//            Glide.with(x.app()).load(imagePath).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
+//        } catch (Exception e) {
+//            LogUtils.e(e.toString());
+//        }
+//    }
+//
+//    /**
+//     * TODO Glide 加载图片(尺寸压缩)
+//     *
+//     * @param imagePath 图片地址
+//     * @param iv        显示图片的控件
+//     */
+//    public void mLoadPicture(String imagePath, ImageView iv, int width, int height) {
+//        try {
+//            Glide.with(x.app()).load(imagePath).override(width, height).placeholder(R.drawable.ico_touxiang).error(R.drawable.ico_touxiang).into(iv);
+//        } catch (Exception e) {
+//            LogUtils.e(e.toString());
+//        }
+//    }
+//
+//    /**
+//     * TODO 加载圆型网络图片
+//     *
+//     * @param url       图片地址
+//     * @param imageView
+//     */
+//    public void mLoadCirclePicture(String url, final ImageView imageView) {
+//        Glide.with(x.app()).load(url).asBitmap().centerCrop().placeholder(R.drawable.ico_touxiang)
+//                .error(R.drawable.ico_touxiang).into(new BitmapImageViewTarget(imageView) {
+//            @Override
+//            protected void setResource(Bitmap resource) {
+//                RoundedBitmapDrawable circularBitmapDrawable =
+//                        RoundedBitmapDrawableFactory.create(x.app().getResources(), resource);
+//                circularBitmapDrawable.setCircular(true);
+//                imageView.setImageDrawable(circularBitmapDrawable);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * TODO Glide 下载图片
+//     *
+//     * @param imagePath 图片地址
+//     */
+//    public Bitmap mDownLoadPicture(String imagePath, int width, int height) {
+//        Bitmap myBitmap = null;
+//        try {
+//            myBitmap = Glide.with(x.app()).load(imagePath).asBitmap().centerCrop().into(width, height).get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            LogUtils.e(e.toString());
+//        }
+//        return myBitmap;
+//    }
 
     public interface XCallBack {
         void onResponse(String result);

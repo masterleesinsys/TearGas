@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity {
                 }
                 if (null != list && 0 <= list.size()) {
                     for (DeviceInfo deviceInfo : list) {
-                        if (deviceInfo.getCurState().contains("布防")) {
+                        if (deviceInfo.getCurState().equals("布防")) {
                             MarkerOptions markerOptions1 = new MarkerOptions().icon(bitmap1).position(new LatLng(deviceInfo.getLat(), deviceInfo.getLng()));
                             Marker marker1 = (Marker) mBaiduMap.addOverlay(markerOptions1);
                             Bundle mBundle1 = new Bundle();
@@ -326,21 +326,23 @@ public class MainActivity extends BaseActivity {
             if ("true".equals(data)) {
                 setTitleBarImageResource(R.drawable.ico_an_xinxi_new);
                 if (null == alertView) {
-                    alertView = new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Object o, int position) {
-                            if (position >= 0) {
-                                if (!"".equals(userID)) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra("userID", userID);
-                                    openActivity(intent, AlarmCenterActivity.class);
-                                } else {
-                                    showToastText("未查询到用户信息，请重试");
+                    if (!getIntent().hasExtra("type")) {
+                        alertView = new AlertView("系统通知", "有新的警情", "取消", new String[]{"去查看"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Object o, int position) {
+                                if (position >= 0) {
+                                    if (!"".equals(userID)) {
+                                        Intent intent = new Intent();
+                                        intent.putExtra("userID", userID);
+                                        openActivity(intent, AlarmCenterActivity.class);
+                                    } else {
+                                        showToastText("未查询到用户信息，请重试");
+                                    }
                                 }
                             }
-                        }
-                    });
-                    alertView.show();
+                        });
+                        alertView.show();
+                    }
                 }
             } else {
                 setTitleBarImageResource(R.drawable.ico_an_xinxi_new_def);
@@ -362,8 +364,8 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume()，实现地图生命周期管理
         mMapView.onResume();
-        if (!getIntent().hasExtra("type"))
-            HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
+
+        HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_CHECKNEW), null, spin_kit, new getChechNewXCallBack());
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_USER), null, spin_kit, new getUserXCallBack());
     }
 

@@ -72,14 +72,39 @@ public class AddUserActivity extends BaseActivity {
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_DI_QU), null, spin_kit, new onGetAllDiQuXCallBack());
                 break;
             case R.id.tv_save:      //添加
-                Map<String, Object> map = new HashMap<>();
+                if ("".equals(userName)) {
+                    new AlertView("错误提示", "请填写用户账号", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("".equals(password)) {
+                    new AlertView("错误提示", "请填写用户密码", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("".equals(name)) {
+                    new AlertView("错误提示", "请填写用户姓名", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("".equals(tel)) {
+                    new AlertView("错误提示", "请填写用户电话", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("无".equals(competence)) {
+                    new AlertView("错误提示", "请选择用户权限", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                } else if ("未知".equals(area)) {
+                    new AlertView("错误提示", "请选择用户管辖范围", null, new String[]{"确定"}, null, this,
+                            AlertView.Style.Alert, null).show();
+                    return;
+                }
+                Map<String, String> map = new HashMap<>();
                 map.put("username", userName);
                 map.put("password", password);
                 map.put("name", name);
                 map.put("tel", tel);
-                map.put("diqu", competence);
-                map.put("quanxian", area);
-                HttpHelper.getInstance().post(MyApplication.getTokenURL(Constants.ADD_USER), map, spin_kit, new onAddUserXCallBack());
+                map.put("diqu", area);
+                map.put("quanxian", competence);
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.ADD_USER), map, spin_kit, new onAddUserXCallBack());
                 break;
         }
     }
@@ -161,8 +186,7 @@ public class AddUserActivity extends BaseActivity {
     private class onAddUserXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
-            String data = "";
+            String data;
             try {
                 data = getHttpResultList(result);
             } catch (Exception e) {
@@ -171,14 +195,9 @@ public class AddUserActivity extends BaseActivity {
                 e.printStackTrace();
                 return;
             }
-            if ("{}".equals(data))
-                return;
-            if ("true".equals(data)) {
+            if (null != data) {
                 finish();
                 showToastText("添加成功");
-                finish();
-            } else {
-                showToastText("添加失败，请重试");
             }
         }
     }

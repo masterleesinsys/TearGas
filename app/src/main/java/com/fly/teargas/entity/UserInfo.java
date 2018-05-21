@@ -14,6 +14,7 @@ public class UserInfo implements Serializable {
      * name : 管理员
      * tel : 114
      * registerTime : 2018-02-04T03:14:27
+     * state : 1
      */
 
     private String userID;
@@ -23,6 +24,7 @@ public class UserInfo implements Serializable {
     private String name;
     private String tel;
     private String registerTime;
+    private Integer state;
 
     public String getUserID() {
         return userID;
@@ -78,5 +80,13 @@ public class UserInfo implements Serializable {
 
     public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

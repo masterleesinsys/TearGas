@@ -36,7 +36,6 @@ public class LogInformationActivity extends BaseActivity {
     @Override
     protected void initView() {
         setStyle(STYLE_BACK);
-        setCaption("管理");
         showNameTvRight(MyApplication.getUserName());
 
         mInitRecyclerView(rv_log_information, 2);
@@ -52,7 +51,6 @@ public class LogInformationActivity extends BaseActivity {
     private class onGetRecordByDeviceIdXCallBack implements HttpHelper.XCallBack {
         @Override
         public void onResponse(String result) {
-            LogUtils.e(result);
             List<RecordInfo> list = null;
             try {
                 String data = getHttpResultList(result);
@@ -63,7 +61,8 @@ public class LogInformationActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != list && 0 < list.size()) {
-                LogInformationAdapter logInformationAdapter = new LogInformationAdapter(LogInformationActivity.this,list);
+                setCaption("管理(" + list.size() + ")");
+                LogInformationAdapter logInformationAdapter = new LogInformationAdapter(LogInformationActivity.this, list);
                 rv_log_information.setAdapter(logInformationAdapter);
             } else {
                 rv_log_information.setAdapter(null);

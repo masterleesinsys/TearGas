@@ -75,12 +75,12 @@ public class PasswordModiActivity extends BaseActivity {
 //                    showToastText("请输入不少于六位密码!");
 //                    return;
 //                }
-                HashMap<String, Object> params = new HashMap<>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("oldpassword", oldpassowrd);
                 params.put("newpassword", newpassowrd);
                 params.put("confirmpassword", againpassword);
-                HttpHelper.getInstance().post(MyApplication.getTokenURL(Constants.CHANGE_PASSWORD), params, spin_kit, new onChangePasswordCallback());
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.CHANGE_PASSWORD), params, spin_kit, new onChangePasswordCallback());
 
 
                 break;

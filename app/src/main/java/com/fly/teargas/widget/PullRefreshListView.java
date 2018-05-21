@@ -1,6 +1,7 @@
 package com.fly.teargas.widget;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Handler;
@@ -92,7 +93,7 @@ public class PullRefreshListView extends ListView implements OnScrollListener {
 
 	private void init(Context context) {
 		mContext = context;
-		setCacheColorHint(context.getResources().getColor(R.color.transparent));
+		setCacheColorHint(context.getResources().getColor(R.color.translucent));
 		inflater = LayoutInflater.from(context);
 
 //		headView = (LinearLayout) inflater.inflate(R.layout.pull_refresh, null);
@@ -416,6 +417,7 @@ public class PullRefreshListView extends ListView implements OnScrollListener {
 		child.measure(childWidthSpec, childHeightSpec);
 	}
 
+	@SuppressLint("SetTextI18n")
 	public void setAdapter(BaseAdapter adapter) {
 		lastUpdatedTextView.setText("最近更新:" + Common.formatCurrentDateTime());
 		super.setAdapter(adapter);
