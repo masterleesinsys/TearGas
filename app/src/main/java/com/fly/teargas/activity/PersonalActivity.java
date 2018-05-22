@@ -102,7 +102,7 @@ public class PersonalActivity extends BaseActivity {
                 logout();
                 break;
             case R.id.ll_updata:    //检查更新
-                //只有requsetUrl service 是必须值 其他参数都有默认值，可选
+                MyApplication.DIALOG_NEW_VER = true;
                 VersionParams.Builder builder = new VersionParams.Builder()
                         .setRequestUrl(MyApplication.getURL(Constants.GET_LATEST_APP))
                         .setService(VerUpdateService.class);

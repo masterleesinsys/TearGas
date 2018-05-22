@@ -44,7 +44,8 @@ public class VerUpdateService extends AVersionService {
             } else {
                 CustomVersionDialogActivity.isNeedUpdate = false;
                 if (MyApplication.DIALOG_NEW_VER)
-                    showVersionDialog("", "版本判断", "已经是最新版本");
+                    Placard.showInfo("已经是最新版本");
+//                    showVersionDialog("", "版本判断", "已经是最新版本");
             }
         } catch (Exception e) {
             LogUtils.e(e.toString());

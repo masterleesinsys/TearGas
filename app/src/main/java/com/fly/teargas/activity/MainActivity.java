@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initVersionCheck() {
-        //只有requsetUrl service 是必须值 其他参数都有默认值，可选
+        MyApplication.DIALOG_NEW_VER = false;
         VersionParams.Builder builder = new VersionParams.Builder()
                 .setRequestUrl(MyApplication.getURL(Constants.GET_LATEST_APP))
                 .setService(VerUpdateService.class);

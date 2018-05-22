@@ -24,7 +24,7 @@ public class MyApplication extends Application {
     public static boolean isProgramExit = false;        // 设置程序关闭状态
     public static boolean DEBUG = false;        // 程序当前是调试还是发布状态,默认为调试状态
     public static String ROOT_PATH = FileUtils.basePath;
-    public static boolean DIALOG_NEW_VER = true;       //版本更新时最新版本是否提示
+    public static boolean DIALOG_NEW_VER = false;       //版本更新时最新版本是否提示
     public static Date SendMoblieCodePreLimitTime = null;       // 时间限制
     public static String USER_WEIXIN_OPEN_ID = "";  //用户的微信ID
     private static boolean running = false;     // 程序是否在运行
