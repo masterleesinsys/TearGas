@@ -130,14 +130,23 @@ public class EquipmentManagementActivity extends BaseActivity {
                             break;
                     }
 
-                    equimentManagementAdapter.setOnItemClickListener(new EquimentManagementAdapter.OnItemClickListener() {
+                    equimentManagementAdapter.setOnImgClickListener(new EquimentManagementAdapter.OnImgClickListener() {
                         @Override
-                        public void onItemClickListener(int position) {
+                        public void onImgClickListener(int position) {
                             Intent intent = new Intent();
-                            intent.putExtra("type","EquipmentManagement");
+                            intent.putExtra("type", "EquipmentManagement");
                             intent.putExtra("lat", list.get(position).getLat());
                             intent.putExtra("lng", list.get(position).getLng());
                             openActivity(intent, MainActivity.class);
+                        }
+                    });
+
+                    equimentManagementAdapter.setOnViewClickListener(new EquimentManagementAdapter.OnViewClickListener() {
+                        @Override
+                        public void onViewClickListener(int position, String deviceID) {
+                            Intent intent = new Intent();
+                            intent.putExtra("deviceID", deviceID);
+                            openActivity(intent, ManagementActivity.class);
                         }
                     });
                 } else {

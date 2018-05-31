@@ -36,7 +36,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ico_android"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
 
         <!-- 百度AK配置 -->
         <meta-data
@@ -53,7 +54,8 @@
         <service
             android:name=".service.VerUpdateService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="" />
 
         <!-- 登录 -->
         <activity android:name=".activity.LoginActivity">

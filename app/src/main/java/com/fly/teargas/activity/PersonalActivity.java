@@ -138,6 +138,8 @@ public class PersonalActivity extends BaseActivity {
                 tv_tel.setText(userInfo.getTel());
                 tv_numberOfDevices.setText(userInfo.getDq());
 
+                MyApplication.setUserType(userInfo.getQx());
+
                 if ("超级管理员".equals(userInfo.getQx())) {
                     ll_addUser.setVisibility(View.VISIBLE);
                     ll_accountInformation.setVisibility(View.VISIBLE);

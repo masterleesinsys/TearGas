@@ -210,6 +210,7 @@ public class MainActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (null != list && 0 <= list.size()) {
+                    setCaption("首页(" + list.size() + ")");
                     for (DeviceInfo deviceInfo : list) {
                         if (deviceInfo.getCurState().equals("布防")) {
                             MarkerOptions markerOptions1 = new MarkerOptions().icon(bitmap1).position(new LatLng(deviceInfo.getLat(), deviceInfo.getLng()));
@@ -227,6 +228,8 @@ public class MainActivity extends BaseActivity {
                             marker2.setExtraInfo(mBundle2);
                         }
                     }
+                } else {
+                    setCaption("首页");
                 }
             }
         });
@@ -241,13 +244,11 @@ public class MainActivity extends BaseActivity {
                 switch (id) {
                     case 1:
                         intent = new Intent();
-                        intent.putExtra("id", id);
                         intent.putExtra("deviceID", deviceID);
                         openActivity(intent, ManagementActivity.class);
                         break;
                     case 2:
                         intent = new Intent();
-                        intent.putExtra("id", id);
                         intent.putExtra("deviceID", deviceID);
                         openActivity(intent, ManagementActivity.class);
                         break;
@@ -299,6 +300,7 @@ public class MainActivity extends BaseActivity {
             }
             if (null != userInfo) {
                 userID = userInfo.getUserID();
+                MyApplication.setUserType(userInfo.getQx());
                 MyApplication.setUserName(userInfo.getName());
                 showNameTvLift(MyApplication.getUserName());
 

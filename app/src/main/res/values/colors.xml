@@ -3,39 +3,13 @@
     <!--字体颜色-->
     <color name="textColor_title">#009aff</color>
     <color name="textColor_hint">#999999</color>
-    <color name="textColor_scarch">#666666</color>
     <color name="textColor_default">#333333</color>
-    <color name="textColor_background">#f8f8f8</color>
-    <color name="textColor_bg">#efefef</color>
     <color name="textColor_division">#dddddd</color>
-    <color name="textColor_seat">#ff0000</color>
-    <color name="textColor_wu">#555555</color>
-    <color name="textColor_esi">#e4e4e4</color>
-    <color name="textColor_orange">#e9980b</color>
-    <color name="textColor_discountCoupon">#00c7b0</color>
-    <color name="textColor_paleWhite">#dedede</color>
-    <color name="textColor_pompadour">#ff9191</color>
-    <color name="bg_color">#ffeded</color>
-    <color name="info_window">#00a1e9</color>
     <color name="main_background">#eeeeee</color>
     <color name="main_update_color">#f35e58</color>
-    <color name="mine_expiration_time">#ffa1a8</color>
-    <color name="mine_vip">#fff600</color>
-    <color name="screen_fillColor">#1abc9c</color>
-    <color name="date_bg">#cccccc</color>
-    <color name="purchase_contour">#acacac</color>
-    <color name="purchase_fill">#f7f7f7</color>
-    <color name="search_editBg">#ededed</color>
-    <color name="order_title">#010000</color>
-    <color name="order_content">#ff4d00</color>
-    <color name="mall_number">#d3d4d8</color>
-    <color name="giveInstruction">#888888</color>
-    <color name="makeAnAppointment">#ffcdd1</color>
-    <color name="withdrawDeposit">#ffa1a8</color>
 
     <!--正常&异常颜色-->
     <color name="normal">#8ec355</color>
-    <color name="abnormal">#e3232e</color>
 
     <!--titleBar切换颜色-->
     <color name="titleBar_checked">#587bf8</color>
@@ -46,47 +20,11 @@
     <color name="white">#ffffff</color>
 
     <!--全透明色&半透明色-->
-    <color name="full_transparency">#00000000</color>
     <color name="translucent">#e0000000</color>
 
     <!--白色透明度-->
-    <color name="translucent_white_05">#f2ffffff</color>
-    <color name="translucent_white_10">#e6ffffff</color>
-    <color name="translucent_white_15">#d9ffffff</color>
-    <color name="translucent_white_20">#ccffffff</color>
-    <color name="translucent_white_25">#bfffffff</color>
-    <color name="translucent_white_30">#b3ffffff</color>
-    <color name="translucent_white_35">#a6ffffff</color>
-    <color name="translucent_white_40">#99ffffff</color>
-    <color name="translucent_white_45">#8cffffff</color>
-    <color name="translucent_white_50">#80ffffff</color>
-    <color name="translucent_white_55">#73ffffff</color>
-    <color name="translucent_white_60">#66ffffff</color>
-    <color name="translucent_white_65">#59ffffff</color>
-    <color name="translucent_white_70">#4dffffff</color>
-    <color name="translucent_white_75">#40ffffff</color>
-    <color name="translucent_white_80">#33ffffff</color>
-    <color name="translucent_white_90">#26ffffff</color>
-    <color name="translucent_white_95">#0dffffff</color>
 
     <!--黑色透明度-->
-    <color name="translucent_black_05">#f2000000</color>
-    <color name="translucent_black_10">#e6000000</color>
-    <color name="translucent_black_15">#d9000000</color>
-    <color name="translucent_black_20">#cc000000</color>
-    <color name="translucent_black_25">#bf000000</color>
-    <color name="translucent_black_30">#b3000000</color>
-    <color name="translucent_black_35">#a6000000</color>
     <color name="translucent_black_40">#99000000</color>
-    <color name="translucent_black_45">#8c000000</color>
-    <color name="translucent_black_50">#80000000</color>
-    <color name="translucent_black_55">#73000000</color>
-    <color name="translucent_black_60">#66000000</color>
-    <color name="translucent_black_65">#59000000</color>
-    <color name="translucent_black_70">#4d000000</color>
-    <color name="translucent_black_75">#40000000</color>
-    <color name="translucent_black_80">#33000000</color>
-    <color name="translucent_black_90">#26000000</color>
-    <color name="translucent_black_95">#0d000000</color>
 
 </resources>

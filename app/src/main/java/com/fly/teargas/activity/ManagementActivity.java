@@ -45,10 +45,12 @@ public class ManagementActivity extends BaseActivity {
     @ViewInject(R.id.ll_logInformation)
     private LinearLayout ll_logInformation; //日志信息
 
+    @ViewInject(R.id.ll_bottom)
+    private LinearLayout ll_bottom;
+
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
 
-    private int id = 0;
     private String deviceID = "";
     private String modelID = "";
 
@@ -58,10 +60,14 @@ public class ManagementActivity extends BaseActivity {
         setCaption("管理");
         showNameTvRight(MyApplication.getUserName());
 
-        if (getIntent().hasExtra("id"))
-            id = getIntent().getIntExtra("id", 0);
         if (getIntent().hasExtra("deviceID"))
             deviceID = getIntent().getStringExtra("deviceID");
+
+        if ("超级管理员".equals(MyApplication.getUserType())) {
+            ll_bottom.setVisibility(View.VISIBLE);
+        } else {
+            ll_bottom.setVisibility(View.GONE);
+        }
 
         if ("".equals(deviceID)) {
             showToastText("未获取到相关数据，请重试");
@@ -126,7 +132,6 @@ public class ManagementActivity extends BaseActivity {
                 }).show();
                 break;
             case R.id.ll_deviceStatus:     //设备状态
-//                new AlertView("温馨提示", "设备状态功能维护中，待后续升级添加", null, new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
                 if ("".equals(deviceID) || "".equals(modelID)) {
                     showToastText("未获取到相关数据，请重试");
                     return;

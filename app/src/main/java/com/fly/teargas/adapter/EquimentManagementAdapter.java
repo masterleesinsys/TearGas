@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fly.teargas.R;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentManagementAdapter.MyViewHolder> {
     private Context context;
-    private OnItemClickListener onItemClickListener;
+    private OnImgClickListener onImgClickListener;
+    private OnViewClickListener onViewClickListener;
     private List<DeviceInfo> list = null;
 
     public EquimentManagementAdapter(Context context, List<DeviceInfo> list) {
@@ -43,6 +45,12 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
         holder.tv_status.setText(list.get(position).getCurState());
         holder.tv_address.setText(list.get(position).getDescription());
 
+        if (list.get(position).isbOnLine()) {
+            holder.iv_equipment.setImageResource(R.drawable.ico_computer_active);
+        } else {
+            holder.iv_equipment.setImageResource(R.drawable.ico_computer);
+        }
+
         if ("布防".equals(list.get(position).getCurState())) {
             holder.tv_is_normal.setText("正常");
             holder.tv_is_normal.setTextColor(ContextCompat.getColor(context, R.color.normal));
@@ -63,30 +71,47 @@ public class EquimentManagementAdapter extends RecyclerView.Adapter<EquimentMana
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_equipment;
         private TextView tv_equipment_name, tv_address, tv_is_normal, tv_status;
+        private RelativeLayout rl_view;
 
         MyViewHolder(View itemView) {
             super(itemView);
 
+            rl_view = itemView.findViewById(R.id.rl_view);
             iv_equipment = itemView.findViewById(R.id.iv_equipment);
             tv_equipment_name = itemView.findViewById(R.id.tv_equipment_name);
             tv_address = itemView.findViewById(R.id.tv_address);
             tv_is_normal = itemView.findViewById(R.id.tv_is_normal);
             tv_status = itemView.findViewById(R.id.tv_status);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            iv_equipment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClickListener(getAdapterPosition());
+                    onImgClickListener.onImgClickListener(getAdapterPosition());
+                }
+            });
+
+            rl_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onViewClickListener.onViewClickListener(getAdapterPosition(), list.get(getAdapterPosition()).getDeviceID());
                 }
             });
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClickListener(int position);
+    public interface OnImgClickListener {
+        void onImgClickListener(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public interface OnViewClickListener {
+        void onViewClickListener(int position, String deviceID);
+    }
+
+    public void setOnImgClickListener(OnImgClickListener onImgClickListener) {
+        this.onImgClickListener = onImgClickListener;
+    }
+
+    public void setOnViewClickListener(OnViewClickListener onViewClickListener) {
+        this.onViewClickListener = onViewClickListener;
     }
 }

@@ -1,5 +1,6 @@
 package com.fly.teargas.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,7 +20,6 @@ import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -106,7 +106,6 @@ public class Tools {
     /**
      * 将json数组转化为int型
      *
-     * @param JSONArray
      * @return
      */
     public static int[] getJsonToIntArray(JSONArray jsonArray) {
@@ -125,7 +124,8 @@ public class Tools {
     // 0 无网络 1 WIFI 2 移动互联网 3 未知网络
     public static int checkNet(Context context) {
 
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService("connectivity");
+        @SuppressLint("WrongConstant") ConnectivityManager manager = (ConnectivityManager) context.getSystemService("connectivity");
+        assert manager != null;
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null) {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
@@ -169,14 +169,6 @@ public class Tools {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getSerialNum(Context context) {
-
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceid = tm.getDeviceId();
-        // String serialNum = tm.getSimSerialNumber();
-        return deviceid;
     }
 
     public static int getVersionCode(Context mContext) {

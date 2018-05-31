@@ -10,9 +10,9 @@ import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
 import com.fly.teargas.util.Tools;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+@SuppressWarnings("ALL")
 public class VerUpdateService extends AVersionService {
 
     private String apkfilename = "app/TearsGas.apk";
@@ -36,8 +36,6 @@ public class VerUpdateService extends AVersionService {
             int version = new JSONObject(data).getInt("version");
             String apkurl = MyApplication.getURL(apkfilename);
 
-            LogUtils.e(apkurl);
-
             if (Tools.getVersionCode(this) < version) {
                 CustomVersionDialogActivity.isNeedUpdate = true;
                 showVersionDialog(apkurl, "版本更新", content);
@@ -60,7 +58,7 @@ public class VerUpdateService extends AVersionService {
             json = new JSONObject(result);
             if (json.getInt("success") == 1) {
                 if (json.has("data")) {
-                    String data = (String) json.getString("data");
+                    String data = json.getString("data");
                     o = JSON.parseObject(data, clazz);
                     return (T) o;
                 } else
@@ -70,7 +68,7 @@ public class VerUpdateService extends AVersionService {
                 Placard.showInfo(errors);
                 return null;
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             LogUtils.e(e.toString());
         }

@@ -7,8 +7,8 @@ android {
         applicationId "com.fly.teargas"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +34,11 @@ allprojects {
 }
 
 dependencies {
+    //noinspection GradleCompatible
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
     dependencies {
         implementation 'me.everything:overscroll-decor-android:1.0.4'
         //仿iOS风格的边缘滚动效果，支持几乎所有滚动视图
@@ -45,33 +50,18 @@ dependencies {
         implementation 'com.github.hotchemi:permissionsdispatcher:3.0.1'
         annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
     }
-//    dependencies {      //spinner选择控件
-//        implementation 'com.github.arcadefire:nice-spinner:1.3.3'
-//    }
-//    implementation 'com.github.bumptech.glide:glide:3.7.0'
-    //图片处理框架
-//    implementation 'com.lzy.widget:imagepicker:0.5.5'
-    //拍照，图库选择
-    //    implementation 'com.shehabic.droppy:Droppy:0.6.0@aar'          //下拉菜单
-    //    implementation 'com.orhanobut:dialogplus:1.11@aar'             //对话框
-//    implementation 'com.jcodecraeer:xrecyclerview:1.5.2'
-    //上拉刷新，下拉加载的recyclerView
-    implementation 'com.bigkoo:alertview:1.0.3'
     //高仿IOS AlertView提示框
-    //    implementation 'com.tsy:pay:1.0.0'         //支付
-    implementation 'com.allenliu.versionchecklib:library:1.6.6'
+    implementation 'com.bigkoo:alertview:1.0.3'
     //版本更新
-    //noinspection GradleCompatible
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'me.majiajie:pager-bottom-tab-strip:2.2.2'
+    implementation 'com.allenliu.versionchecklib:library:1.6.6'
     //底部导航控制栏
-    implementation 'org.xutils:xutils:3.5.0'
+    implementation 'me.majiajie:pager-bottom-tab-strip:2.2.2'
     //X组件
-    implementation 'com.alibaba:fastjson:1.1.54.android'
+    implementation 'org.xutils:xutils:3.5.0'
     //json解析阿里组件
-    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.alibaba:fastjson:1.1.54.android'
     //加载进度组件
-    implementation files('libs/BaiduLBS_Android.jar')   //百度SDK
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    //百度地图SDK
+    implementation files('libs/BaiduLBS_Android.jar')
 }

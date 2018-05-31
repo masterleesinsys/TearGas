@@ -22,6 +22,7 @@ import com.fly.teargas.MyApplication;
 import com.fly.teargas.R;
 import com.fly.teargas.entity.DeviceInfo;
 import com.fly.teargas.entity.ModelInfo;
+import com.fly.teargas.entity.UserInfo;
 import com.fly.teargas.util.HttpHelper;
 import com.fly.teargas.util.LogUtils;
 import com.fly.teargas.util.Placard;
@@ -48,6 +49,8 @@ public class InformationModificationActivity extends BaseActivity {
     private TextView tv_selectTemplate; //选择模版
     @ViewInject(R.id.tv_set_stencil)
     private TextView tv_set_stencil; //修改当前模版
+    @ViewInject(R.id.tv_operationalUser)
+    private TextView tv_operationalUser; //选择操作用户
     @ViewInject(R.id.tv_save)
     private TextView tv_save; //保存
     @ViewInject(R.id.iv_get_location)
@@ -116,6 +119,8 @@ public class InformationModificationActivity extends BaseActivity {
     private String lat = "";
     private String lng = "";
     private String deviceAddress = "";
+    private String userID = "";
+    private String userOfDeviceID = "";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -126,10 +131,32 @@ public class InformationModificationActivity extends BaseActivity {
 
         OverScrollDecoratorHelper.setUpOverScroll(sv_information_modification);
 
+        initEdittext();
+
         if (getIntent().hasExtra("deviceID"))
             deviceID = getIntent().getStringExtra("deviceID");
 
         tv_device_name.setText("设备" + deviceID);
+    }
+
+    private void initEdittext() {
+        et_IN1.setEnabled(false);
+        et_IN2.setEnabled(false);
+        et_IN3.setEnabled(false);
+        et_IN4.setEnabled(false);
+        et_IN5.setEnabled(false);
+        et_IN6.setEnabled(false);
+        et_IN7.setEnabled(false);
+        et_IN8.setEnabled(false);
+
+        et_OUT1.setEnabled(false);
+        et_OUT2.setEnabled(false);
+        et_OUT3.setEnabled(false);
+        et_OUT4.setEnabled(false);
+        et_OUT5.setEnabled(false);
+        et_OUT6.setEnabled(false);
+        et_OUT7.setEnabled(false);
+        et_OUT8.setEnabled(false);
     }
 
     @SuppressLint("SetTextI18n")
@@ -141,7 +168,7 @@ public class InformationModificationActivity extends BaseActivity {
         HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_DEVICE), map, spin_kit, new onGetDeviceXCallBack());
     }
 
-    @Event(value = {R.id.tv_save, R.id.tv_set_stencil, R.id.tv_selectTemplate, R.id.iv_get_location})
+    @Event(value = {R.id.tv_save, R.id.tv_set_stencil, R.id.tv_selectTemplate, R.id.iv_get_location, R.id.tv_operationalUser})
     private void onClick(View view) {
         ElasticAction.doAction(view, 400, 0.85f, 0.85f);
         Intent intent = null;
@@ -151,6 +178,9 @@ public class InformationModificationActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_selectTemplate:    //选择模版
                 HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_MODEL), null, spin_kit, new onGetAllModelXCallBack());
+                break;
+            case R.id.tv_operationalUser:   //选择
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_USER), null, spin_kit, new onGetAllUserXCallBack());
                 break;
             case R.id.tv_set_stencil:    //修改当前模版
                 if ("".equals(modelID)) {
@@ -173,7 +203,7 @@ public class InformationModificationActivity extends BaseActivity {
                         if (position >= 0) {
                             Map<String, String> map = new HashMap<>();
                             map.put("deviceID", deviceID);
-                            map.put("userOfDeviceID", deviceID);
+                            map.put("userOfDeviceID", userOfDeviceID);
                             map.put("beizhu", deviceAddress);
                             map.put("lat", lat);
                             map.put("lng", lng);
@@ -189,7 +219,7 @@ public class InformationModificationActivity extends BaseActivity {
         }
     }
 
-    private void showAlertView(int type, final String[] strs, final List<ModelInfo> list) {
+    private void showAlertView(int type, final String[] strs, final List<ModelInfo> modelInfoList, final List<UserInfo> userInfoList) {
         switch (type) {
             case 0:
                 alertView = new AlertView(null, null, null, null, strs, this, AlertView.Style.Alert, new OnItemClickListener() {
@@ -197,10 +227,12 @@ public class InformationModificationActivity extends BaseActivity {
                     public void onItemClick(Object o, int position) {
                         if (position == 0) {
                             alertView.dismiss();
-                            openActivity(SetStencilActivity.class);
+                            Intent intent = new Intent();
+                            intent.putExtra("type", "add");
+                            openActivity(intent,SetStencilActivity.class);
                         } else {
                             Map<String, String> map = new HashMap<>();
-                            map.put("modelID", list.get(position - 1).getModelID());
+                            map.put("modelID", modelInfoList.get(position - 1).getModelID());
                             HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_MODEL), map, spin_kit, new HttpHelper.XCallBack() {
                                 @SuppressLint("SetTextI18n")
                                 @Override
@@ -260,6 +292,23 @@ public class InformationModificationActivity extends BaseActivity {
                     }
                 });
                 break;
+            case 2:
+                alertView = new AlertView(null, null, null, null, strs, this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        if (position > -1) {
+                            alertView.dismiss();
+                            tv_operationalUser.setText(userInfoList.get(position).getName());
+                            userOfDeviceID = userInfoList.get(position).getUserID();
+                        } else {
+                            alertView.dismiss();
+                        }
+                    }
+                });
+                break;
+            case 3:
+                new AlertView("系统提示", "当前未查询到您可管理的操作用户", null, new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
+                break;
         }
         alertView.show();
     }
@@ -280,11 +329,16 @@ public class InformationModificationActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != deviceInfo) {
+                userID = deviceInfo.getUserID();
+                userOfDeviceID = userID;
+
                 et_lat.setText(String.valueOf(deviceInfo.getLat()));
                 et_lng.setText(String.valueOf(deviceInfo.getLng()));
                 et_deviceAddress.setText(deviceInfo.getDescription());
 
                 tv_selectTemplate.setText("模版" + deviceInfo.getModelID());
+
+                HttpHelper.getInstance().get(MyApplication.getTokenURL(Constants.GET_ALL_USER), null, spin_kit, new onGetAllUser1XCallBack());
 
                 Map<String, String> map = new HashMap<>();
                 map.put("modelID", deviceInfo.getModelID());
@@ -358,9 +412,73 @@ public class InformationModificationActivity extends BaseActivity {
                     strList.add("模版" + modelInfo.getModelID());
                 }
                 str = strList.toArray(str);
-                showAlertView(0, str, list);
+                showAlertView(0, str, list, null);
             } else {
-                showAlertView(1, null, null);
+                showAlertView(1, null, null, null);
+            }
+        }
+    }
+
+    /**
+     * 获取所有用户信息
+     */
+    private class onGetAllUser1XCallBack implements HttpHelper.XCallBack {
+        private List<UserInfo> list = null;
+
+        @Override
+        public void onResponse(String result) {
+            LogUtils.e(result);
+            try {
+                String data = getHttpResultList(result);
+                list = JSON.parseArray(data, UserInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != list && 0 < list.size()) {
+                for (UserInfo userInfo : list) {
+                    if ("".equals(userID)) {
+                        showToastText("未获取到当前操作用户信息，请重试");
+                    } else {
+                        if (userID.equals(userInfo.getUserID())) {
+                            LogUtils.e(userInfo.getName());
+                            tv_operationalUser.setText(userInfo.getName());
+                        }
+                    }
+                }
+            } else {
+                showToastText("未获取到当前操作用户信息，请重试");
+            }
+        }
+    }
+
+    /**
+     * 获取所有用户信息
+     */
+    private class onGetAllUserXCallBack implements HttpHelper.XCallBack {
+        private List<UserInfo> list = null;
+        private List<String> strList = new ArrayList<>();
+        private String[] str = new String[]{};
+
+        @Override
+        public void onResponse(String result) {
+            try {
+                String data = getHttpResultList(result);
+                list = JSON.parseArray(data, UserInfo.class);
+            } catch (Exception e) {
+                LogUtils.e(e.toString());
+                Placard.showInfo(e.toString());
+                e.printStackTrace();
+            }
+            if (null != list && 0 < list.size()) {
+                for (UserInfo userInfo : list) {
+                    strList.add(userInfo.getName());
+                }
+                str = strList.toArray(str);
+                showAlertView(2, str, null, list);
+            } else {
+                showAlertView(3, null, null, null);
             }
         }
     }

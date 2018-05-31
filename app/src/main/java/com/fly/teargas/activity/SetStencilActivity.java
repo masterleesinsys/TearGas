@@ -92,6 +92,7 @@ public class SetStencilActivity extends BaseActivity {
             case "set":
                 setCaption("修改模版" + modelID);
 
+                getRightTvView();
                 setTitleBarRightTvVisibility(View.VISIBLE);
                 setTitleBarRightTvText("删除");
 

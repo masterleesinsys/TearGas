@@ -18,7 +18,7 @@ import com.fly.teargas.MyApplication;
  * versionParams.setCustomDownloadActivityClass(CustomVersionDialogActivity.class);
  * 使用库默认自带的就行了
  * @important 如果要重写几个ui:
- * ，请分别使用父类的versionDialog／loadingDialog/failDialog以便库管理显示和消失
+ * 请分别使用父类的versionDialog／loadingDialog/failDialog以便库管理显示和消失
  */
 public class CustomVersionDialogActivity extends VersionDialogActivity {
     public static int customVersionDialogIndex = 3;

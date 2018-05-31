@@ -1,5 +1,6 @@
 package com.fly.teargas.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -38,7 +39,8 @@ public class ImageUtil {
     private static final String TAG = "ImageUtil";
     public static String videoPath = MyApplication.ROOT_PATH + "mediacache/";
 
-    private static Map<Integer, int[]> sizeType = new HashMap<Integer, int[]>();
+    @SuppressLint("UseSparseArrays")
+    private static Map<Integer, int[]> sizeType = new HashMap<>();
 
     static {
         createImageFolder();

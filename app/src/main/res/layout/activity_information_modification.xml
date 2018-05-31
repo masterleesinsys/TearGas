@@ -58,7 +58,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="number|numberDecimal"
                         android:maxLength="10"
-                        android:text="113.534468"
                         android:textColor="@color/textColor_default"
                         android:textSize="14sp" />
 
@@ -76,7 +75,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="number|numberDecimal"
                         android:maxLength="10"
-                        android:text="34.840273"
                         android:textColor="@color/textColor_default"
                         android:textSize="14sp" />
 
@@ -105,7 +103,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/editbackground"
-                android:hint="设备地址"
+                android:hint="设备备注"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor_default"
@@ -113,10 +111,25 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/tv_selectTemplate"
+                android:id="@+id/tv_operationalUser"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/et_deviceAddress"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/editbackground"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="选择操作用户"
+                android:textColor="@color/textColor_default"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_selectTemplate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_operationalUser"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
@@ -139,7 +152,6 @@
                 android:textSize="15sp" />
 
             <LinearLayout
-                android:id="@+id/ll_inOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_set_stencil"

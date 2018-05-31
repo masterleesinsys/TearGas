@@ -22,7 +22,6 @@
         layout="@layout/titlebar" />
 
     <LinearLayout
-        android:id="@+id/ll_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titlebar"
@@ -31,7 +30,6 @@
 
         <!--当前账户-->
         <LinearLayout
-            android:id="@+id/ll_currentAccount"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white"
@@ -60,7 +58,6 @@
 
         <!--用户姓名-->
         <LinearLayout
-            android:id="@+id/ll_username"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -90,7 +87,6 @@
 
         <!--用户身份-->
         <LinearLayout
-            android:id="@+id/ll_userType"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -120,7 +116,6 @@
 
         <!--用户注册时间-->
         <LinearLayout
-            android:id="@+id/ll_registerTime"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -150,7 +145,6 @@
 
         <!--联系电话-->
         <LinearLayout
-            android:id="@+id/ll_tel"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -187,7 +181,6 @@
 
         <!--当前管辖设备数-->
         <LinearLayout
-            android:id="@+id/ll_numberOfDevices"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
@@ -235,7 +228,6 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_setPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -273,7 +265,6 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_addUser"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -311,7 +302,6 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_accountInformation"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

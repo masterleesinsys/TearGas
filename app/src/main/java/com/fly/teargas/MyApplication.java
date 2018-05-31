@@ -22,7 +22,7 @@ public class MyApplication extends Application {
     public static String IMAGE_HOST = "http://60.205.213.120/";
     public final static int DATA_PAGE_SIZE = 10;         //数据分页大小
     public static boolean isProgramExit = false;        // 设置程序关闭状态
-    public static boolean DEBUG = false;        // 程序当前是调试还是发布状态,默认为调试状态
+    public static boolean DEBUG = true;        // 程序当前是调试还是发布状态,默认为调试状态
     public static String ROOT_PATH = FileUtils.basePath;
     public static boolean DIALOG_NEW_VER = false;       //版本更新时最新版本是否提示
     public static Date SendMoblieCodePreLimitTime = null;       // 时间限制
@@ -37,6 +37,7 @@ public class MyApplication extends Application {
     private static double UserLng;      //用户所在位置的经度
     private static String UserAddress;      //用户所在位置地址信息
     private static String UserName;      //用户名
+    private static String UserType;      //用户类型（权限）
 
     public static MyApplication getInstance() {
         if (mInstance == null) {
@@ -213,5 +214,13 @@ public class MyApplication extends Application {
 
     public static void setUserAddress(String userAddress) {
         UserAddress = userAddress;
+    }
+
+    public static String getUserType() {
+        return UserType;
+    }
+
+    public static void setUserType(String userType) {
+        UserType = userType;
     }
 }
