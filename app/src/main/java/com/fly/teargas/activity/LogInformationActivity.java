@@ -61,7 +61,7 @@ public class LogInformationActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (null != list && 0 < list.size()) {
-                setCaption("管理(" + list.size() + ")");
+                setCaption("日志信息(" + list.size() + ")");
                 LogInformationAdapter logInformationAdapter = new LogInformationAdapter(LogInformationActivity.this, list);
                 rv_log_information.setAdapter(logInformationAdapter);
             } else {

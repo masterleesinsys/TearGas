@@ -229,7 +229,7 @@ public class InformationModificationActivity extends BaseActivity {
                             alertView.dismiss();
                             Intent intent = new Intent();
                             intent.putExtra("type", "add");
-                            openActivity(intent,SetStencilActivity.class);
+                            openActivity(intent, SetStencilActivity.class);
                         } else {
                             Map<String, String> map = new HashMap<>();
                             map.put("modelID", modelInfoList.get(position - 1).getModelID());
@@ -331,6 +331,7 @@ public class InformationModificationActivity extends BaseActivity {
             if (null != deviceInfo) {
                 userID = deviceInfo.getUserID();
                 userOfDeviceID = userID;
+                modelID = deviceInfo.getModelID();
 
                 et_lat.setText(String.valueOf(deviceInfo.getLat()));
                 et_lng.setText(String.valueOf(deviceInfo.getLng()));

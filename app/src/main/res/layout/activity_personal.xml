@@ -193,7 +193,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="当前用户权限"
+                android:text="用户管理地区"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
