@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.fly.teargas">
 
     <!-- 获取设备网络状态，禁用后无法获取网络状态 -->
@@ -17,7 +18,8 @@
     <!-- 允许sd卡读权限，需读取地图数据，禁用后无法显示地图 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 获取统计数据 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <!-- 鉴权所需该权限获取进程列表 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 使用步行AR导航，配置Camera权限 -->
@@ -28,6 +30,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".MyApplication"

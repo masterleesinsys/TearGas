@@ -7,6 +7,7 @@ import android.app.Application;
 import com.fly.teargas.util.FileUtils;
 import com.fly.teargas.util.ImageUtil;
 import com.fly.teargas.util.LogUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.x;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class MyApplication extends Application {
     public static String SERVICE_HOST = "http://39.107.98.245/";    //服务地址
     public static String IMAGE_HOST = "http://39.107.98.245/";
-//    public static String SERVICE_HOST = "http://60.205.213.120/";    //服务地址
+    //    public static String SERVICE_HOST = "http://60.205.213.120/";    //服务地址
 //    public static String IMAGE_HOST = "http://60.205.213.120/";
     public final static int DATA_PAGE_SIZE = 10;         //数据分页大小
     public static boolean isProgramExit = false;        // 设置程序关闭状态
@@ -121,6 +122,9 @@ public class MyApplication extends Application {
 
         x.Ext.init(this);
         x.Ext.setDebug(false); // 开启debug会影响性能
+
+        //腾讯bugly
+        CrashReport.initCrashReport(getApplicationContext(), "54e3725f5c", false);
 
         // 检查缓存目录是否存在
         File file = new File(getCachePath());
