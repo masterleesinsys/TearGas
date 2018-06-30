@@ -18,8 +18,10 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class MyApplication extends Application {
-    public static String SERVICE_HOST = "http://60.205.213.120/";    //服务地址
-    public static String IMAGE_HOST = "http://60.205.213.120/";
+    public static String SERVICE_HOST = "http://39.107.98.245/";    //服务地址
+    public static String IMAGE_HOST = "http://39.107.98.245/";
+//    public static String SERVICE_HOST = "http://60.205.213.120/";    //服务地址
+//    public static String IMAGE_HOST = "http://60.205.213.120/";
     public final static int DATA_PAGE_SIZE = 10;         //数据分页大小
     public static boolean isProgramExit = false;        // 设置程序关闭状态
     public static boolean DEBUG = false;        // 程序当前是调试还是发布状态,默认为调试状态
