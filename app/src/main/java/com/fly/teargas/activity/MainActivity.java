@@ -183,6 +183,7 @@ public class MainActivity extends BaseActivity {
         mMapView.showScaleControl(false);
         //默认显示普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+        
 
         locationNow(0);
 
