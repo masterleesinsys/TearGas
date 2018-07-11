@@ -3,6 +3,7 @@ package com.fly.teargas.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allenliu.versionchecklib.core.AllenChecker;
@@ -24,6 +25,8 @@ import com.skydoves.elasticviews.ElasticAction;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.fly.teargas.MyApplication.ROOT_PATH;
 
@@ -60,6 +63,9 @@ public class PersonalActivity extends BaseActivity {
     @ViewInject(R.id.ll_updata)
     private LinearLayout ll_updata;     //检查更新
 
+    @ViewInject(R.id.sv_personal)
+    private ScrollView sv_personal;
+
     @ViewInject(R.id.spin_kit)
     private SpinKitView spin_kit;
 
@@ -74,6 +80,7 @@ public class PersonalActivity extends BaseActivity {
         showNameTvLift(MyApplication.getUserName());
 
         tv_versionNumber.setText("版本号:" + Tools.getVersionName(this) + "");
+        OverScrollDecoratorHelper.setUpOverScroll(sv_personal);
     }
 
     @Override
